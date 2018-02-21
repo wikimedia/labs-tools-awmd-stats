@@ -1,5 +1,6 @@
 import urllib2
 import json
+import datetime
 
 # get user stats using Gerrit API
 def getUserStats(userId):
