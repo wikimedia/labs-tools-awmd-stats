@@ -1,7 +1,7 @@
 import urllib2
 import json
 
-# fetch HTML from url and select the wikitable only
+# fetch user stats using Gerrit API
 def fetchUser(userId):
 
     url = 
