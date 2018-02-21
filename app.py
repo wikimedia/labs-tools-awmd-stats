@@ -1,6 +1,6 @@
 import urllib2
 import json
-import datetime
+import time
 
 # get user stats using Gerrit API
 def getUserStats(userId):
@@ -15,6 +15,6 @@ def getUserStats(userId):
 
 # create json file for monthly stats
 def createJsonFile(jsonTree):
-    month = 
+    month = time.strftime("%Y-%m-%d %H:%M");
     with open('sessions.json', 'w') as f:
         f.write(str(jsonTree))  # convert result to string ad save it
