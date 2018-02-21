@@ -11,3 +11,9 @@ def getUserStats(userId):
         jsonArray = result.read()
 
         return jsonArray
+
+# create json file for monthly stats
+def createJsonFile(jsonTree):
+    month = 
+    with open('sessions.json', 'w') as f:
+        f.write(str(jsonTree))  # convert result to string ad save it
