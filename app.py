@@ -4,8 +4,16 @@ import time
 
 
 # loop through participants
-def getParticipants
-
+def getParticipants():
+# read from the previously save sessions.json
+    file = open("sessions.json", "r")
+    jsonText =  file.read()
+    response = app.response_class(
+        response=jsonText,
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 # get user stats using Gerrit API
 def getUserStats(username):
@@ -22,6 +30,10 @@ def getUserStats(username):
 
 # create json file for monthly stats
 def createJsonFile(jsonArray):
-    filename = time.strftime("%Y-%m"); # eg: 2018-02
     with open(filename + '.json', 'w') as f:
         f.write(str(jsonArray))  # convert result to string ad save it
+
+# get current month
+def getCurrentMonth():
+    currentMonth = time.strftime("%Y-%m"); # eg: 2018-02 
+    return currentMonth   
