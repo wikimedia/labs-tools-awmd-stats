@@ -1,4 +1,17 @@
-[master e648e2b] users.json
- 2 files changed, 0 insertions(+), 0 deletions(-)
- rename users.js => participants.js (100%)
- create mode 100644 participants.json
+[
+	{
+		"name": "Francois Kobon",
+		"username": "fkobon",
+		"country": "Côte d'Ivoire"
+	},
+	{
+		"name": "Ta Stephane",
+		"username": "opentechno",
+		"country": "Côte d'Ivoire"
+	},
+	{
+		"name": "African Hope",
+		"username": "samuelguebo",
+		"country": "Côte d'Ivoire"
+	},
+]
