@@ -10,6 +10,17 @@ app = Flask(__name__) # instantiate Flask
 @app.route('/')
 def index():
 
+# route for fetching stats by month
+@app.route('/month/')
+def month():
+    file = open("sessions.json", "r")
+    jsonText =  file.read()
+    response = app.response_class(
+        response=jsonText,
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 # loop through participants
 def getParticipants():
