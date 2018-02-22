@@ -15,6 +15,6 @@ def getUserStats(userId):
 
 # create json file for monthly stats
 def createJsonFile(jsonTree):
-    month = time.strftime("%Y-%m-%d %H:%M");
+    filename = time.strftime("%Y-%m"); # eg: 2018-02
     with open('sessions.json', 'w') as f:
         f.write(str(jsonTree))  # convert result to string ad save it
