@@ -43,13 +43,15 @@ participants = getParticipants()
 monthlyStats = []
 for participant in participants:
 
-    patches = getUserStats(participant['username'])
-    username = []; 
+    username = participant['username']
+    patches = getUserStats(username)
+
+    participant_patches = []; 
 
     for patch in patches:
-        username.append(patch)   
+        participant_patches.append(patch)   
 
-    monthlyStats.append([participant['username'], username])
+    monthlyStats.append([username, participant_patches])
 
 #print json.dumps(monthlyStats) # convert from array to json
 createJsonFile(json.dumps(monthlyStats))

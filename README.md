@@ -9,6 +9,7 @@ Africa Wikimedia Developer Tool for Gathering Monthly statistics of participants
 
 ## Installing dependencies
 * ```pip install Flask```
+* ```pip install python-crontab```
 
 
 # Contributors
