@@ -6,6 +6,11 @@ from flask import Flask
 
 app = Flask(__name__) # instantiate Flask
 
+# route for homepage
+@app.route('/')
+def index():
+
+
 # loop through participants
 def getParticipants():
 
