@@ -28,12 +28,12 @@ def getUserStats(username):
 # create json file for monthly stats
 def createJsonFile(jsonArray):
     filename = getCurrentMonth()
-    with open(filename + '.json', 'w') as f:
+    with open('stats/' + filename + '.json', 'w') as f:
         f.write(str(jsonArray))  # convert result to string ad save it
 
 # get current month
 def getCurrentMonth():
-    currentMonth = time.strftime("%Y-%m"); # eg: 2018-02 
+    currentMonth = time.strftime("%Y-%m"); # eg: ./stats/2018-02.json 
     return currentMonth   
 
 
