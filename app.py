@@ -1,10 +1,9 @@
 import urllib2
 import json
 import time
+import pprint
 from flask import Flask
 from flask import render_template
-from pprint import pprint
-
 
 
 app = Flask(__name__) # instantiate Flask
@@ -15,8 +14,10 @@ app = Flask(__name__) # instantiate Flask
 def index():
     stats = getStatsFromDb(getCurrentMonth()) # stats for the current month
     #return render_template('index.html', stats = stats)
-    for participant in stats:
+    with open('stats/' + getCurrentMonth() + '.json', 'r') as f:
+        stats = json.load(f)
 
+    return render_template('index.html', stats = stats)
 
 # REST endpoint for fetching stats by month
 @app.route('/month/<month>')
@@ -101,7 +102,7 @@ def getStatsFromDb( month ):
     jsonText =  file.read()
     stats = json.loads(jsonText)
     
-    return stats
+    return json
 
 
 if __name__ == '__main__':
