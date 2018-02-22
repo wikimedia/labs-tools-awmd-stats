@@ -2,14 +2,16 @@ import urllib2
 import json
 import time
 from flask import Flask
+from flask import render_template
 
 
 app = Flask(__name__) # instantiate Flask
 
+
 # route for homepage
 @app.route('/')
 def index():
-    render_template('static/index.html')
+    return render_template('static/index.html')
 
 # route for fetching stats by month
 @app.route('/month/<month>')
