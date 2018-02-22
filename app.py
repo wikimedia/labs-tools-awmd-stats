@@ -22,7 +22,7 @@ def getUserStats(username):
         result = urllib2.urlopen(request)
         jsonArray = result.read()
 
-        return jsonArray
+        return json.loads(jsonArray)
 
 # create json file for monthly stats
 def createJsonFile(jsonArray):
@@ -46,7 +46,8 @@ for participant in participants:
     patches = getUserStats(username)
 
     for patch in patches:
-        
+        monthlyStats[username].append() 
+
     
     
 print json.dumps(monthlyStats) # convert from array to json
