@@ -39,7 +39,9 @@ def getCurrentMonth():
 # load and display participants
 participants = getParticipants()
 
+monthlyStats = ''
 for participant in participants:
     details = getUserStats(participant['username'])
     print details
     
+print monthlyStats
