@@ -11,9 +11,10 @@ app = Flask(__name__) # instantiate Flask
 # route for homepage
 @app.route('/')
 def index():
-    return render_template('index.html')
+    stats = getStats(getCurrentMonth()) # stats for the current month
+    return render_template('index.html', stats)
 
-# route for fetching stats by month
+# REST endpoint for fetching stats by month
 @app.route('/month/<month>')
 def month():
     file = open("stats/" + month + ".json", "r")
