@@ -8,11 +8,7 @@ def getParticipants():
 
     file = open('participants.json', "r")
     jsonText =  file.read()
-    response = app.response_class(
-        response=jsonText,
-        status=200,
-        mimetype='application/json'
-    )
+    response = json.loads(jsonText)
     return response
 
 # get user stats using Gerrit API
