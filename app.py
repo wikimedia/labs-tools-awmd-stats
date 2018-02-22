@@ -3,6 +3,8 @@ import json
 import time
 from flask import Flask
 from flask import render_template
+from pprint import pprint
+
 
 
 app = Flask(__name__) # instantiate Flask
@@ -12,7 +14,9 @@ app = Flask(__name__) # instantiate Flask
 @app.route('/')
 def index():
     stats = getStatsFromDb(getCurrentMonth()) # stats for the current month
-    return render_template('index.html', stats = stats)
+    #return render_template('index.html', stats = stats)
+    for participant in stats:
+
 
 # REST endpoint for fetching stats by month
 @app.route('/month/<month>')
@@ -97,7 +101,7 @@ def getStatsFromDb( month ):
     jsonText =  file.read()
     stats = json.loads(jsonText)
     
-    return json
+    return stats
 
 
 if __name__ == '__main__':
