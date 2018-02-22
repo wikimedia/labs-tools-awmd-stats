@@ -12,7 +12,7 @@ app = Flask(__name__) # instantiate Flask
 @app.route('/')
 def index():
     stats = getStatsFromDb(getCurrentMonth()) # stats for the current month
-    return render_template('index.html', 'stats' = stats)
+    return render_template('index.html', stats = stats)
 
 # REST endpoint for fetching stats by month
 @app.route('/month/<month>')
@@ -77,8 +77,7 @@ def cronTask():
             participant_patches.append(patch)   
 
         # create array with [{ username: [details: [userdetails], stats: [patches] ] }]
-        monthlyStats.append([username, [ [details, participant], [stats, participant_patches] ])
-
+        monthlyStats.append([username, [ [details, participant], [stats, participant_patches] ]])
 
     # convert from array to json
     createJsonFile(json.dumps(monthlyStats))
