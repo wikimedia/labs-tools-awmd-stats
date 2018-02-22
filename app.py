@@ -11,7 +11,7 @@ app = Flask(__name__) # instantiate Flask
 # route for homepage
 @app.route('/')
 def index():
-    return render_template('static/index.html')
+    return render_template('index.html')
 
 # route for fetching stats by month
 @app.route('/month/<month>')
