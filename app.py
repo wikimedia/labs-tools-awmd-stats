@@ -97,10 +97,8 @@ def getStatsFromDb( month ):
     # read stats from DB (file)
     file = open("stats/" + month + ".json", "r")
     jsonText =  file.read()
-    jsonText =  file.read()
-    stats = jsonText
+    stats = json.loads(jsonText)
     
-    print stats
     return stats
 
 
