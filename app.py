@@ -39,9 +39,10 @@ def getCurrentMonth():
 # load and display participants
 participants = getParticipants()
 
-monthlyStats = ''
+monthlyStats = []
 for participant in participants:
+
     details = getUserStats(participant['username'])
     print details
     
-print monthlyStats
+print json.dumps(monthlyStats) # convert from array to json
