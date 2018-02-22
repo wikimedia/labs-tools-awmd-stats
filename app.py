@@ -22,7 +22,7 @@ def getUserStats(username):
         result = urllib2.urlopen(request)
         jsonArray = result.read()
 
-        jsonArray.replace(")]}'"); # Fix this error in headers of json tree
+        jsonArray.replace(")]}'", ""); # Fix this error in headers of json tree
         return jsonArray
 
 # create json file for monthly stats
