@@ -6,8 +6,8 @@ import time
 # loop through participants
 def getParticipants():
 # read from the previously save sessions.json
-    filename = getCurrentMonth()
-    file = open(filename + '.json', "r")
+
+    file = open('users.json', "r")
     jsonText =  file.read()
     response = app.response_class(
         response=jsonText,
