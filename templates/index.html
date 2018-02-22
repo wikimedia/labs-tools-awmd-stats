@@ -1,23 +1,28 @@
 {% for participant in stats %}
 <div class="container">
-  <h2>{{ participant }}</h2>
-  <p>{{ participant.name }}</p>            
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Project</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for patch in participant.stats %}
-      <tr>
-        <td>{{patch.id}}</td>
-        <td>{{patch.id}}</td>
-        <td>john@example.com</td>
-      </tr>
-    </tbody>
-  </table>
+	<h2>{{ participant }}</h2>
+	<p>{{ participant.name }}</p>            
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Project</th>
+				<th>Created</th>
+				<th>Updated</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for patch in participant.stats %}
+				<tr>
+					<td>{{patch.change_id}}</td>
+					<td>{{patch.project}}</td>
+					<td>{{patch.created}}</td>
+					<td>{{patch.updated}}</td>
+					<td>{{patch.status}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 </div>
 {% endfor %}
