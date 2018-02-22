@@ -77,7 +77,7 @@ def cronTask():
             participant_patches.append(patch)   
 
         # create array with [{ username: [details: [userdetails], stats: [patches] ] }]
-        monthlyStats.append([username, [ [details, participant], [stats, participant_patches] ]])
+        monthlyStats.append([username, [ ['details', participant], ['stats', participant_patches] ]])
 
     # convert from array to json
     createJsonFile(json.dumps(monthlyStats))
