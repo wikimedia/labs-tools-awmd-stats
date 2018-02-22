@@ -2,6 +2,11 @@ import urllib2
 import json
 import time
 
+
+# loop through participants
+def getParticipants
+
+
 # get user stats using Gerrit API
 def getUserStats(username):
     
