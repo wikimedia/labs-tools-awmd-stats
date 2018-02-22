@@ -13,6 +13,7 @@ app = Flask(__name__) # instantiate Flask
 def index():
     stats = getStatsFromDb(getCurrentMonth()) # stats for the current month
     #return render_template('index.html', stats = stats)
+    print stats
     return stats
 
 # REST endpoint for fetching stats by month
@@ -99,6 +100,7 @@ def getStatsFromDb( month ):
     jsonText =  file.read()
     stats = jsonText
     
+    print stats
     return stats
 
 
