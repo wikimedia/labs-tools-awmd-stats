@@ -1,0 +1,81 @@
+)]}'
+[
+  {
+    "id": "mediawiki%2Fextensions%2FAbuseFilter~master~Ie41fed055c0e3260eb58ef4907fc29eaa21243d6",
+    "project": "mediawiki/extensions/AbuseFilter",
+    "branch": "master",
+    "topic": "minus-x",
+    "hashtags": [],
+    "change_id": "Ie41fed055c0e3260eb58ef4907fc29eaa21243d6",
+    "subject": "Update minus-x from 0.2.1 to 0.3.0",
+    "status": "MERGED",
+    "created": "2018-02-17 15:12:18.000000000",
+    "updated": "2018-02-17 17:34:06.000000000",
+    "submitted": "2018-02-17 17:33:29.000000000",
+    "insertions": 1,
+    "deletions": 1,
+    "unresolved_comment_count": 0,
+    "_number": 411594,
+    "owner": {
+      "_account_id": 5226
+    }
+  },
+  {
+    "id": "mediawiki%2Fextensions%2FCheckUser~master~I669affa176f6c5b0dbf61ac3ca4e77a4fb6eb3e5",
+    "project": "mediawiki/extensions/CheckUser",
+    "branch": "master",
+    "topic": "T170507",
+    "hashtags": [],
+    "change_id": "I669affa176f6c5b0dbf61ac3ca4e77a4fb6eb3e5",
+    "subject": "CheckUser \"contributions\" link should be a red link for non-existent accounts",
+    "status": "MERGED",
+    "created": "2017-09-24 21:54:31.000000000",
+    "updated": "2017-10-09 18:44:20.000000000",
+    "submitted": "2017-10-09 18:41:41.000000000",
+    "insertions": 50,
+    "deletions": 9,
+    "unresolved_comment_count": 0,
+    "_number": 380420,
+    "owner": {
+      "_account_id": 5226
+    }
+  },
+  {
+    "id": "mediawiki%2Fextensions%2FAbuseFilter~master~I669affa176f6c5b0dbf61ac3ca4e77a4fb6eb3e5",
+    "project": "mediawiki/extensions/AbuseFilter",
+    "branch": "master",
+    "hashtags": [],
+    "change_id": "I669affa176f6c5b0dbf61ac3ca4e77a4fb6eb3e5",
+    "subject": "CheckUser \"contributions\" link should be a red link for non-existent accounts",
+    "status": "ABANDONED",
+    "created": "2017-09-22 18:18:49.000000000",
+    "updated": "2017-09-24 22:07:01.000000000",
+    "insertions": 5,
+    "deletions": 0,
+    "unresolved_comment_count": 0,
+    "_number": 379811,
+    "owner": {
+      "_account_id": 5226
+    }
+  },
+  {
+    "id": "mediawiki%2Fextensions%2FTranslate~master~Id5322f44c6c11e8a651c7f82a3405e4eac798ae6",
+    "project": "mediawiki/extensions/Translate",
+    "branch": "master",
+    "topic": "T56530",
+    "hashtags": [],
+    "change_id": "Id5322f44c6c11e8a651c7f82a3405e4eac798ae6",
+    "subject": "Set $wgTranslatePermissionUrl to false doesn\u0027t remove \"Request permission\" link",
+    "status": "MERGED",
+    "created": "2017-08-16 09:12:51.000000000",
+    "updated": "2017-08-30 15:02:19.000000000",
+    "submitted": "2017-08-30 15:02:19.000000000",
+    "insertions": 10,
+    "deletions": 7,
+    "unresolved_comment_count": 0,
+    "_number": 372119,
+    "owner": {
+      "_account_id": 5226
+    }
+  }
+]
