@@ -12,7 +12,7 @@ app = Flask(__name__) # instantiate Flask
 @app.route('/')
 def index():
     stats = getStatsFromDb(getCurrentMonth()) # stats for the current month
-    return render_template('index.html', stats)
+    return render_template('index.html', 'stats' = stats)
 
 # REST endpoint for fetching stats by month
 @app.route('/month/<month>')
