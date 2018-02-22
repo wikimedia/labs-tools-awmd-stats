@@ -13,7 +13,7 @@ def index():
 # route for fetching stats by month
 @app.route('/month/<month>')
 def month():
-    file = open("sessions.json", "r")
+    file = open("stats/" + month + ".json", "r")
     jsonText =  file.read()
     response = app.response_class(
         response=jsonText,
@@ -76,3 +76,6 @@ def cronTask():
 
     # convert from array to json
     createJsonFile(json.dumps(monthlyStats))
+
+if __name__ == '__main__':
+    app.run()
