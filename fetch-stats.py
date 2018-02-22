@@ -11,7 +11,7 @@ app = Flask(__name__) # instantiate Flask
 def index():
 
 # route for fetching stats by month
-@app.route('/month/')
+@app.route('/month/<month>')
 def month():
     file = open("sessions.json", "r")
     jsonText =  file.read()
