@@ -40,5 +40,6 @@ def getCurrentMonth():
 participants = getParticipants()
 
 for participant in participants:
-    print participant['name']
-    print participant['username']
+    details = getUserStats(participant['username'])
+    print details
+    
