@@ -13,7 +13,7 @@ app = Flask(__name__) # instantiate Flask
 def index():
     stats = getStatsFromDb(getCurrentMonth()) # stats for the current month
     #return render_template('index.html', stats = stats)
-    return render_template('index.html', stats = stats)
+    return stats
 
 # REST endpoint for fetching stats by month
 @app.route('/month/<month>')
@@ -57,7 +57,7 @@ def createJsonFile(jsonArray):
 
 # get current month
 def getCurrentMonth():
-    currentMonth = time.strftime("%Y-%m"); # eg: ./stats/2018-02.json 
+    currentMonth = time.strftime("%Y-%m"); # eg 2018-02 
     return currentMonth   
 
 # cron job for fetching and saving stats, for now fires in HTTP
@@ -97,7 +97,7 @@ def getStatsFromDb( month ):
     file = open("stats/" + month + ".json", "r")
     jsonText =  file.read()
     jsonText =  file.read()
-    stats = json.loads(jsonText)
+    stats = jsonText
     
     return stats
 
