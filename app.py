@@ -22,8 +22,8 @@ def getUserStats(username):
         result = urllib2.urlopen(request)
         jsonArray = result.read()
 
-        jsonArray.replace(")]}'", ""); # Fix this error in headers of json tree
-        return jsonArray
+        jsonArray = jsonArray.replace(")]}'", ""); # Fix this error in headers of json tree
+        return jsonArray;
 
 # create json file for monthly stats
 def createJsonFile(jsonArray):
@@ -46,6 +46,7 @@ for participant in participants:
     username = participant['username']
     patches = getUserStats(username)
     
-    createJsonFile(patches)
+    
 
 print json.dumps(monthlyStats) # convert from array to json
+createJsonFile(patches)
