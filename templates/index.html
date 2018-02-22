@@ -1,7 +1,7 @@
 {% for participant in stats %}
 <div class="container">
-	<h2>{{ participant }}</h2>
-	<p>{{ participant.name }}</p>            
+	<h2>{{ participant.details.name }}</h2>
+	<p>{{ participant.details.username }} / {{ participant.details.country }}</p>            
 	<table class="table table-striped">
 		<thead>
 			<tr>
