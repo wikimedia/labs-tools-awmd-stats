@@ -47,8 +47,7 @@ for participant in participants:
     patches = getUserStats(username)
     
     for patch in patches:
-        monthlyStats.append([username, patch])
-    
+        monthlyStats[username] = patch    
 
-print json.dumps(monthlyStats) # convert from array to json
-#createJsonFile(patches)
+#print json.dumps(monthlyStats) # convert from array to json
+createJsonFile(json.dumps(monthlyStats))
