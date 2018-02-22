@@ -4,6 +4,8 @@ import time
 from flask import Flask
 
 
+app = Flask(__name__) # instantiate Flask
+
 # loop through participants
 def getParticipants():
 
