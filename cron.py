@@ -1,9 +1,5 @@
-# Fire once a day.
-import os 
-import crython
+from crontab import CronTab
 
-#@crython.job(expr='@daily')
-@crython.job(second='*/30')
-def cron():
-	os.system('python fetch-stats.py')
-	print 'cron started'
+cron = CronTab()  
+job = cron.new(command='python fetch-stats.py')  
+job.hour.every(24) # Fire once a day.
