@@ -81,6 +81,13 @@ def cronTask():
 
     # convert from array to json
     createJsonFile(json.dumps(monthlyStats))
+    
+    response = app.response_class(
+        response=monthlyStats,
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 # get monthly stats from DB (file)
 def getStatsFromDb( month ):
