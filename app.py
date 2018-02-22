@@ -3,13 +3,6 @@ import json
 import time
 
 
-
-participants = json.loads(getParticipants())
-
-for participant in participants:
-    print participant['name']
-    print participant['username']
-
 # loop through participants
 def getParticipants():
 
@@ -45,3 +38,11 @@ def createJsonFile(jsonArray):
 def getCurrentMonth():
     currentMonth = time.strftime("%Y-%m"); # eg: 2018-02 
     return currentMonth   
+
+
+# load and display participants
+participants = json.loads(getParticipants())
+
+for participant in participants:
+    print participant['name']
+    print participant['username']
