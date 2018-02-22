@@ -59,7 +59,8 @@ def getCurrentMonth():
     currentMonth = time.strftime("%Y-%m"); # eg: ./stats/2018-02.json 
     return currentMonth   
 
-# cron job for fetching and saving stats
+# cron job for fetching and saving stats, for now fires in HTTP
+@app.route('/cron')
 def cronTask():
     # load and save participants stats
     participants = getParticipants()
