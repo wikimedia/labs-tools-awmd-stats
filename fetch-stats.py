@@ -36,23 +36,24 @@ def getCurrentMonth():
     currentMonth = time.strftime("%Y-%m"); # eg: ./stats/2018-02.json 
     return currentMonth   
 
+# cron job for fetching and saving stats
+def cronTask():
+    # load and save participants stats
+    participants = getParticipants()
 
-# load and save participants stats
-participants = getParticipants()
+    monthlyStats = []
+    for participant in participants:
 
-monthlyStats = []
-for participant in participants:
+        username = participant['username']
+        patches = getUserStats(username)
 
-    username = participant['username']
-    patches = getUserStats(username)
+        participant_patches = []; 
 
-    participant_patches = []; 
+        for patch in patches:
+            participant_patches.append(patch)   
 
-    for patch in patches:
-        participant_patches.append(patch)   
-
-    monthlyStats.append([username, participant_patches])
+        monthlyStats.append([username, participant_patches])
 
 
-# convert from array to json
-createJsonFile(json.dumps(monthlyStats))
+    # convert from array to json
+    createJsonFile(json.dumps(monthlyStats))
