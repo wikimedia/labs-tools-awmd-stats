@@ -7,7 +7,7 @@ import time
 def getParticipants():
 # read from the previously save sessions.json
 
-    file = open('users.json', "r")
+    file = open('participants.json', "r")
     jsonText =  file.read()
     response = app.response_class(
         response=jsonText,
