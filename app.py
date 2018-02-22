@@ -81,8 +81,20 @@ def cronTask():
     # convert from array to json
     createJsonFile(json.dumps(monthlyStats))
 
-# read stats from DB (file)
-def getStatsFromDb():
+# get monthly stats from DB (file)
+def getStatsFromDb( month ):
+    
+    # read stats from DB (file)
+    file = open("stats/" + month + ".json", "r")
+    jsonText =  file.read()
+    jsonText =  file.read()
+    response = json.loads(jsonText)
+    
+    return response
+
+
+
+
 
 if __name__ == '__main__':
     app.run()
