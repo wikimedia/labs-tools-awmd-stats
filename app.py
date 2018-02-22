@@ -42,7 +42,11 @@ participants = getParticipants()
 monthlyStats = []
 for participant in participants:
 
-    details = getUserStats(participant['username'])
-    print details
+    username = participant['username']
+    patches = getUserStats(username)
+
+    for patch in patches:
+        
+    
     
 print json.dumps(monthlyStats) # convert from array to json
