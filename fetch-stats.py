@@ -37,7 +37,7 @@ def getCurrentMonth():
     return currentMonth   
 
 
-# load and display participants
+# load and save participants stats
 participants = getParticipants()
 
 monthlyStats = []
@@ -53,5 +53,6 @@ for participant in participants:
 
     monthlyStats.append([username, participant_patches])
 
-#print json.dumps(monthlyStats) # convert from array to json
+
+# convert from array to json
 createJsonFile(json.dumps(monthlyStats))
