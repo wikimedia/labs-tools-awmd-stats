@@ -30,6 +30,7 @@ def getUserStats(username):
 
 # create json file for monthly stats
 def createJsonFile(jsonArray):
+    filename = getCurrentMonth()
     with open(filename + '.json', 'w') as f:
         f.write(str(jsonArray))  # convert result to string ad save it
 
