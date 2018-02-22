@@ -3,10 +3,12 @@ import json
 import time
 
 # get user stats using Gerrit API
-def getUserStats(userId):
-
-    url = 
-    if userId!="":
+def getUserStats(username):
+    
+    if username!="":
+        # concatenate url
+        url = "https://gerrit.wikimedia.org/r/changes/?q=owner:" + username;
+        
         request = urllib2.Request(url)
         result = urllib2.urlopen(request)
         jsonArray = result.read()
@@ -14,7 +16,7 @@ def getUserStats(userId):
         return jsonArray
 
 # create json file for monthly stats
-def createJsonFile(jsonTree):
+def createJsonFile(jsonArray):
     filename = time.strftime("%Y-%m"); # eg: 2018-02
-    with open('sessions.json', 'w') as f:
-        f.write(str(jsonTree))  # convert result to string ad save it
+    with open(filename + '.json', 'w') as f:
+        f.write(str(jsonArray))  # convert result to string ad save it
