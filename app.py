@@ -23,7 +23,7 @@ def getUserStats(username):
         jsonArray = result.read()
 
         jsonArray = jsonArray.replace(")]}'", ""); # Fix this error in headers of json tree
-        return jsonArray;
+        return json.loads(jsonArray);
 
 # create json file for monthly stats
 def createJsonFile(jsonArray):
@@ -46,7 +46,9 @@ for participant in participants:
     username = participant['username']
     patches = getUserStats(username)
     
+    for patch in patches:
+        monthlyStats.append([username, patch])
     
 
 print json.dumps(monthlyStats) # convert from array to json
-createJsonFile(patches)
+#createJsonFile(patches)
