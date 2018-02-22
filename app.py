@@ -3,9 +3,15 @@ import json
 import time
 
 
+
+participants = json.loads(getParticipants())
+
+for participant in participants:
+    print participant['name']
+    print participant['username']
+
 # loop through participants
 def getParticipants():
-# read from the previously save sessions.json
 
     file = open('participants.json', "r")
     jsonText =  file.read()
