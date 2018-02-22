@@ -37,7 +37,7 @@ def getCurrentMonth():
 
 
 # load and display participants
-participants = json.loads(getParticipants())
+participants = getParticipants()
 
 for participant in participants:
     print participant['name']
