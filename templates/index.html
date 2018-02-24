@@ -1,28 +1,32 @@
-{% for participant in stats %}
-<div class="container">
-	<h2>{{ participant.name }}</h2>
-	<p>{{ participant.username }} / {{ participant.details.country }}</p>            
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Project</th>
-				<th>Created</th>
-				<th>Updated</th>
-				<th>Status</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for patch in participant.stats %}
+{% extends "base.html" %}
+{% block content %}
+
+	{% for participant in stats %}
+	<div class="container">
+		<h2>{{ participant.name }}</h2>
+		<p>{{ participant.username }} / {{ participant.details.country }}</p>            
+		<table class="table table-striped">
+			<thead>
 				<tr>
-					<td>{{patch.change_id}}</td>
-					<td>{{patch.project}}</td>
-					<td>{{patch.created}}</td>
-					<td>{{patch.updated}}</td>
-					<td>{{patch.status}}</td>
+					<th>ID</th>
+					<th>Project</th>
+					<th>Created</th>
+					<th>Updated</th>
+					<th>Status</th>
 				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-</div>
-{% endfor %}
+			</thead>
+			<tbody>
+				{% for patch in participant.stats %}
+					<tr>
+						<td>{{patch.change_id}}</td>
+						<td>{{patch.project}}</td>
+						<td>{{patch.created}}</td>
+						<td>{{patch.updated}}</td>
+						<td>{{patch.status}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	{% endfor %}
+{% endblock %}
