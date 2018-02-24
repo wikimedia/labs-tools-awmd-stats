@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-	{% for participant in stats.items() %}
+	{% for participant in stats %}
 	<div class="container">
-		<h2>{{ participant['details']['name'] }}</h2>
+		<h2>{{ participant.details.name }}</h2>
 		<p>{{ participant.details.username }} / {{ participant.details.country }}</p>            
 		<table class="table table-striped">
 			<thead>
@@ -19,7 +19,7 @@
 					<tr>
 						<td>{{patch.change_id}}</td>
 						<td>{{patch.project}}</td>
-						<td>{{patch.created}}</td>
+						<td>{{strftime('%H:%M%:%S',patch.created)}}</td>
 						<td>{{patch.updated}}</td>
 						<td>{{patch.status}}</td>
 					</tr>

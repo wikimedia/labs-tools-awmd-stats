@@ -1,7 +1,7 @@
 import urllib2
 import json
 import time
-import pprint
+from time import strftime
 from flask import Flask
 from flask import render_template
 
@@ -77,7 +77,7 @@ def cronTask():
         username = participant['username']
         patches = getUserStats(username)
 
-        participant_patches = []; 
+        participant_patches = [];
 
         for patch in patches:
             participant_patches.append(patch)   
