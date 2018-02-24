@@ -10,6 +10,9 @@ app = Flask(__name__) # instantiate Flask
 # route for homepage
 @app.route('/')
 def index():
+    # register datetime filter
+    environment.filters['datetimeformat'] = datetimeformat
+
     # stats = getStatsFromDb(getCurrentMonth()) # stats for the current month
     #return render_template('index.html', stats = stats)
     with open('stats/' + getCurrentMonth() + '.json', 'r') as f:
