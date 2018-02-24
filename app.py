@@ -13,17 +13,12 @@ app = Flask(__name__) # instantiate Flask
 def index():
     # stats = getStatsFromDb(getCurrentMonth()) # stats for the current month
     #return render_template('index.html', stats = stats)
-    #with open('stats/' + getCurrentMonth() + '.json', 'r') as f:
-    with open('stats/test.json', 'r') as f:
+    with open('stats/' + getCurrentMonth() + '.json', 'r') as f:
+    #with open('stats/test.json', 'r') as f:
         stats = json.load(f)
 
-    #return render_template('index.html', stats = stats)
+    return render_template('index.html', stats = stats)
     #return render_template('test.html', stats = stats)
-
-    for participant in stats:
-        print participant['details']
-
-    return '';
 
 # REST endpoint for fetching stats by month
 @app.route('/month/<month>')
