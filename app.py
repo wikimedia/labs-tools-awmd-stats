@@ -17,7 +17,7 @@ def index():
     with open('stats/' + getCurrentMonth() + '.json', 'r') as f:
         stats = json.load(f)
 
-    return render_template('index.html', stats = stats)
+    return render_template('index.html', stats = stats['participants'])
 
 # REST endpoint for fetching stats by month
 @app.route('/month/<month>')
@@ -70,7 +70,8 @@ def cronTask():
     # load and save participants stats
     participants = getParticipants()
 
-    monthlyStats = []
+    monthlyStats = {}
+    stats = {}
     for participant in participants:
 
         username = participant['username']
@@ -82,13 +83,14 @@ def cronTask():
             participant_patches.append(patch)   
 
         # create array with [{ username: [details: [userdetails], stats: [patches] ] }]
-        monthlyStats.append([username, [ ['details', participant], ['stats', participant_patches] ]])
+        monthlyStats[username] = {'details': participant, 'stats': participant_patches }
+    stats['participants'] = monthlyStats
 
     # convert from array to json
-    createJsonFile(json.dumps(monthlyStats))
+    createJsonFile(json.dumps(stats))
 
     response = app.response_class(
-        response=json.dumps(monthlyStats),
+        response=json.dumps(stats),
         status=200,
         mimetype='application/json'
     )
