@@ -1,7 +1,6 @@
 import urllib2
 import json
 import time
-from time import strftime
 from flask import Flask
 from flask import render_template
 
@@ -106,6 +105,9 @@ def getStatsFromDb( month ):
     
     return json
 
+# custom Flask filter for datetimeformating
+def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
+    return value.strftime(format)
 
 if __name__ == '__main__':
     app.run()
