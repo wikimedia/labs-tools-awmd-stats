@@ -20,9 +20,8 @@ def index():
     #return render_template('index.html', stats = stats)
     #return render_template('test.html', stats = stats)
 
-    for item in stats:
-            print item.email
-    
+    for participant in stats:
+        print participant['details']
 
     return '';
 
@@ -77,7 +76,7 @@ def cronTask():
     # load and save participants stats
     participants = getParticipants()
 
-    monthlyStats = {}
+    monthlyStats = []
     for participant in participants:
 
         username = participant['username']
@@ -89,10 +88,10 @@ def cronTask():
             participant_patches.append(patch)   
 
         # create array with [{ username: [details: [userdetails], stats: [patches] ] }]
-        monthlyStats[username] = {'details': participant, 'stats': participant_patches }
+        monthlyStats.append({'details': participant, 'stats': participant_patches })
 
     # convert from array to json
-    output = "[" + json.dumps(monthlyStats) + "]" # converting json array object
+    output = json.dumps(monthlyStats) # converting list to json
     createJsonFile(output)
 
     response = app.response_class(
