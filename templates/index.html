@@ -3,8 +3,8 @@
 
 	{% for participant in stats %}
 	<div class="container">
-		<h2>{{ participant.name }}</h2>
-		<p>{{ participant.username }} / {{ participant.details.country }}</p>            
+		<h2>{{ participant['details']['name'] }}</h2>
+		<p>{{ participant['details']['username'] }} / {{ ['details']['country'] }}</p>            
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -16,13 +16,13 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for patch in participant.stats %}
+				{% for patch in participant['stats'] %}
 					<tr>
-						<td>{{patch.change_id}}</td>
-						<td>{{patch.project}}</td>
-						<td>{{patch.created}}</td>
-						<td>{{patch.updated}}</td>
-						<td>{{patch.status}}</td>
+						<td>{{patch['change_id']}}</td>
+						<td>{{patch['project']}}</td>
+						<td>{{patch['created']</td>
+						<td>{{patch['updated']</td>
+						<td>{{patch['status']}}</td>
 					</tr>
 				{% endfor %}
 			</tbody>
