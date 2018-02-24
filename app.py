@@ -8,16 +8,23 @@ from flask import render_template
 
 app = Flask(__name__) # instantiate Flask
 
-
 # route for homepage
 @app.route('/')
 def index():
-    stats = getStatsFromDb(getCurrentMonth()) # stats for the current month
+    # stats = getStatsFromDb(getCurrentMonth()) # stats for the current month
     #return render_template('index.html', stats = stats)
-    with open('stats/' + getCurrentMonth() + '.json', 'r') as f:
+    #with open('stats/' + getCurrentMonth() + '.json', 'r') as f:
+    with open('stats/test.json', 'r') as f:
         stats = json.load(f)
 
-    return render_template('index.html', stats = stats['participants'])
+    #return render_template('index.html', stats = stats)
+    #return render_template('test.html', stats = stats)
+
+    for item in stats:
+            print item.email
+    
+
+    return '';
 
 # REST endpoint for fetching stats by month
 @app.route('/month/<month>')
@@ -71,7 +78,6 @@ def cronTask():
     participants = getParticipants()
 
     monthlyStats = {}
-    stats = {}
     for participant in participants:
 
         username = participant['username']
@@ -84,13 +90,13 @@ def cronTask():
 
         # create array with [{ username: [details: [userdetails], stats: [patches] ] }]
         monthlyStats[username] = {'details': participant, 'stats': participant_patches }
-    stats['participants'] = monthlyStats
 
     # convert from array to json
-    createJsonFile(json.dumps(stats))
+    output = "[" + json.dumps(monthlyStats) + "]" # converting json array object
+    createJsonFile(output)
 
     response = app.response_class(
-        response=json.dumps(stats),
+        response=output,
         status=200,
         mimetype='application/json'
     )
