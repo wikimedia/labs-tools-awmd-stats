@@ -66,7 +66,7 @@ def createJsonFile(jsonArray):
 # get current month
 def getCurrentMonth():
     currentMonth = time.strftime("%Y-%m"); # eg 2018-02 
-    return currentMonth   
+    return currentMonth 
 
 # cron job for fetching and saving stats, for now fires in HTTP
 @app.route('/cron')
