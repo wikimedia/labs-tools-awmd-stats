@@ -85,7 +85,7 @@ def cronTask():
         for patch in patches:
             participant_patches.append(patch)   
 
-        # create array with [{ username: [details: [userdetails], stats: [patches] ] }]
+        # append a dictionary to an array
         monthlyStats.append({'details': participant, 'stats': participant_patches })
 
     # convert from array to json
