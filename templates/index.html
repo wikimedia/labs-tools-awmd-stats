@@ -17,9 +17,9 @@
 			<tbody>
 				{% for patch in participant.stats %}
 					<tr>
-						<td>{{patch.change_id}}</td>
+						<td>{{loop.index}}</td>
 						<td>{{patch.project}}</td>
-						<td>{{strftime('%H:%M%:%S',patch.created)}}</td>
+						<td>{{patch.created}}</td>
 						<td>{{patch.updated}}</td>
 						<td>{{patch.status}}</td>
 					</tr>

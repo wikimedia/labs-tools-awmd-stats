@@ -3,6 +3,8 @@ import json
 import time
 from flask import Flask
 from flask import render_template
+from datetime import datetime
+
 
 
 app = Flask(__name__) # instantiate Flask
@@ -11,7 +13,6 @@ app = Flask(__name__) # instantiate Flask
 @app.route('/')
 def index():
     # register datetime filter
-    environment.filters['datetimeformat'] = datetimeformat
 
     # stats = getStatsFromDb(getCurrentMonth()) # stats for the current month
     #return render_template('index.html', stats = stats)
@@ -96,7 +97,7 @@ def cronTask():
         status=200,
         mimetype='application/json'
     )
-    return response
+    return response 
 
 # get monthly stats from DB (file)
 def getStatsFromDb( month ):
@@ -109,8 +110,10 @@ def getStatsFromDb( month ):
     return json
 
 # custom Flask filter for datetimeformating
-def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
-    return value.strftime(format)
+@app.template_filter()
+def datetimeformat(value, format):
+
+    return datetime.strptime(value, format)
 
 if __name__ == '__main__':
     app.run()
