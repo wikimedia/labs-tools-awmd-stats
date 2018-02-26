@@ -104,11 +104,12 @@ def cronTask():
 
     return response 
 
-# get monthly stats from DB (file)
+# get monthly stats from db
 def getStatsFromDb( month ):
-    
-    db.search(where('field') == 'value')    
-    return json
+    Patch = Query()
+    db = getDb()
+    stats = db.contains(Patch.created = month)    
+    return stats
 
 # custom Flask filter for datetimeformating
 @app.template_filter()
