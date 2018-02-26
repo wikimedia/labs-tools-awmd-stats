@@ -50,16 +50,9 @@ def getUserStats(username):
         
         r = requests.get(url)
 
-        jsonArray = r.content
-
-        jsonArray = jsonArray.replace(")]}'", ""); # Fix this error in headers of json tree
+        jsonArray = r.text
+        jsonArray = jsonArray.replace(")]}'", "", 1); # Fix this error in headers of json tree
         return json.loads(jsonArray);
-
-# create json file for monthly stats
-def createJsonFile(jsonArray):
-    filename = getCurrentMonth()
-    with open('stats/' + filename + '.json', 'w') as f:
-        f.write(str(jsonArray))  # convert result to string ad save it
 
 # get current month
 def getCurrentMonth(format = "%Y-%m"):
