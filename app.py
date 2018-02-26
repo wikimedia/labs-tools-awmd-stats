@@ -87,8 +87,14 @@ def cronTask():
         # loop through participant patches
         for patch in patches:
 
+            # prepare patch dictionary
+            patch['username'] = username;
+            patch['name'] = participant['name'];
+            patch['country'] = participant['country'];
+
             # persist to db
             db.insert({'type': 'apple', 'count': 7})
+            {'details': participant, 'stats': participant_patches }
 
     # output the db
     output = db.all();
