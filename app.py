@@ -4,7 +4,7 @@ import time
 from flask import Flask
 from flask import render_template
 from datetime import datetime
-from tinydb import TinyDb, Query
+from tinydb import TinyDB, Query
 
 
 
