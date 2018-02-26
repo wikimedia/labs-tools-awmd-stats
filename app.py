@@ -16,7 +16,7 @@ def index():
 
     stats = getStatsFromDb(getCurrentMonth())
 
-    return render_template('index.html', stats = stats)
+    return render_template('patch.html', stats = stats)
 
 # REST endpoint for fetching stats by month
 @app.route('/month/<month>')
