@@ -15,8 +15,15 @@ app = Flask(__name__) # instantiate Flask
 def index():
 
     stats = getStatsFromDb(getCurrentMonth())
+    submitters = getSubmitters(stats)
+
+    # test: loop through submitters and echo
+    for k, submitter in submitters:
+        print k + " has " + len(submitter) + " items"
 
     return render_template('patch.html', stats = stats, month = getCurrentMonth())
+
+
 
 # REST endpoint for fetching stats by month
 @app.route('/month/<month>')
@@ -126,7 +133,7 @@ def getSubmitters(patches):
     for patch in patches:
         submitters[patch['username']] = patch 
     
-    return stats
+    return submitters
 
 # filter month
 def filterMonth(string, month):
