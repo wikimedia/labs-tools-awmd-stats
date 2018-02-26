@@ -119,7 +119,14 @@ def getDb():
     return db
 
 # get the list of patch submitters
-def getSubmitters():
+def getSubmitters(patches):
+    submitters = {}
+    
+    # build a new dictionary
+    for patch in patches:
+        submitters[patch['username']] = patch 
+    
+    return stats
 
 # filter month
 def filterMonth(string, month):
