@@ -92,9 +92,8 @@ def cronTask():
             patch['name'] = participant['name'];
             patch['country'] = participant['country'];
 
-            # persist to db
-            db.insert({'type': 'apple', 'count': 7})
-            {'details': participant, 'stats': participant_patches }
+            # persist patch to db
+            db.insert(patch)
 
     # output the db
     output = db.all();
