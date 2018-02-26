@@ -13,8 +13,8 @@ app = Flask(__name__) # instantiate Flask
 # route for homepage
 @app.route('/')
 def index():
-    
-    stats = json.load(f)
+
+    stats = getStatsFromDb(getCurrentMonth())
 
     return render_template('index.html', stats = stats)
 

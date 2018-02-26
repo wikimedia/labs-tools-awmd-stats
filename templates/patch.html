@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+	<div class="container">
+		           
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Project</th>
+					<th>Created</th>
+					<th>Updated</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for patch in stats %}
+					<tr>
+						<td>{{loop.index}}</td>
+						<td>{{patch.project}}</td>
+						<td>{{patch.created}}</td>
+						<td>{{patch.updated}}</td>
+						<td>{{patch.status}}</td>
+						<td>{{patch.username}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	{% endfor %}
+{% endblock %}
