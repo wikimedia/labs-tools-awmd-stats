@@ -1,4 +1,3 @@
-import pprint
 import requests
 import json
 import time
@@ -118,7 +117,6 @@ def getDb():
 
 # get the list of patch submitters
 def getSubmitters(patches):
-    
     submitters = []
     # grouping by, the pythonic way
     for key, group in itertools.groupby(patches, key=lambda x:x['username']):
