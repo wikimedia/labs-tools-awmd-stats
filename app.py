@@ -102,7 +102,8 @@ def cronTask():
 def getStatsFromDb( month ):
     Patch = Query()
     db = getDb()
-    stats = db.contains(Patch.created == month)    
+
+    stats = db.search(Patch.created.test(compareMonth, month))
     return stats
 
 # custom Flask filter for datetimeformating
@@ -116,6 +117,10 @@ def getDb():
     # setting the tinydb location
     db = TinyDB('db/db.json')
     return db
+
+# filter month
+def filterMonth(month, string):
+    return if month in string: 
 
 if __name__ == '__main__':
     app.run()
