@@ -78,22 +78,20 @@ def cronTask():
     # setting the tinydb location
     db = TinyDB('db/db.json')
 
+    # loop through participants
     for participant in participants:
 
         username = participant['username']
         patches = getUserStats(username)
 
-        participant_patches = [];
-
+        # loop through participant patches
         for patch in patches:
-            participant_patches.append(patch)   
 
-        # append a dictionary to an array
-        monthlyStats.append({'details': participant, 'stats': participant_patches })
+            # persist to db
+            db.insert({'type': 'apple', 'count': 7})
 
-    # convert from array to json
-    output = json.dumps(monthlyStats) # converting list to json
-    createJsonFile(output)
+    # output the db
+    output = db.all();
 
     response = app.response_class(
         response=output,
