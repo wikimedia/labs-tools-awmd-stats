@@ -72,7 +72,7 @@ def getCurrentMonth():
 # cron job for fetching and saving stats, for now fires in HTTP
 @app.route('/cron')
 def cronTask():
-    # load and save participants stats
+    # load and save participants list
     participants = getParticipants()
 
     monthlyStats = []
