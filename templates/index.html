@@ -11,10 +11,10 @@
 			        <h4 class="card-title">{{submitter[0]['name']}}</h4>
 					<p class="card-text">
 						{{submitter[0]['username']}} / submitted {{submitter|length}} patches 
-						<br><br>
-													
+						<br>							
 					</p>
-					<a href="/submitter/{{submitter.username}}" class="btn btn-primary float-left" title="Full details for {{submitter.name}}">
+					<p class="card-text"><small class="text-muted">{{submitter[0]['country']}}</small></p>
+					<a href="/submitter/{{submitter[0]['username']}}" class="btn btn-primary float-left" title="Full details for {{submitter[0]['name']}}">
 					View patches</a>
 			      </div>
 			    </div>
