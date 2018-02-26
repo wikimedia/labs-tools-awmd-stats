@@ -1,11 +1,12 @@
+import pprint
 import requests
 import json
 import time
+import itertools
 from flask import Flask
 from flask import render_template
 from datetime import datetime
 from tinydb import TinyDB, Query
-import pandas as pd
 
 
 app = Flask(__name__) # instantiate Flask
@@ -17,15 +18,8 @@ def index():
     submitters = getSubmitters(stats)
     month = getCurrentMonth("%B, %Y") # make month format human-readable 
 
-    #return render_template('index.html', stats = stats, 
-        #month = month, submitters = submitters)
-    
-    for submitter in submitters:
-        print(submitter)
-
-    return ''
-
-
+    return render_template('index.html', stats = stats, 
+        month = month, submitters = submitters)
 
 
 # REST endpoint for fetching stats by month
@@ -69,6 +63,8 @@ def getCurrentMonth(format = "%Y-%m"):
 # cron job for fetching and saving stats, for now fires in HTTP
 @app.route('/cron')
 def cronTask():
+    db = getDb()
+
     # load and save participants list
     participants = getParticipants()
 
@@ -87,7 +83,6 @@ def cronTask():
             patch['country'] = participant['country'];
 
             # persist patch to db
-            db = getDb()
             db.insert(patch)
 
     # output the db as json
@@ -123,11 +118,12 @@ def getDb():
 
 # get the list of patch submitters
 def getSubmitters(patches):
-
-    # grouping with pandas
-    df = pd.DataFrame(patches) 
-    submitters = df.groupby('username')
     
+    submitters = []
+    # grouping by, the pythonic way
+    for key, group in itertools.groupby(patches, key=lambda x:x['username']):
+        submitters.append(list(group))
+
     return submitters
 
 # filter month

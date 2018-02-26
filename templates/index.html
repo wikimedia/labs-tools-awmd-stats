@@ -4,13 +4,13 @@
 		<h2>Stats for {{month}}</h2>
        	<p>{{stats|length}} patches by {{submitters|length}} submitters</p>
        	<div class="row">
-			{% for submitter in submitters.items() %}
+			{% for submitter in submitters %}
 			<div class="col-sm-4">
 			    <div class="card">
 			      <div class="card-body">
-			        <h4 class="card-title">{{submitter[0]}}</h4>
+			        <h4 class="card-title">{{submitter[0]['name']}}</h4>
 					<p class="card-text">
-						{{submitter['username']}} / submitted {{submitter|length}} patches 
+						{{submitter[0]['username']}} / submitted {{submitter|length}} patches 
 						<br><br>
 													
 					</p>
