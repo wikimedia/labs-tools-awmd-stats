@@ -36,6 +36,13 @@ def month():
 # REST endpoint for list of submitter patches
 @app.route('/submitter/<username>')
 def submitter():
+    stats = getStatsFromDb(getCurrentMonth())
+    submitters = getSubmitters(stats)
+    month = getCurrentMonth("%B, %Y") # make month format human-readable 
+
+    return render_template('submitter.html', stats = stats, 
+        month = month, submitters = submitters)
+
 # loop through participants
 def getParticipants():
 
