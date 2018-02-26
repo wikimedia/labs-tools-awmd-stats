@@ -102,7 +102,7 @@ def cronTask():
 def getStatsFromDb( month ):
     Patch = Query()
     db = getDb()
-    stats = db.contains(Patch.created = month)    
+    stats = db.contains(Patch.created == month)    
     return stats
 
 # custom Flask filter for datetimeformating
