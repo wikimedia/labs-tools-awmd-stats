@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+	<div class="container">
+       <h2>Stats for {{month}}</h2>
+       <h4>{{stats|length}} patches by {{submitters|length}} submitters</h4>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Project</th>
+					<th>Created</th>
+					<th>Updated</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for patch in stats %}
+					<tr>
+						<td>{{loop.index}}</td>
+						<td>{{patch.project}}</td>
+						<td>{{patch.created|datetimeformat}}</td>
+						<td>{{patch.updated|datetimeformat}}</td>
+						<td>{{patch.status}}</td>
+						<td>{{patch.username}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
