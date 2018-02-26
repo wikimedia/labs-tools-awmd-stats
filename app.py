@@ -110,9 +110,6 @@ def cronTask():
 def getStatsFromDb( month ):
     
     # read stats from DB (file)
-    file = open("stats/" + month + ".json", "r")
-    jsonText =  file.read()
-    stats = json.loads(jsonText)
     
     return json
 
