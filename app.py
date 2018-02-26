@@ -1,4 +1,4 @@
-import urllib2
+from urllib.request import urlopen, Request
 import json
 import time
 from flask import Flask
@@ -47,8 +47,8 @@ def getUserStats(username):
         # concatenate url
         url = "https://gerrit.wikimedia.org/r/changes/?q=owner:" + username;
         
-        request = urllib2.Request(url)
-        result = urllib2.urlopen(request)
+        request = Request(url)
+        result = urlopen(request)
         jsonArray = result.read()
 
         jsonArray = jsonArray.replace(")]}'", ""); # Fix this error in headers of json tree
