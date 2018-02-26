@@ -5,6 +5,7 @@ from flask import Flask
 from flask import render_template
 from datetime import datetime
 from tinydb import TinyDB, Query
+import pandas as pd
 
 
 app = Flask(__name__) # instantiate Flask
@@ -16,8 +17,14 @@ def index():
     submitters = getSubmitters(stats)
     month = getCurrentMonth("%B, %Y") # make month format human-readable 
 
-    return render_template('index.html', stats = stats, 
-        month = month, submitters = submitters)
+    #return render_template('index.html', stats = stats, 
+        #month = month, submitters = submitters)
+    
+    for submitter in submitters:
+        print(submitter)
+
+    return ''
+
 
 
 
@@ -116,11 +123,10 @@ def getDb():
 
 # get the list of patch submitters
 def getSubmitters(patches):
-    submitters = {}
-    
-    # build a new dictionary
-    for patch in patches:
-        submitters[patch['username']] = patch
+
+    # grouping with pandas
+    df = pd.DataFrame(patches) 
+    submitters = df.groupby('username')
     
     return submitters
 
