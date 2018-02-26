@@ -1,10 +1,12 @@
 from urllib.request import urlopen, Request
 import json
 import time
+import certifi
 from flask import Flask
 from flask import render_template
 from datetime import datetime
 from tinydb import TinyDB, Query
+
 
 app = Flask(__name__) # instantiate Flask
 
@@ -48,7 +50,8 @@ def getUserStats(username):
         url = "https://gerrit.wikimedia.org/r/changes/?q=owner:" + username;
         
         request = Request(url)
-        result = urlopen(request)
+        result = urlopen(request, cafile=certifi.where())
+        
         jsonArray = result.read()
 
         jsonArray = jsonArray.replace(")]}'", ""); # Fix this error in headers of json tree
