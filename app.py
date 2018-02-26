@@ -95,14 +95,15 @@ def cronTask():
             # persist patch to db
             db.insert(patch)
 
-    # output the db
+    # output the db as json
     output = db.all();
 
     response = app.response_class(
-        response=output,
+        response=json.dumps(output),
         status=200,
         mimetype='application/json'
     )
+
     return response 
 
 # get monthly stats from DB (file)
