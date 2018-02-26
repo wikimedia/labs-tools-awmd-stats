@@ -33,6 +33,9 @@ def month():
     )
     return response
 
+# REST endpoint for list of submitter patches
+@app.route('/submitter/<username>')
+def submitter():
 # loop through participants
 def getParticipants():
 
