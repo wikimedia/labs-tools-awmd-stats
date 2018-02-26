@@ -1,7 +1,6 @@
 import urllib2
 import json
 import time
-import collections
 from flask import Flask
 from flask import render_template
 from datetime import datetime
@@ -16,12 +15,10 @@ def index():
 
     stats = getStatsFromDb(getCurrentMonth())
     submitters = getSubmitters(stats)
+    month = getCurrentMonth()
 
-    # test: loop through submitters and echo
-    for k, submitter in submitters:
-        print k + " has " + len(submitter) + " items"
-
-    return render_template('patch.html', stats = stats, month = getCurrentMonth())
+    return render_template('patch.html', stats = stats, 
+        month = monthly, submitters = submitters)
 
 
 
@@ -131,7 +128,7 @@ def getSubmitters(patches):
     
     # build a new dictionary
     for patch in patches:
-        submitters[patch['username']] = patch 
+        submitters[patch['username']] = patch
     
     return submitters
 
