@@ -1,11 +1,11 @@
 import urllib2
 import json
 import time
+import collections
 from flask import Flask
 from flask import render_template
 from datetime import datetime
 from tinydb import TinyDB, Query
-
 
 
 app = Flask(__name__) # instantiate Flask
@@ -16,7 +16,7 @@ def index():
 
     stats = getStatsFromDb(getCurrentMonth())
 
-    return render_template('patch.html', stats = stats)
+    return render_template('patch.html', stats = stats, month = getCurrentMonth())
 
 # REST endpoint for fetching stats by month
 @app.route('/month/<month>')
@@ -117,6 +117,9 @@ def getDb():
     # setting the tinydb location
     db = TinyDB('db/db.json')
     return db
+
+# get the list of patch submitters
+def getSubmitters():
 
 # filter month
 def filterMonth(string, month):

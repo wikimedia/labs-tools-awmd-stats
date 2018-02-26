@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 	<div class="container">
-       <h2></h2>
-		<p>{{stats|length}} patches / by x participants </p>
+       <h2>Stats for {{month}}</h2>
+       <h3>{{stats|length}} patches / by {{stats.username|length}} participants</h3>
 		<table class="table table-striped">
 			<thead>
 				<tr>
