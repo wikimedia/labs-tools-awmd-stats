@@ -75,9 +75,6 @@ def cronTask():
     # load and save participants list
     participants = getParticipants()
 
-    # setting the tinydb location
-    db = TinyDB('db/db.json')
-
     # loop through participants
     for participant in participants:
 
@@ -93,6 +90,7 @@ def cronTask():
             patch['country'] = participant['country'];
 
             # persist patch to db
+            db = getDb()
             db.insert(patch)
 
     # output the db as json
@@ -109,8 +107,7 @@ def cronTask():
 # get monthly stats from DB (file)
 def getStatsFromDb( month ):
     
-    # read stats from DB (file)
-    
+    db.search(where('field') == 'value')    
     return json
 
 # custom Flask filter for datetimeformating
@@ -118,6 +115,12 @@ def getStatsFromDb( month ):
 def datetimeformat(value, format):
 
     return datetime.strptime(value, format)
+
+# db object to be used indepently
+def getDb():
+    # setting the tinydb location
+    db = TinyDB('db/db.json')
+    return db
 
 if __name__ == '__main__':
     app.run()
