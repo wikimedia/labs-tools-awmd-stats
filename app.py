@@ -103,7 +103,7 @@ def getStatsFromDb( month ):
     Patch = Query()
     db = getDb()
 
-    stats = db.search(Patch.created.test(compareMonth, month))
+    stats = db.search(Patch.created.test(filterMonth, month))
     return stats
 
 # custom Flask filter for datetimeformating
@@ -119,8 +119,11 @@ def getDb():
     return db
 
 # filter month
-def filterMonth(month, string):
-    return if month in string: 
+def filterMonth(string, month):
+    if month in string: 
+        return True
+    else:
+        return False 
 
 if __name__ == '__main__':
     app.run()
