@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 	<div class="container">
-       <h2>Stats for {{month}}</h2>
-       <h4>{{stats|length}} patches by {{submitters|length}} submitters</h4>
+       <h2>Stats for {{submitter['name']}}</h2>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -21,7 +20,6 @@
 						<td>{{patch.created|datetimeformat}}</td>
 						<td>{{patch.updated|datetimeformat}}</td>
 						<td>{{patch.status}}</td>
-						<td>{{patch.username}}</td>
 					</tr>
 				{% endfor %}
 			</tbody>
