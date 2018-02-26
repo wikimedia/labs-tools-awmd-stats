@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-	{% for participant in stats %}
 	<div class="container">
-		<h2>{{ participant.details.name }}</h2>
-		<p>{{ participant.details.username }} / {{ participant.details.country }}</p>            
+       <h2>Stats for {{month}}</h2>
+       <h4>{{stats|length}} patches by {{submitters|length}} submitters</h4>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -15,17 +14,17 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for patch in participant.stats %}
+				{% for patch in stats %}
 					<tr>
 						<td>{{loop.index}}</td>
 						<td>{{patch.project}}</td>
-						<td>{{patch.created}}</td>
-						<td>{{patch.updated}}</td>
+						<td>{{patch.created|datetimeformat}}</td>
+						<td>{{patch.updated|datetimeformat}}</td>
 						<td>{{patch.status}}</td>
+						<td>{{patch.username}}</td>
 					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
 	</div>
-	{% endfor %}
 {% endblock %}

@@ -6,19 +6,17 @@ from flask import render_template
 from datetime import datetime
 from tinydb import TinyDB, Query
 
-
 app = Flask(__name__) # instantiate Flask
 
 # route for homepage
 @app.route('/')
 def index():
-
     stats = getStatsFromDb(getCurrentMonth())
     submitters = getSubmitters(stats)
-    month = getCurrentMonth()
+    month = getCurrentMonth("%B, %Y") # make month format human-readable 
 
-    return render_template('patch.html', stats = stats, 
-        month = monthly, submitters = submitters)
+    return render_template('index.html', stats = stats, 
+        month = month, submitters = submitters)
 
 
 
@@ -63,8 +61,8 @@ def createJsonFile(jsonArray):
         f.write(str(jsonArray))  # convert result to string ad save it
 
 # get current month
-def getCurrentMonth():
-    currentMonth = time.strftime("%Y-%m"); # eg 2018-02 
+def getCurrentMonth(format = "%Y-%m"):
+    currentMonth = time.strftime(format); # eg 2018-02 
     return currentMonth 
 
 # cron job for fetching and saving stats, for now fires in HTTP
@@ -112,9 +110,9 @@ def getStatsFromDb( month ):
 
 # custom Flask filter for datetimeformating
 @app.template_filter()
-def datetimeformat(value, format):
-
-    return datetime.strptime(value, format)
+def datetimeformat(value, inFormat="%Y-%m-%d %H:%M:%S.000000000", outFormat = '%Y-%m-%d, %H:%M'):
+    formattedString = datetime.strptime(value, inFormat)
+    return formattedString.strftime(outFormat) # simple formatting
 
 # db object to be used indepently
 def getDb():
