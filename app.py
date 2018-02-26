@@ -1,7 +1,6 @@
-from urllib.request import urlopen, Request
+import requests
 import json
 import time
-import certifi
 from flask import Flask
 from flask import render_template
 from datetime import datetime
@@ -49,10 +48,9 @@ def getUserStats(username):
         # concatenate url
         url = "https://gerrit.wikimedia.org/r/changes/?q=owner:" + username;
         
-        request = Request(url)
-        result = urlopen(request, cafile=certifi.where())
-        
-        jsonArray = result.read()
+        r = requests.get(url)
+
+        jsonArray = r.content
 
         jsonArray = jsonArray.replace(")]}'", ""); # Fix this error in headers of json tree
         return json.loads(jsonArray);
