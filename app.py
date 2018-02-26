@@ -75,7 +75,9 @@ def cronTask():
     # load and save participants list
     participants = getParticipants()
 
-    monthlyStats = []
+    # setting the tinydb location
+    db = TinyDB('db/db.json')
+
     for participant in participants:
 
         username = participant['username']
