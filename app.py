@@ -90,8 +90,10 @@ def cronTask():
 			patch['name'] = participant['name'];
 			patch['country'] = participant['country'];
 
-			# persist patch to db
-			db.insert(patch)
+			# make sure patch wasn't previously saved
+			if(!patchExists(patch)):
+				# persist patch to db
+				db.insert(patch)
 
 	# output the db as json
 	output = db.all();
@@ -139,6 +141,8 @@ def filterMonth(string, month):
 		return True
 	else:
 		return False 
-
+# check wether patch exists in DB
+def patchExists(patch):
+	
 if __name__ == '__main__':
 	app.run()
