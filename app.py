@@ -91,7 +91,7 @@ def cronTask():
 			patch['country'] = participant['country'];
 
 			# make sure patch wasn't previously saved
-			if(!patchExists(patch)):
+			if not patchExists(patch):
 				# persist patch to db
 				db.insert(patch)
 
@@ -143,12 +143,13 @@ def filterMonth(string, month):
 		return False 
 # check wether patch exists in DB
 def patchExists(patch):
+	db = getDb()
 	Patch = Query()
-	rows = db.search((Patch.create == patch['created']) 
+	rows = db.search((Patch.created == patch['created']) 
 		& (Patch.username == patch['username']))
 
 	# if the patch was previously saved
-	if (0<count(rows)):
+	if (0<len(rows)):
 		return True
 	else:
 		return False
