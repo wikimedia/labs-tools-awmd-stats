@@ -11,8 +11,6 @@ Africa Wikimedia Developer Tool for Gathering Monthly statistics of participants
 * ```pip install Flask```
 * ```pip install tinydb```
 * ```pip install requests```
-* ```pip install pandas```
-
 
 # Contributors
  * [Derick Alangi](https://github.com/ch3nkula/)
