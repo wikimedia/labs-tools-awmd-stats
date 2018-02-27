@@ -1,2 +1,7 @@
-$('#sandbox-container input').datepicker({
+
+
+jQuery(document).ready( function($){   
+	 $('#datepicker input').datepicker({
+	});
+	    
 });

@@ -96,7 +96,7 @@ def cronTask():
 				db.insert(patch)
  
 	# output the db as json
-	output = db.all(); 
+	output = db.all();
    
 	response = app.response_class(
 		response=json.dumps(output),
