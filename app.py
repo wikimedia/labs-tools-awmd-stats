@@ -143,6 +143,16 @@ def filterMonth(string, month):
 		return False 
 # check wether patch exists in DB
 def patchExists(patch):
-	
+	Patch = Query()
+	rows = db.search((Patch.create == patch['created']) 
+		& (Patch.username == patch['username']))
+
+	# if the patch was previously saved
+	if (0<count(rows)):
+		return True
+	else:
+		return False
+
+
 if __name__ == '__main__':
 	app.run()
