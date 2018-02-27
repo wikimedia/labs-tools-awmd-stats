@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 	<div class="container">
-       <h2>Stats for {{submitter['name']}}</h2>
+       <h2>Stats for {{patches[0]['name']}}</h2>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -13,7 +13,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for patch in stats %}
+				{% for patch in patches %}
 					<tr>
 						<td>{{loop.index}}</td>
 						<td>{{patch.project}}</td>
