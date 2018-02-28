@@ -51,7 +51,7 @@ def getParticipants():
 	return response
 
 # get user stats using Gerrit API
-def getUserStats(username):
+def getUserStats(username, time):
 	
 	if username!="":
 		# concatenate url
