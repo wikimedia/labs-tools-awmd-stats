@@ -95,7 +95,7 @@ def month(month=None):
 				# persist patch to db
 				db.insert(patch)
  
-	# output the db as json
+	# output the monthly stats as json
 	output = getStatsFromDb(month);
    
 	response = app.response_class(
