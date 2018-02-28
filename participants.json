@@ -13,10 +13,15 @@
 		"name": "African Hope",
 		"username": "samuelguebo",
 		"country": "Côte d'Ivoire"
-	}
+	},
 	{
 		"name": "Dolea Anick",
 		"username": "zenacode",
+		"country": "Côte d'Ivoire"
+	},
+	{
+		"name": "Soro",
+		"username": "Alhassane",
 		"country": "Côte d'Ivoire"
 	}
 ]
