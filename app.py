@@ -52,23 +52,17 @@ def getParticipants():
 	response = json.loads(jsonText)
 	return response
 
-# get user stats using Gerrit API
-def getUserStats(username, month):
+# get submitter using Gerrit API
+def getSubmitterStats(username, month):
 	
 	date = getCurrentMonth() 
 	previous_month = decrementMonth(date)
 	next_month = incrementMonth(date)
 
-	print("date: " + date)
-	print("after: " + previous_month)
-	print("before: " + next_month)
-
 	if username!="":
 		# concatenate url
 		url = "https://gerrit.wikimedia.org/r/changes/?q=owner:" + username + "+after:" + previous_month + "+before:" + next_month;
 		
-		print("url: " + url)
-
 		r = requests.get(url)
 
 		jsonArray = r.text
@@ -92,7 +86,7 @@ def cronTask():
 	for participant in participants:
 
 		username = participant['username']
-		patches = getUserStats(username)
+		patches = getSubmitterStats(username)
 
 		# loop through participant patches
 		for patch in patches:
@@ -189,7 +183,7 @@ def decrementMonth(month, x=1):
 # test endpoint
 @app.route('/test')
 def test():
-	pprint.pprint(getUserStats('D3r1ck01', '2018-01'))
+	pprint.pprint(getSubmitterStats('D3r1ck01', '2018-01'))
 	return ''
 
 if __name__ == '__main__':
