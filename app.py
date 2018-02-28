@@ -59,9 +59,7 @@ def getUserStats(username, month):
 
 	if username!="":
 		# concatenate url
-		url = "https://gerrit.wikimedia.org/r/changes/?q=owner:" + username + 
-		"+after:" + after +
-		"+before:" + before;
+		url = "https://gerrit.wikimedia.org/r/changes/?q=owner:" + username + "+after:" + after +"+before:" + before;
 		
 		r = requests.get(url)
 
@@ -161,10 +159,23 @@ def patchExists(patch):
 		return False
 #convert month to date format
 def monthToDate(month):
-	month +"-01" # use the 1st day of month
 
-# increase date by x month
-def increaseMonth(month, x=1):
+	month = datetime.strptime(month, ("%Y-%m"))
+	date = month.strftime("%Y-%m-%d"); # eg 2018-02-01
 	
+	return date 
+	
+# increment date by x month
+def incrementMonth(month, x=1):
+	date =  
+	next_month = (datetime.date.today().month + 1) % 12 or 12
+
+# test route
+@app.route('/test')
+def test():
+	print(monthToDate('2018-03'))
+	return ''
+
+
 if __name__ == '__main__':
 	app.run()
