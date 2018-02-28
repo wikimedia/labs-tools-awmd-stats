@@ -22,6 +22,16 @@ def index():
 	return render_template('index.html', stats = stats, 
 		month = month, submitters = submitters)
 
+# REST endpoint for fetching stats by month
+@app.route('/month/')
+@app.route('/month/<month>')
+def month(month=None):
+	if month == None:
+		month = getCurrentMonth()
+	month = getCurrentMonth("%B, %Y") # make month format human-readable 
+
+	return render_template('month.html', month = month)
+
 # REST endpoint for list of submitter patches
 @app.route('/submitter/<username>')
 def submitter(username):
@@ -52,7 +62,6 @@ def getSubmitterStats(username, month=None):
 	if username!="":
 		# concatenate url
 		url = "https://gerrit.wikimedia.org/r/changes/?q=owner:" + username + "+after:" + previous_month + "+before:" + next_month;
-		
 		r = requests.get(url)
 
 		jsonArray = r.text
@@ -65,9 +74,9 @@ def getCurrentMonth(format = "%Y-%m"):
 	return currentMonth 
 
 # REST endpoint for fetching stats by month
-@app.route('/month/')
-@app.route('/month/<month>')
-def month(month=None):
+@app.route('/fetch/')
+@app.route('/fetch/<month>')
+def fetch(month=None):
 	db = getDb()
 	if month == None:
 		month = getCurrentMonth()
@@ -140,7 +149,7 @@ def filterMonth(string, month):
 	if month in string: 
 		return True
 	else:
-		return False 
+		return False
 # check wether patch exists in DB
 def patchExists(patch):
 	db = getDb()

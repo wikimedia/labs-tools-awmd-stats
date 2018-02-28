@@ -5,14 +5,20 @@ jQuery(document).ready( function($){
 		minViewMode: "months"
 	});
 
+
 	// progress bar while loading stats
-	$.ajax({
+	jQuery.ajax({
             method: 'GET',
-            url: '/month/',
+            url: '/fetch/',
             dataType: 'json',
-            success: function() { },
-            error: function() { },
+            success: function() { 
+        	console.log('ajax done');
+            },
+            error: function(e) { 
+            	console.log(e);
+            },
             progress: function(e) {
+            	console.log('ajax progress');
                 //make sure we can compute the length
                 console.log(e);
                 if(e.lengthComputable) {
@@ -29,5 +35,6 @@ jQuery(document).ready( function($){
                 }
             }
         }); 
+
 		
 });

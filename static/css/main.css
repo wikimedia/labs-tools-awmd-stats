@@ -1,0 +1,5 @@
+.control{width:200px}
+#execute{border:1px solid #000;width:100%;background:none;cursor:pointer}
+#progressbar{border:none !important;height:3px !important;text-align:center !important}
+.ui-progressbar-value{margin-right:auto !important;margin-left:auto !important}
+.ui-widget-header{background:red !important}
