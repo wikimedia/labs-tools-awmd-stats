@@ -51,11 +51,17 @@ def getParticipants():
 	return response
 
 # get user stats using Gerrit API
-def getUserStats(username, time):
+def getUserStats(username, month):
 	
+	day = monthToDate(month) 
+	before = monthToDate(deCreaseMonth(month))
+	after = monthToDate(inCreaseMonth(month))
+
 	if username!="":
 		# concatenate url
-		url = "https://gerrit.wikimedia.org/r/changes/?q=owner:" + username;
+		url = "https://gerrit.wikimedia.org/r/changes/?q=owner:" + username + 
+		"+after:" + after +
+		"+before:" + before;
 		
 		r = requests.get(url)
 
@@ -153,7 +159,8 @@ def patchExists(patch):
 		return True
 	else:
 		return False
-
-
+#convert month to date format
+def monthToDate(month):
+	month +"-01" # use the 1st day of month
 if __name__ == '__main__':
 	app.run()
