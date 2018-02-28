@@ -40,9 +40,12 @@ def getParticipants():
 	return response
 
 # get submitter using Gerrit API
-def getSubmitterStats(username, month):
+def getSubmitterStats(username, month=None):
 	
-	date = getCurrentMonth() 
+	if month == None:
+		date = getCurrentMonth()
+	else:
+		date = month 
 	previous_month = decrementMonth(date)
 	next_month = incrementMonth(date)
 
@@ -62,9 +65,13 @@ def getCurrentMonth(format = "%Y-%m"):
 	return currentMonth 
 
 # REST endpoint for fetching stats by month
+@app.route('/month/')
 @app.route('/month/<month>')
-def month(month=False):
+def month(month=None):
 	db = getDb()
+	if month == None:
+		month = getCurrentMonth()
+
 
 	# load and save participants list
 	participants = getParticipants()
@@ -73,7 +80,7 @@ def month(month=False):
 	for participant in participants:
 
 		username = participant['username']
-		patches = getSubmitterStats(username)
+		patches = getSubmitterStats(username, month)
 
 		# loop through participant patches
 		for patch in patches:
@@ -89,7 +96,7 @@ def month(month=False):
 				db.insert(patch)
  
 	# output the db as json
-	output = db.all();
+	output = getStatsFromDb(month);
    
 	response = app.response_class(
 		response=json.dumps(output),
