@@ -2,7 +2,7 @@ import requests
 import json
 import time
 import itertools
-import datetime
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from flask import Flask
 from flask import render_template
@@ -163,25 +163,21 @@ def monthToDate(month):
 
 	month = datetime.strptime(month, ("%Y-%m"))
 	date = month.strftime("%Y-%m-%d"); # eg 2018-02-01
-
-	date = datetime.strptime(date, ("%Y-%m-%d"))
+	date = datetime.strptime(date, ("%Y-%m-%d")) # return datetime object
 	
 	return date 
 	
-# increment date by x month
+# increment date by x months
 def incrementMonth(month, x=1):
 	date =  monthToDate(month)
+	date_after_month = date + relativedelta(months=x)
+	return date_after_month.strftime("%Y-%m-%d")
 
-	# number of days this month
-	month_days = calendar.monthrange(date.year, date.month)[1]
-	candidate = date + datetime.timedelta(days=month_days)
-	# but maybe we are a month too far
-	if candidate.day != date.day:
-		# go to last day of next month,
-		# by getting one day before begin of candidate month
-		return candidate.replace(day=1) - timedelta(days=1)
-	else:
-		return candidate
+# decrement date by x months
+def decrementMonth(month, x=1):
+	date =  monthToDate(month)
+	date_after_month = date + relativedelta(months=x)
+	retur
 
 # test route
 @app.route('/test')
