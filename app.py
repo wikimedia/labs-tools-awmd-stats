@@ -2,6 +2,7 @@ import requests
 import json
 import time
 import itertools
+import pprint
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from flask import Flask
@@ -54,14 +55,20 @@ def getParticipants():
 # get user stats using Gerrit API
 def getUserStats(username, month):
 	
-	day = monthToDate(month) 
-	before = monthToDate(deCreaseMonth(month))
-	after = monthToDate(inCreaseMonth(month))
+	date = getCurrentMonth() 
+	previous_month = decrementMonth(date)
+	next_month = incrementMonth(date)
+
+	print("date: " + date)
+	print("after: " + previous_month)
+	print("before: " + next_month)
 
 	if username!="":
 		# concatenate url
-		url = "https://gerrit.wikimedia.org/r/changes/?q=owner:" + username + "+after:" + after +"+before:" + before;
+		url = "https://gerrit.wikimedia.org/r/changes/?q=owner:" + username + "+after:" + previous_month + "+before:" + next_month;
 		
+		print("url: " + url)
+
 		r = requests.get(url)
 
 		jsonArray = r.text
@@ -170,19 +177,19 @@ def monthToDate(month):
 # increment date by x months
 def incrementMonth(month, x=1):
 	date =  monthToDate(month)
-	date_after_month = date + relativedelta(months=x)
-	return date_after_month.strftime("%Y-%m-%d")
+	next_month = date + relativedelta(months=x)
+	return next_month.strftime("%Y-%m-%d")
 
 # decrement date by x months
 def decrementMonth(month, x=1):
 	date =  monthToDate(month)
-	date_after_month = date + relativedelta(months=x)
-	retur
+	previous_month = date - relativedelta(months=x)
+	return previous_month.strftime("%Y-%m-%d")
 
-# test route
+# test endpoint
 @app.route('/test')
 def test():
-	print(incrementMonth('2018-03'))
+	pprint.pprint(getUserStats('D3r1ck01', '2018-01'))
 	return ''
 
 if __name__ == '__main__':
