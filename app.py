@@ -3,7 +3,7 @@ import json
 import time
 import itertools
 import datetime
-import datedelta
+from dateutil.relativedelta import relativedelta
 from flask import Flask
 from flask import render_template
 from tinydb import TinyDB, Query
