@@ -162,5 +162,9 @@ def patchExists(patch):
 #convert month to date format
 def monthToDate(month):
 	month +"-01" # use the 1st day of month
+
+# increase date by x month
+def increaseMonth(month, x=1):
+	
 if __name__ == '__main__':
 	app.run()
