@@ -22,19 +22,6 @@ def index():
 	return render_template('index.html', stats = stats, 
 		month = month, submitters = submitters)
 
-
-# REST endpoint for fetching stats by month
-@app.route('/month/<month>')
-def month():
-	file = open("stats/" + month + ".json", "r")
-	jsonText =  file.read()
-	response = app.response_class(
-		response=jsonText,
-		status=200,
-		mimetype='application/json'
-	)
-	return response
-
 # REST endpoint for list of submitter patches
 @app.route('/submitter/<username>')
 def submitter(username):
@@ -74,9 +61,9 @@ def getCurrentMonth(format = "%Y-%m"):
 	currentMonth = time.strftime(format); # eg 2018-02 
 	return currentMonth 
 
-# cron job for fetching and saving stats, for now fires in HTTP
-@app.route('/cron')
-def cronTask():
+# REST endpoint for fetching stats by month
+@app.route('/month/<month>')
+def month(month=False):
 	db = getDb()
 
 	# load and save participants list
