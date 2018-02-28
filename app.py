@@ -2,9 +2,10 @@ import requests
 import json
 import time
 import itertools
+import datetime
+import datedelta
 from flask import Flask
 from flask import render_template
-from datetime import datetime
 from tinydb import TinyDB, Query
 
 
@@ -162,20 +163,31 @@ def monthToDate(month):
 
 	month = datetime.strptime(month, ("%Y-%m"))
 	date = month.strftime("%Y-%m-%d"); # eg 2018-02-01
+
+	date = datetime.strptime(date, ("%Y-%m-%d"))
 	
 	return date 
 	
 # increment date by x month
 def incrementMonth(month, x=1):
-	date =  
-	next_month = (datetime.date.today().month + 1) % 12 or 12
+	date =  monthToDate(month)
+
+	# number of days this month
+	month_days = calendar.monthrange(date.year, date.month)[1]
+	candidate = date + datetime.timedelta(days=month_days)
+	# but maybe we are a month too far
+	if candidate.day != date.day:
+		# go to last day of next month,
+		# by getting one day before begin of candidate month
+		return candidate.replace(day=1) - timedelta(days=1)
+	else:
+		return candidate
 
 # test route
 @app.route('/test')
 def test():
-	print(monthToDate('2018-03'))
+	print(incrementMonth('2018-03'))
 	return ''
-
 
 if __name__ == '__main__':
 	app.run()
