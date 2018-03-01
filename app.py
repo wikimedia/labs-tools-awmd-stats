@@ -19,8 +19,14 @@ def index():
 	submitters = getSubmitters(stats)
 	month = getCurrentMonth("%B, %Y") # make month format human-readable 
 
-	return render_template('index.html', stats = stats, 
-		month = month, submitters = submitters)
+	# check wether there are entries in db
+		if hasMonth(month) == True:
+			return render_template('index.html', stats = stats, 
+				month = month, submitters = submitters)
+		else:
+			return render_template('loader.html', month = month)			
+
+	
 
 # REST endpoint for fetching stats by month
 @app.route('/month/')
@@ -116,7 +122,7 @@ def fetch(month=None):
 	return response 
 
 # get monthly stats from db
-def getStatsFromDb( month ):
+def getStatsFromDb(month):
 	Patch = Query()
 	db = getDb()
 
