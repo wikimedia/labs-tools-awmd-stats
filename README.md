@@ -8,10 +8,7 @@ Africa Wikimedia Developer Tool for Gathering Monthly statistics of participants
 * [Pip](https://pip.pypa.io/en/stable/installing/) dependencies manager
 
 ## Installing dependencies
-* ```pip install Flask```
-* ```pip install tinydb```
-* ```pip install requests```
-* ```pip install pyton-dateutil```
+* ```pip install requirements.txt```
 
 # Contributors
  * [Derick Alangi](https://github.com/ch3nkula/)
