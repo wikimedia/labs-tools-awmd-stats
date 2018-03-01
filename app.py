@@ -13,9 +13,9 @@ from tinydb import TinyDB, Query
 app = Flask(__name__) # instantiate Flask
 
 # route for homepage
-@app.route('/')
 @app.route('/month/')
 @app.route('/month/<month>')
+@app.route('/')
 def index(month=None):
 	
 	if month == None:
