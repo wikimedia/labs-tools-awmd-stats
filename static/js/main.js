@@ -11,8 +11,7 @@ jQuery(document).ready( function($){
             d = (_d > 9 ? _d : '0'+_d),
             month = y + '-' + m;
 
-		console.log("open: "+ "/month/"+month)
-        //window.open("/month/"+month,"_self")
+        window.open("/month/"+month,"_self")
     });
 
 
