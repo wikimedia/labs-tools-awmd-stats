@@ -1,5 +1,5 @@
 jQuery(document).ready( function($){   
-	 $('#datepicker button').datepicker({
+	 $('#datepicker').datepicker({
 		format: "mm-yyyy",
 		startView: "months", 
 		minViewMode: "months"
@@ -15,10 +15,11 @@ jQuery(document).ready( function($){
 	});
 
 	// progress bar while loading stats
-	$( "#html_content" ).load( "/raw/", function( response, status, xhr ) {
+	var month = $('input #month').val();
+
+	jQuery( "#html_content" ).load( "/raw/" + month, function( response, status, xhr ) {
 	  if ( status == "error" ) {
-		var msg = "Sorry but there was an error: ";
-		$( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+		console.log( xhr.status + " " + xhr.statusText );
 	  }
 	});
 

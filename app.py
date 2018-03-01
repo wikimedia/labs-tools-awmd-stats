@@ -17,19 +17,19 @@ app = Flask(__name__) # instantiate Flask
 @app.route('/month/')
 @app.route('/month/<month>')
 def index(month=None):
+	
 	if month == None:
-		month = getCurrentMonth("%B, %Y") # make month format human-readable 
-		
-	month = getCurrentMonth("%B, %Y") # make month format human-readable 
+		month = getCurrentMonth() # make month format human-readable 
 	stats = getStatsFromDb(month)
 	submitters = getSubmitters(stats)
 
 	# check wether there are entries in db
+	formatted = datetime.strptime(month, ("%Y-%m"))
 	if dbHasMonth(month) == True:
 		return render_template('index.html', stats = stats, 
-			month = month, submitters = submitters)
+			month = formatted.strftime("%B, %Y"), submitters = submitters)
 	else:
-		return render_template('loader.html', month = month)
+		return render_template('loader.html', month = month, formatted = formatted.strftime("%B, %Y"))
 
 # REST endpoint for list of submitter patches
 @app.route('/submitter/<username>')
@@ -72,13 +72,14 @@ def getCurrentMonth(format = "%Y-%m"):
 	currentMonth = time.strftime(format); # eg 2018-02 
 	return currentMonth 
 
-# REST endpoint for fetching stats by month
-@app.route('/fetch/')
-@app.route('/fetch/<month>')
-def fetch(month=None):
-	db = getDb()
+
+# display stats as raw html
+@app.route('/raw/')
+@app.route('/raw/<month>')
+def raw(month=None):
+
 	if month == None:
-		month = getCurrentMonth()
+	month = getCurrentMonth()
 
 	# load and save participants list
 	participants = getParticipants()
@@ -90,6 +91,7 @@ def fetch(month=None):
 		patches = getSubmitterStats(username, month)
 
 		# loop through participant patches
+		db = getDb()
 		for patch in patches:
 
 			# prepare patch dictionary
@@ -101,27 +103,7 @@ def fetch(month=None):
 			if not patchExists(patch):
 				# persist patch to db
 				db.insert(patch)
- 
-	# output the monthly stats as json
-	output = getStatsFromDb(month);
-   
-	response = app.response_class(
-		response=json.dumps(output),
-		status=200,
-		mimetype='application/json'
-	)
 
-	return response 
-
-
-
-# display stats as raw html
-@app.route('/raw/')
-@app.route('/raw/<month>')
-def raw(month=None):
-	db = getDb()
-	if month == None:
-		month = getCurrentMonth()
 	month = getCurrentMonth("%B, %Y") # make month format human-readable 
 	stats = getStatsFromDb(month)
 	submitters = getSubmitters(stats)
