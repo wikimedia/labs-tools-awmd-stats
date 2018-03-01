@@ -193,6 +193,12 @@ def test():
 def hasMonth(month):
 	stats = getStatsFromDb(month)
 
+	# if there is at least one entry
+	if 0< len(stats)
+		return True
+	else
+		return False
+
 
 
 if __name__ == '__main__':
