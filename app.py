@@ -14,26 +14,16 @@ app = Flask(__name__) # instantiate Flask
 
 # route for homepage
 @app.route('/')
-def index():
+@app.route('/month/')
+@app.route('/month/<month>')
+def index(month=None):
+	if month == None:
+		month = getCurrentMonth("%B, %Y") # make month format human-readable 
+		
 	month = getCurrentMonth("%B, %Y") # make month format human-readable 
 	stats = getStatsFromDb(month)
 	submitters = getSubmitters(stats)
 
-	# check wether there are entries in db
-	if dbHasMonth(month) == True:
-		return render_template('index.html', stats = stats, 
-			month = month, submitters = submitters)
-	else:
-		return render_template('loader.html', month = month)
-	
-
-# REST endpoint for fetching stats by month
-@app.route('/month/')
-@app.route('/month/<month>')
-def month(month=None):
-	if month == None:
-		month = getCurrentMonth("%B, %Y") # make month format human-readable 
-	
 	# check wether there are entries in db
 	if dbHasMonth(month) == True:
 		return render_template('index.html', stats = stats, 
