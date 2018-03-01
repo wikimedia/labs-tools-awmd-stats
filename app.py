@@ -197,14 +197,5 @@ def dbHasMonth(month):
 	else:
 		return False
 
-# display entries in DRY
-def displayMonthlyEntries():
-	# check wether there are entries in db
-	if dbHasMonth(month) == True:
-		return render_template('index.html', stats = stats, 
-			month = month, submitters = submitters)
-	else:
-		return render_template('loader.html', month = month)
-
 if __name__ == '__main__':
 	app.run()
