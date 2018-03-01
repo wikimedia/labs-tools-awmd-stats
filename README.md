@@ -8,7 +8,7 @@ Africa Wikimedia Developer Tool for Gathering Monthly statistics of participants
 * [Pip](https://pip.pypa.io/en/stable/installing/) dependencies manager
 
 ## Installing dependencies
-* ```pip install requirements.txt```
+* ```pip install -r requirements.txt```
 
 # Contributors
  * [Derick Alangi](https://github.com/ch3nkula/)
