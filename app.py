@@ -189,5 +189,11 @@ def test():
 	pprint.pprint(getSubmitterStats('D3r1ck01', '2018-01'))
 	return ''
 
+# chech wether month has entries in db
+def hasMonth(month):
+	stats = getStatsFromDb(month)
+
+
+
 if __name__ == '__main__':
 	app.run()

@@ -14,8 +14,6 @@ jQuery(document).ready( function($){
         window.open("/month/"+month,"_self")
     });
 
-
-
 	// progress bar while loading stats
 	jQuery.ajax({
             method: 'GET',
