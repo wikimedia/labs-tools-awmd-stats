@@ -15,7 +15,7 @@ jQuery(document).ready( function($){
 	});
 
 	// progress bar while loading stats
-	var month = $('input #month').val();
+	var month = $('input#month').val();
 
 	jQuery( "#html_content" ).load( "/raw/" + month, function( response, status, xhr ) {
 	  if ( status == "error" ) {

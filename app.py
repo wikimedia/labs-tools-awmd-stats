@@ -79,7 +79,7 @@ def getCurrentMonth(format = "%Y-%m"):
 def raw(month=None):
 
 	if month == None:
-	month = getCurrentMonth()
+		month = getCurrentMonth()
 
 	# load and save participants list
 	participants = getParticipants()
@@ -104,12 +104,13 @@ def raw(month=None):
 				# persist patch to db
 				db.insert(patch)
 
-	month = getCurrentMonth("%B, %Y") # make month format human-readable 
 	stats = getStatsFromDb(month)
 	submitters = getSubmitters(stats)
 
+	formatted = datetime.strptime(month, ("%Y-%m"))
 	return render_template('stats.html', stats = stats, 
-			month = month, submitters = submitters)
+			month = formatted.strftime("%B, %Y"), submitters = submitters)
+
 
 # get monthly stats from db
 def getStatsFromDb(month):
