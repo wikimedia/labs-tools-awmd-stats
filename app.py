@@ -15,17 +15,16 @@ app = Flask(__name__) # instantiate Flask
 # route for homepage
 @app.route('/')
 def index():
-	stats = getStatsFromDb(getCurrentMonth())
-	submitters = getSubmitters(stats)
 	month = getCurrentMonth("%B, %Y") # make month format human-readable 
+	stats = getStatsFromDb(month)
+	submitters = getSubmitters(stats)
 
 	# check wether there are entries in db
-		if hasMonth(month) == True:
-			return render_template('index.html', stats = stats, 
-				month = month, submitters = submitters)
-		else:
-			return render_template('loader.html', month = month)			
-
+	if dbHasMonth(month) == True:
+		return render_template('index.html', stats = stats, 
+			month = month, submitters = submitters)
+	else:
+		return render_template('loader.html', month = month)
 	
 
 # REST endpoint for fetching stats by month
@@ -33,15 +32,14 @@ def index():
 @app.route('/month/<month>')
 def month(month=None):
 	if month == None:
-		month = getCurrentMonth()
-	month = getCurrentMonth("%B, %Y") # make month format human-readable 
-
+		month = getCurrentMonth("%B, %Y") # make month format human-readable 
+	
 	# check wether there are entries in db
-		if hasMonth(month) == True:
-			return render_template('index.html', stats = stats, 
-				month = month, submitters = submitters)
-		else:
-			return render_template('loader.html', month = month)
+	if dbHasMonth(month) == True:
+		return render_template('index.html', stats = stats, 
+			month = month, submitters = submitters)
+	else:
+		return render_template('loader.html', month = month)
 
 # REST endpoint for list of submitter patches
 @app.route('/submitter/<username>')
@@ -92,7 +90,6 @@ def fetch(month=None):
 	if month == None:
 		month = getCurrentMonth()
 
-
 	# load and save participants list
 	participants = getParticipants()
 
@@ -125,6 +122,22 @@ def fetch(month=None):
 	)
 
 	return response 
+
+
+
+# display stats as raw html
+@app.route('/raw/')
+@app.route('/raw/<month>')
+def raw(month=None):
+	db = getDb()
+	if month == None:
+		month = getCurrentMonth()
+	month = getCurrentMonth("%B, %Y") # make month format human-readable 
+	stats = getStatsFromDb(month)
+	submitters = getSubmitters(stats)
+
+	return render_template('stats.html', stats = stats, 
+			month = month, submitters = submitters)
 
 # get monthly stats from db
 def getStatsFromDb(month):
@@ -161,6 +174,7 @@ def filterMonth(string, month):
 		return True
 	else:
 		return False
+
 # check wether patch exists in DB
 def patchExists(patch):
 	db = getDb()
@@ -173,9 +187,9 @@ def patchExists(patch):
 		return True
 	else:
 		return False
+
 #convert month to date format
 def monthToDate(month):
-
 	month = datetime.strptime(month, ("%Y-%m"))
 	date = month.strftime("%Y-%m-%d"); # eg 2018-02-01
 	date = datetime.strptime(date, ("%Y-%m-%d")) # return datetime object
@@ -201,23 +215,23 @@ def test():
 	return ''
 
 # chech wether month has entries in db
-def hasMonth(month):
+def dbHasMonth(month):
 	stats = getStatsFromDb(month)
 
 	# if there is at least one entry
-	if 0< len(stats)
+	if 0< len(stats):
 		return True
-	else
+	else:
 		return False
+
 # display entries in DRY
 def displayMonthlyEntries():
 	# check wether there are entries in db
-	if hasMonth(month) == True:
+	if dbHasMonth(month) == True:
 		return render_template('index.html', stats = stats, 
 			month = month, submitters = submitters)
 	else:
 		return render_template('loader.html', month = month)
-
 
 if __name__ == '__main__':
 	app.run()
