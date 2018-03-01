@@ -36,7 +36,12 @@ def month(month=None):
 		month = getCurrentMonth()
 	month = getCurrentMonth("%B, %Y") # make month format human-readable 
 
-	return render_template('month.html', month = month)
+	# check wether there are entries in db
+		if hasMonth(month) == True:
+			return render_template('index.html', stats = stats, 
+				month = month, submitters = submitters)
+		else:
+			return render_template('loader.html', month = month)
 
 # REST endpoint for list of submitter patches
 @app.route('/submitter/<username>')
@@ -204,7 +209,14 @@ def hasMonth(month):
 		return True
 	else
 		return False
-
+# display entries in DRY
+def displayMonthlyEntries():
+	# check wether there are entries in db
+	if hasMonth(month) == True:
+		return render_template('index.html', stats = stats, 
+			month = month, submitters = submitters)
+	else:
+		return render_template('loader.html', month = month)
 
 
 if __name__ == '__main__':
