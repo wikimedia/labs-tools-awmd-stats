@@ -1,5 +1,10 @@
 jQuery(document).ready( function($){
-	var base_url = window.location.origin 
+	
+	// base url
+	var getUrl = window.location;
+	var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+
+
 	$('#datepicker').datepicker({
 		format: "mm-yyyy",
 		startView: "months", 
