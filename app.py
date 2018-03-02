@@ -1,3 +1,6 @@
+# Author: Samuel Guebo, Derick Alangi
+# Description: Entry point of the application
+
 import requests
 import json
 import time
