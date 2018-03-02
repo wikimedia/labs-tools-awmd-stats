@@ -15,14 +15,11 @@ from tinydb import TinyDB, Query
 # instantiate Flask
 app = Flask(__name__)
 
-# route for homepage
 @app.route('/month/')
 @app.route('/month/<month>')
 @app.route('/')
 def index(month=None):
-"""
-Default / Home page of the application / tool.
-"""	
+	""" Default / Home page of the application / tool. """
 	if month == None:
 		month = getCurrentMonth() # make month format human-readable 
 	stats = getStatsFromDb(month)
@@ -58,11 +55,8 @@ def getParticipants():
 	return response
 
 
-# get submitter using Gerrit API
 def getSubmitterStats(username, month=None):
-"""
-Fetch Gerrit API for patch contributor data
-"""
+	""" Fetch Gerrit API for patch contributor data. """
 	if month == None:
 		date = getCurrentMonth()
 	else:
@@ -91,9 +85,7 @@ def getCurrentMonth(format = "%Y-%m"):
 @app.route('/raw/')
 @app.route('/raw/<month>')
 def raw(month=None):
-"""
-Display Raw HTML stats
-"""
+	""" Display Raw HTML stats """
 	if month == None:
 		month = getCurrentMonth()
 
