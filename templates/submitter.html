@@ -1,29 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
-	<div class="container">
-       <h2>Stats for {{patches[0]['name']}}</h2>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Project</th>
-					<th>Created</th>
-					<th>Updated</th>
-					<th>Status</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for patch in patches %}
-					<tr>
-						<td>{{loop.index}}</td>
-						<td>{{patch.project}}</td>
-						<td>{{patch.created|datetimeformat}}</td>
-						<td>{{patch.updated|datetimeformat}}</td>
-						<td>{{patch.status}}</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-		<a href="{{url_for('index')}}" class="btn btn-primary float-left" title="Back to homepage">&laquo; Back</a>
-	</div>
+<div class="container">
+	<h2>Stats for {{patches[0]['name']}}</h2>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Project</th>
+				<th>Created</th>
+				<th>Updated</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for patch in patches %}
+			<tr>
+				<td>{{loop.index}}</td>
+				<td>{{patch.project}}</td>
+				<td>{{patch.created|datetimeformat}}</td>
+				<td>{{patch.updated|datetimeformat}}</td>
+				<td>{{patch.status}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<a href="{{url_for('index')}}" class="btn btn-primary float-left" title="Back to homepage">&laquo; Back</a>
+</div>
 {% endblock %}
