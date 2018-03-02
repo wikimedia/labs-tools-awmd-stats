@@ -22,6 +22,7 @@ def index(month=None):
 	""" Default / Home page of the application / tool. """
 	if month == None:
 		month = getCurrentMonth() # make month format human-readable 
+	monthID = month
 	stats = getStatsFromDb(month)
 	submitters = getSubmitters(stats)
 
@@ -29,13 +30,13 @@ def index(month=None):
 	formatted = datetime.strptime(month, ("%Y-%m"))
 	if dbHasMonth(month) == True:
 		return render_template('index.html', stats = stats, 
-			month = formatted.strftime("%B, %Y"), submitters = submitters)
+			month = formatted.strftime("%B, %Y"), submitters = submitters, monthID = monthID)
 	else:
 		return render_template('loader.html', month = month, formatted = formatted.strftime("%B, %Y"))
 
 
-@app.route('/submitter/<username>')
-def submitter(username):
+@app.route('/submitter/<username>/<month>')
+def submitterPatchesByMonth(username, month):
 	""" REST endpoint for list of submitter patche(s). """
 	Submitter = Query()
 	db = getDb()
@@ -43,7 +44,7 @@ def submitter(username):
 	# filter by username
 	patches = db.search(Submitter.username == username)
 
-	return render_template('submitter.html', patches = patches)
+	return render_template('submitter.html', patches = patches, monthID = month)
 
 
 def getParticipants():

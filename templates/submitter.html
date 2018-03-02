@@ -14,13 +14,15 @@
 		</thead>
 		<tbody>
 			{% for patch in patches %}
-			<tr>
-				<td>{{loop.index}}</td>
-				<td>{{patch.project}}</td>
-				<td>{{patch.created|datetimeformat}}</td>
-				<td>{{patch.updated|datetimeformat}}</td>
-				<td>{{patch.status}}</td>
-			</tr>
+				{% if monthID in patch.created %}
+					<tr>
+						<td>{{loop.index}}</td>
+						<td>{{patch.project}}</td>
+						<td>{{patch.created|datetimeformat}}</td>
+						<td>{{patch.updated|datetimeformat}}</td>
+						<td>{{patch.status}}</td>
+					</tr>
+				{% endif %}
 			{% endfor %}
 		</tbody>
 	</table>
