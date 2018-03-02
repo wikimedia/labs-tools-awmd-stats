@@ -34,6 +34,8 @@ function getBaseUrl() {
 	// use home url link as baseurl, remove protocole
 	var baseUrl = document.getElementById('baseurl').getAttribute('href').replace(/^https?:\/\//,'');
 
-	
+	// add actual protocol to fix Flask bug with protocol inconsistency
+	baseUrl = location.protocol + "//" + baseUrl 
+	console.log(baseUrl)
 	return baseUrl;
 }
