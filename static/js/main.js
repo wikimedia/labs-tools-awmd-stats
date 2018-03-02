@@ -1,8 +1,7 @@
 jQuery(document).ready( function($){
 	
 	// base url
-	var getUrl = window.location;
-	var baseUrl = getUrl .protocol + "//" + getUrl.host  + getUrl.pathname.split('/')[0];
+	baseUrl = getBaseUrl();
 
 
 	$('#datepicker').datepicker({
@@ -29,3 +28,16 @@ jQuery(document).ready( function($){
 		}
 	});
 });
+
+function getBaseUrl() {
+	var getUrl = window.location;
+	var urlParts = getUrl.pathname.split('/');
+
+	var baseUrl = baseUrl = getUrl .protocol + "//" + getUrl.host + getUrl.pathname.split('/')[0];
+
+	if(urlParts.length > 3){
+		baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+	}
+	
+	return baseUrl;
+}
