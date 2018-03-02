@@ -34,20 +34,20 @@ def index(month=None):
 		return render_template('loader.html', month = month, formatted = formatted.strftime("%B, %Y"))
 
 
-# REST endpoint for list of submitter patches
 @app.route('/submitter/<username>')
 def submitter(username):
+	""" REST endpoint for list of submitter patche(s). """
 	Submitter = Query()
 	db = getDb()
 
-	patches = db.search(Submitter.username == username) # filter by username
+	# filter by username
+	patches = db.search(Submitter.username == username)
 
 	return render_template('submitter.html', patches = patches)
 
 
-# loop through participants
 def getParticipants():
-
+	""" Loop through and get all participants. """
 	file = open('participants.json', "r")
 	jsonText =  file.read()
 	response = json.loads(jsonText)
@@ -65,23 +65,23 @@ def getSubmitterStats(username, month=None):
 	next_month = incrementMonth(date)
 
 	if username != "":
-		# concatenate url
-		url = "https://gerrit.wikimedia.org/r/changes/?q=owner:" + username + "+after:" + previous_month + "+before:" + next_month;
+		link = "https://gerrit.wikimedia.org/r/changes/?q=owner:"
+		# build the API requst url
+		url = link + username + "+after:" + previous_month + "+before:" + next_month;
 		r = requests.get(url)
-
 		jsonArray = r.text
 		jsonArray = jsonArray.replace(")]}'", "", 1); # Fix this error in headers of json tree
 
 		return json.loads(jsonArray);
 
-# get current month
+
 def getCurrentMonth(format = "%Y-%m"):
-	currentMonth = time.strftime(format); # eg 2018-02 
+	""" Get current month. """
+	currentMonth = time.strftime(format); # e.g. 2018-02 
 
 	return currentMonth 
 
 
-# display stats as raw html
 @app.route('/raw/')
 @app.route('/raw/<month>')
 def raw(month=None):
@@ -121,34 +121,34 @@ def raw(month=None):
 			month = formatted.strftime("%B, %Y"), submitters = submitters)
 
 
-# get monthly stats from db
 def getStatsFromDb(month):
+	""" Get monthly statistics from DB. """
 	Patch = Query()
 	db = getDb()
-
 	stats = db.search(Patch.created.test(filterMonth, month))
 
 	return stats
 
 
-# custom Flask filter for datetimeformating
 @app.template_filter()
 def datetimeformat(value, inFormat="%Y-%m-%d %H:%M:%S.000000000", outFormat = '%Y-%m-%d, %H:%M'):
+	""" Custom Flask filter for datetimeformating. """
 	formattedString = datetime.strptime(value, inFormat)
 
 	return formattedString.strftime(outFormat) # simple formatting
 
 
-# db object to be used indepently
 def getDb():
+	""" DB object to be used independently. """
+
 	# setting the tinydb location
 	db = TinyDB('db/db.json')
 
 	return db
 
 
-# get the list of patch submitters
 def getSubmitters(patches):
+	""" Get the list of patch submitters. """
 	submitters = []
 	# grouping by, the pythonic way
 	for key, group in itertools.groupby(patches, key=lambda x:x['username']):
@@ -157,16 +157,16 @@ def getSubmitters(patches):
 	return submitters
 
 
-# filter month
 def filterMonth(string, month):
+	""" Filter month. """
 	if month in string: 
 		return True
 	else:
 		return False
 
 
-# check wether patch exists in DB
 def patchExists(patch):
+	""" Check whether patch(es) exists in the DB. """
 	db = getDb()
 	Patch = Query()
 	rows = db.search((Patch.created == patch['created']) 
@@ -179,8 +179,8 @@ def patchExists(patch):
 		return False
 
 
-#convert month to date format
 def monthToDate(month):
+	""" Convert month to date format. """
 	month = datetime.strptime(month, ("%Y-%m"))
 	date = month.strftime("%Y-%m-%d"); # eg 2018-02-01
 	date = datetime.strptime(date, ("%Y-%m-%d")) # return datetime object
@@ -188,32 +188,32 @@ def monthToDate(month):
 	return date 
 
 	
-# increment date by x months
-def incrementMonth(month, x=1):
+def incrementMonth(month, n=1):
+	""" Increment date by 'n' months. """
 	date =  monthToDate(month)
 	next_month = date + relativedelta(months=x)
 
 	return next_month.strftime("%Y-%m-%d")
 
 
-# decrement date by x months
-def decrementMonth(month, x=1):
+def decrementMonth(month, n=1):
+	""" Decrement date by 'n' months. """
 	date =  monthToDate(month)
 	previous_month = date - relativedelta(months=x)
 
 	return previous_month.strftime("%Y-%m-%d")
 
 
-# test endpoint
 @app.route('/test')
 def test():
+	""" Test API endpoint with hardcoded data. """
 	pprint.pprint(getSubmitterStats('D3r1ck01', '2018-01'))
 
 	return ''
 
 
-# chech wether month has entries in db
 def dbHasMonth(month):
+	""" Check whether month has entries in the DB. """
 	stats = getStatsFromDb(month)
 	# if there is at least one entry
 	if 0 < len(stats):
