@@ -36,6 +36,5 @@ function getBaseUrl() {
 
 	// add actual protocol to fix Flask bug with protocol inconsistency
 	baseUrl = location.protocol + "//" + baseUrl 
-	console.log(baseUrl)
 	return baseUrl;
 }
