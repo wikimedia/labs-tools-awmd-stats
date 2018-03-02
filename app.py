@@ -191,7 +191,7 @@ def monthToDate(month):
 def incrementMonth(month, n=1):
 	""" Increment date by 'n' months. """
 	date =  monthToDate(month)
-	next_month = date + relativedelta(months=x)
+	next_month = date + relativedelta(months=n)
 
 	return next_month.strftime("%Y-%m-%d")
 
@@ -199,7 +199,7 @@ def incrementMonth(month, n=1):
 def decrementMonth(month, n=1):
 	""" Decrement date by 'n' months. """
 	date =  monthToDate(month)
-	previous_month = date - relativedelta(months=x)
+	previous_month = date - relativedelta(months=n)
 
 	return previous_month.strftime("%Y-%m-%d")
 
