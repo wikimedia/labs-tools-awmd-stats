@@ -3,7 +3,7 @@
 Africa Wikimedia Developer (AWMD) Tool for gathering monthly statistics of participants.
 
 
-# Requiremens
+# Requirements
 
 * [Python](https://www.python.org/downloads/)
 * [Pip](https://pip.pypa.io/en/stable/installing/) dependencies manager
