@@ -1,4 +1,5 @@
-jQuery(document).ready( function($){   
+jQuery(document).ready( function($){
+	var base_url = window.location.origin 
 	$('#datepicker').datepicker({
 		format: "mm-yyyy",
 		startView: "months", 
@@ -11,13 +12,13 @@ jQuery(document).ready( function($){
 		d = (_d > 9 ? _d : '0'+_d),
 		month = y + '-' + m;
 
-		window.open("/month/"+month,"_self")
+		window.open(base_url + "/month/"+month,"_self")
 	});
 
 	// progress bar while loading stats
 	var month = $('input#month').val();
 
-	jQuery( "#html_content" ).load( "/raw/" + month, function( response, status, xhr ) {
+	jQuery( "#html_content" ).load( base_url + "/raw/" + month, function( response, status, xhr ) {
 		if ( status == "error" ) {
 			console.log( xhr.status + " " + xhr.statusText );
 		}
