@@ -30,6 +30,10 @@ jQuery(document).ready( function($){
 });
 
 function getBaseUrl() {
-	var baseUrl = document.getElementById('baseurl').getAttribute('href');
+
+	// use home url link as baseurl, remove protocole
+	var baseUrl = document.getElementById('baseurl').getAttribute('href').replace(/^https?:\/\//,'');
+
+	
 	return baseUrl;
 }
