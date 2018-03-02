@@ -33,7 +33,7 @@ def index(month=None):
 			month = formatted.strftime("%B, %Y"), submitters = submitters, monthID = monthID)
 	else:
 		return render_template('loader.html', month = month, formatted = formatted.strftime("%B, %Y"))
-
+ 
 
 @app.route('/submitter/<username>/<month>')
 def submitterPatchesByMonth(username, month):
