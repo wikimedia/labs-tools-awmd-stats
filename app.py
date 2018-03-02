@@ -44,7 +44,10 @@ def submitterPatchesByMonth(username, month):
 	# filter by username
 	patches = db.search(Submitter.username == username)
 
-	return render_template('submitter.html', patches = patches, monthID = month)
+	# grab previous url from request
+	backUrl = requests.referrer 
+
+	return render_template('submitter.html', patches = patches, monthID = month, backUrl = backUrl)
 
 
 def getParticipants():
