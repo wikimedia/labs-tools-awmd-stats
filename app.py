@@ -1,5 +1,6 @@
 # Author: Samuel Guebo, Derick Alangi
 # Description: Entry point of the application
+# License: MIT
 
 import requests
 import json
@@ -26,7 +27,7 @@ def index(month=None):
 	stats = getStatsFromDb(month)
 	submitters = getSubmitters(stats)
 
-	# check wether there are entries in db
+	# check whether there are entries in db
 	formatted = datetime.strptime(month, ("%Y-%m"))
 	if dbHasMonth(month) == True:
 		return render_template('index.html', stats = stats, 
@@ -37,13 +38,11 @@ def index(month=None):
 
 @app.route('/submitter/<username>/<month>')
 def submitterPatchesByMonth(username, month):
-	""" REST endpoint for list of submitter patche(s). """
+	""" REST endpoint for list of contributor's patche(s). """
 	Submitter = Query()
 	db = getDb()
-
 	# filter by username
 	patches = db.search(Submitter.username == username)
-
 	# grab previous url from flask.request.referrer
 	backUrl = request.referrer
 
@@ -51,8 +50,8 @@ def submitterPatchesByMonth(username, month):
 
 
 def getParticipants():
-	""" Loop through and get all participants. """
-	file = open('participants.json', "r")
+	""" Loop through and get all contributors. """
+	file = open('contributors.json', "r")
 	jsonText =  file.read()
 	response = json.loads(jsonText)
 
