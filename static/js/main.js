@@ -1,5 +1,9 @@
 jQuery(document).ready( function($){
-	var base_url = window.location.origin 
+	
+	// base url
+	baseUrl = getBaseUrl();
+
+
 	$('#datepicker').datepicker({
 		format: "mm-yyyy",
 		startView: "months", 
@@ -12,15 +16,25 @@ jQuery(document).ready( function($){
 		d = (_d > 9 ? _d : '0'+_d),
 		month = y + '-' + m;
 
-		window.open(base_url + "/month/"+month,"_self")
+		window.open(baseUrl + "month/"+month,"_self")
 	});
 
 	// progress bar while loading stats
 	var month = $('input#month').val();
 
-	jQuery( "#html_content" ).load( base_url + "/raw/" + month, function( response, status, xhr ) {
+	jQuery( "#html_content" ).load( baseUrl + "raw/" + month, function( response, status, xhr ) {
 		if ( status == "error" ) {
 			console.log( xhr.status + " " + xhr.statusText );
 		}
 	});
 });
+
+function getBaseUrl() {
+
+	// use home url link as baseurl, remove protocole
+	var baseUrl = document.getElementById('baseurl').getAttribute('href').replace(/^https?:\/\//,'');
+
+	// add actual protocol to fix Flask bug with protocol inconsistency
+	baseUrl = location.protocol + "//" + baseUrl 
+	return baseUrl;
+}

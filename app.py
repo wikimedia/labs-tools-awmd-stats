@@ -9,7 +9,7 @@ import pprint
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from flask import Flask
-from flask import render_template
+from flask import render_template, request
 from tinydb import TinyDB, Query
 
 # instantiate Flask
@@ -33,7 +33,7 @@ def index(month=None):
 			month = formatted.strftime("%B, %Y"), submitters = submitters, monthID = monthID)
 	else:
 		return render_template('loader.html', month = month, formatted = formatted.strftime("%B, %Y"))
-
+ 
 
 @app.route('/submitter/<username>/<month>')
 def submitterPatchesByMonth(username, month):
@@ -44,7 +44,10 @@ def submitterPatchesByMonth(username, month):
 	# filter by username
 	patches = db.search(Submitter.username == username)
 
-	return render_template('submitter.html', patches = patches, monthID = month)
+	# grab previous url from flask.request.referrer
+	backUrl = request.referrer
+
+	return render_template('submitter.html', patches = patches, monthID = month, backUrl = backUrl)
 
 
 def getParticipants():
