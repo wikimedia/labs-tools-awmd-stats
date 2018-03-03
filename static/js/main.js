@@ -27,6 +27,11 @@ jQuery(document).ready( function($){
 			console.log( xhr.status + " " + xhr.statusText );
 		}
 	});
+
+	/* Refresh page when refresh icon is clicked */
+	$('#refresh-btn').click(function() {
+		location.reload();
+	});
 });
 
 function getBaseUrl() {
