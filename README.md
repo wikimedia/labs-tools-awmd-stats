@@ -1,25 +1,25 @@
 # awmd-stats
 
-Africa Wikimedia Developer (AWMD) Tool for gathering monthly statistics of participants.
+Africa Wikimedia Developer (AWMD) Tool for gathering monthly statistics of African technical contributors into Wikimedia projects e.g. MediaWiki, MediaWiki extensions, etc.
 
 
 # Requirements
 
-* [Python](https://www.python.org/downloads/)
-* [Pip](https://pip.pypa.io/en/stable/installing/) dependencies manager
+* [Python 3.x+](https://www.python.org/downloads/)
+* [PIP (Python Dependency Manager)](https://pip.pypa.io/en/stable/installing/)
 
 ## Installing dependencies
 
-*  Make sure you're running [Python 3+](https://www.python.org/download/releases/3.0/).
-* Install application dependencies using the `install-deps.sh`:
+Install application dependencies using the `install-deps.sh` script:
 ```bash 
 ./install-deps.sh
 ```
+The above script attempts to check system requirements and tell informs user on next steps.
 
 
 # Track your contributions
 
-* You want your contributions to be tracked by this tool? Nicely add your information in the `participants.json` in the `JSON` format and the tool will automatically run a cron to fetch your contributions.
+* You want your contributions to be tracked by this tool? Nicely add your information in the `contributors.json` in the `JSON` format and the tool will automatically run a cron to fetch your contributions.
 
 
 # Contributors
