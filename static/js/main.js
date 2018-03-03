@@ -30,7 +30,7 @@ jQuery(document).ready( function($){
 
 	/* Refresh page when refresh icon is clicked */
 	$('#refresh-btn').click(function() {
-		location.reload();
+		location.reload(true);
 	});
 });
 
