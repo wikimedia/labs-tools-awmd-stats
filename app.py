@@ -25,7 +25,7 @@ def index(month=None):
 		month = getCurrentMonth() # make month format human-readable 
 	monthID = month
 	stats = getStatsFromDb(month)
-	submitters = getSubmitters(stats)
+	submitters = getContributors(stats)
 
 	# check whether there are entries in db
 	formatted = datetime.strptime(month, ("%Y-%m"))
@@ -49,7 +49,7 @@ def submitterPatchesByMonth(username, month):
 	return render_template('submitter.html', patches = patches, monthID = month, backUrl = backUrl)
 
 
-def getParticipants():
+def getContributors():
 	""" Loop through and get all contributors. """
 	file = open('contributors.json', "r")
 	jsonText =  file.read()
@@ -58,7 +58,7 @@ def getParticipants():
 	return response
 
 
-def getSubmitterStats(username, month=None):
+def getContributorStats(username, month=None):
 	""" Fetch Gerrit API for patch contributor data. """
 	if month == None:
 		date = getCurrentMonth()
@@ -92,14 +92,14 @@ def raw(month=None):
 	if month == None:
 		month = getCurrentMonth()
 
-	# load and save participants list
-	participants = getParticipants()
+	# load and save contributors list
+	contributors = getContributors()
 
-	# loop through participants
-	for participant in participants:
+	# loop through contributors
+	for contributor in contributors:
 
-		username = participant['username']
-		patches = getSubmitterStats(username, month)
+		username = contributor['username']
+		patches = getContributorStats(username, month)
 
 		# loop through participant patches
 		db = getDb()
@@ -116,7 +116,7 @@ def raw(month=None):
 				db.insert(patch)
 
 	stats = getStatsFromDb(month)
-	submitters = getSubmitters(stats)
+	submitters = getContributors(stats)
 
 	formatted = datetime.strptime(month, ("%Y-%m"))
 
@@ -150,14 +150,14 @@ def getDb():
 	return db
 
 
-def getSubmitters(patches):
-	""" Get the list of patch submitters. """
-	submitters = []
+def getContributors(patches):
+	""" Get the list of patch contributors. """
+	contributors = []
 	# grouping by, the pythonic way
-	for key, group in itertools.groupby(patches, key=lambda x:x['username']):
-		submitters.append(list(group))
+	for key, group in itertools.groupby(patches, key = lambda x: x['username']):
+		contributors.append(list(group))
 
-	return submitters
+	return contributors
 
 
 def filterMonth(string, month):
@@ -176,7 +176,7 @@ def patchExists(patch):
 		& (Patch.username == patch['username']))
 
 	# if the patch was previously saved
-	if 0 < len(rows):
+	if len(rows) > 0:
 		return True
 	else:
 		return False
@@ -210,7 +210,7 @@ def decrementMonth(month, n=1):
 @app.route('/test')
 def test():
 	""" Test API endpoint with hardcoded data. """
-	pprint.pprint(getSubmitterStats('D3r1ck01', '2018-01'))
+	pprint.pprint(getContributorStats('D3r1ck01', '2018-01'))
 
 	return ''
 
@@ -219,7 +219,7 @@ def dbHasMonth(month):
 	""" Check whether month has entries in the DB. """
 	stats = getStatsFromDb(month)
 	# if there is at least one entry
-	if 0 < len(stats):
+	if len(stats) > 0:
 		return True
 	else:
 		return False
