@@ -2,12 +2,16 @@
 # Unit tests for the application
 # TODO: We intend to have 100% test coverage
 
+# Section 1: Test all routes
+# Section 2: Test all UD methods
+
 import unittest
 from app import *
 
 class AppTestCase(unittest.TestCase):
 	""" Tests for the application. """
 
+	###=== Section 1: Test all the routes===###
 	def setUp(self):
 		self.app = app.test_client()
 
@@ -40,6 +44,12 @@ class AppTestCase(unittest.TestCase):
 	def test_contributor_username_month_route(self):
 		response = self.app.get('/contributor/D3r1ck01/2018-02')
 		self.assertEquals(response.status_code, 200)
+
+
+	###=== Section 2: Test all the UD methods===###
+	def testGetCurrentMonth(self, formatted="%Y-%m"):
+		Y_M_format = time.strftime(formatted)
+		self.assertEquals(getCurrentMonth(formatted), Y_M_format)
 
 
 # Execute the unit tests

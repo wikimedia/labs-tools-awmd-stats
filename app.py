@@ -69,7 +69,7 @@ def getContributorStats(username, month=None):
 	if username != "":
 		link = "https://gerrit.wikimedia.org/r/changes/?q=owner:"
 		# build the API requst url
-		url = link + username + "+after:" + previous_month + "+before:" + next_month;
+		url = link + username + "+after:" + previous_month + "+before:" + next_month
 		r = requests.get(url)
 		jsonArray = r.text
 		jsonArray = jsonArray.replace(")]}'", "", 1); # Fix this error in headers of json tree
@@ -77,9 +77,9 @@ def getContributorStats(username, month=None):
 		return json.loads(jsonArray);
 
 
-def getCurrentMonth(format = "%Y-%m"):
+def getCurrentMonth(format="%Y-%m"):
 	""" Get current month. """
-	currentMonth = time.strftime(format); # e.g. 2018-02 
+	currentMonth = time.strftime(format) # e.g. 2018-02
 
 	return currentMonth 
 
@@ -107,7 +107,7 @@ def raw(month=None):
 			# prepare patch dictionary
 			patch['username'] = username;
 			patch['name'] = contributor['name'];
-			patch['country'] = contributor['country'];
+			patch['country'] = contributor['country']
 
 			# make sure patch wasn't previously saved
 			if not patchExists(patch):
