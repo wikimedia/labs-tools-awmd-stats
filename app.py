@@ -16,7 +16,6 @@ from tinydb import TinyDB, Query
 # instantiate Flask
 app = Flask(__name__)
 
-@app.route('/month/')
 @app.route('/month/<month>')
 @app.route('/')
 def index(month=None):
@@ -208,7 +207,7 @@ def decrementMonth(month, n=1):
 
 
 @app.route('/test')
-def test():
+def sample_request():
 	""" Test API endpoint with hardcoded data. """
 	pprint.pprint(getContributorStats('D3r1ck01', '2018-01'))
 
