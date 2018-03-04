@@ -47,10 +47,21 @@ class AppTestCase(unittest.TestCase):
 
 
 	###=== Section 2: Test all the UD methods===###
+
+	# Test getCurrentMonth() method
 	def testGetCurrentMonth(self, formatted="%Y-%m"):
 		Y_M_format = time.strftime(formatted)
 		self.assertEquals(getCurrentMonth(formatted), Y_M_format)
 
+	# Test dbHasMonth() method
+	def testDbHasMonth_WithData(self):
+		status = dbHasMonth("2018-02") # search month with data
+		self.assertEquals(status, True) # returns True for month with data
+
+	def testDbHasMonth_WithoutData(self):
+		# Past month with no data: https://tools.wmflabs.org/awmd-stats/month/2017-11.
+		status = dbHasMonth("2017-11") # search month without data
+		self.assertEquals(status, False) # returns False for month without data
 
 # Execute the unit tests
 if __name__ == '__main__':
