@@ -116,12 +116,12 @@ def raw(month=None):
 				db.insert(patch)
 
 	stats = getStatsFromDb(month)
-	submitters = getContributors(stats)
+	contributors = getContributors(stats)
 
 	formatted = datetime.strptime(month, ("%Y-%m"))
 
 	return render_template('stats.html', stats = stats, 
-			month = formatted.strftime("%B, %Y"), submitters = submitters)
+			month = formatted.strftime("%B, %Y"), contributors = contributors)
 
 
 def getStatsFromDb(month):
