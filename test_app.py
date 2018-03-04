@@ -27,10 +27,22 @@ class AppTestCase(unittest.TestCase):
 		response = self.app.get('/raw/')
 		self.assertEquals(response.status_code, 200)
 
+	# Test the /raw/<month> route response status_code
+	def test_raw_month_route(self):
+		response = self.app.get('/raw/2018-01')
+		self.assertEquals(response.status_code, 200)
+
 	# Test the /month/<month> route response status_code
 	def test_month_route(self):
 		response = self.app.get('/month/2018-01')
 		self.assertEquals(response.status_code, 200)
 
+	# Test the /contributor/<username>/<month>
+	def test_contributor_username_month_route(self):
+		response = self.app.get('/contributor/d3r1ck01/2018-01')
+		self.assertEquals(response.status_code, 200)
+
+
+# Execute the unit tests
 if __name__ == '__main__':
 	unittest.main()
