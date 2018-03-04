@@ -3,7 +3,6 @@
 # TODO: We intend to have 100% test coverage
 
 import unittest
-from flask import Flask
 from app import *
 
 class AppTestCase(unittest.TestCase):
@@ -39,7 +38,7 @@ class AppTestCase(unittest.TestCase):
 
 	# Test the /contributor/<username>/<month>
 	def test_contributor_username_month_route(self):
-		response = self.app.get('/contributor/d3r1ck01/2018-01')
+		response = self.app.get('/contributor/D3r1ck01/2018-02')
 		self.assertEquals(response.status_code, 200)
 
 
