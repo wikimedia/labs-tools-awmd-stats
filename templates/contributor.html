@@ -17,7 +17,7 @@
 				{% if monthID in patch.created %}
 					<tr>
 						<td>{{loop.index}}</td>
-						<td><a href="https://gerrit.wikimedia.org/r/#/c/{{patch._number}}/">{{patch.project}}</a></td>
+						<td><a href="//gerrit.wikimedia.org/r/#/c/{{patch._number}}/">{{patch.project}}</a></td>
 						<td>{{patch.created|datetimeformat}}</td>
 						<td>{{patch.updated|datetimeformat}}</td>
 						<td>{{patch.status}}</td>
