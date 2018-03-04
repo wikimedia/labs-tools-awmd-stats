@@ -25,19 +25,19 @@ def index(month=None):
 		month = getCurrentMonth() # make month format human-readable 
 	monthID = month
 	stats = getStatsFromDb(month)
-	submitters = getContributors(stats)
+	contributors = getContributors(stats)
 
 	# check whether there are entries in db
 	formatted = datetime.strptime(month, ("%Y-%m"))
 	if dbHasMonth(month) == True:
 		return render_template('index.html', stats = stats, 
-			month = formatted.strftime("%B, %Y"), submitters = submitters, monthID = monthID)
+			month = formatted.strftime("%B, %Y"), contributors = contributors, monthID = monthID)
 	else:
 		return render_template('loader.html', month = month, formatted = formatted.strftime("%B, %Y"))
  
 
-@app.route('/submitter/<username>/<month>')
-def submitterPatchesByMonth(username, month):
+@app.route('/contributor/<username>/<month>')
+def contributorPatchesByMonth(username, month):
 	""" REST endpoint for list of contributor's patche(s). """
 	Submitter = Query()
 	db = getDb()
@@ -46,11 +46,11 @@ def submitterPatchesByMonth(username, month):
 	# grab previous url from flask.request.referrer
 	backUrl = request.referrer
 
-	return render_template('submitter.html', patches = patches, monthID = month, backUrl = backUrl)
+	return render_template('contributor.html', patches = patches, monthID = month, backUrl = backUrl)
 
 
-def getContributors():
-	""" Loop through and get all contributors. """
+def readContributorsFromFile():
+	""" Read through and get all contributors. """
 	file = open('contributors.json', "r")
 	jsonText =  file.read()
 	response = json.loads(jsonText)
@@ -93,7 +93,7 @@ def raw(month=None):
 		month = getCurrentMonth()
 
 	# load and save contributors list
-	contributors = getContributors()
+	contributors = readContributorsFromFile()
 
 	# loop through contributors
 	for contributor in contributors:
@@ -101,14 +101,14 @@ def raw(month=None):
 		username = contributor['username']
 		patches = getContributorStats(username, month)
 
-		# loop through participant patches
+		# loop through contributor patches
 		db = getDb()
 		for patch in patches:
 
 			# prepare patch dictionary
 			patch['username'] = username;
-			patch['name'] = participant['name'];
-			patch['country'] = participant['country'];
+			patch['name'] = contributor['name'];
+			patch['country'] = contributor['country'];
 
 			# make sure patch wasn't previously saved
 			if not patchExists(patch):
