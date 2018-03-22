@@ -79,6 +79,10 @@ def getContributorStats(username, month=None):
 @app.route('/refresh/<month>')
 def refreshStatsByMonth(month):
 	""" Force a deep refresh """
+	formatted = datetime.strptime(month, ("%Y-%m"))
+
+	# Let loader handle the refreshing process as this is its purpose 
+	return render_template('loader.html', month = month, formatted = formatted.strftime("%B, %Y"))
 
 def getCurrentMonth(format="%Y-%m"):
 	""" Get current month. """
