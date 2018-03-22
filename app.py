@@ -32,7 +32,7 @@ def index(month=None):
 		return render_template('index.html', stats = stats, 
 			month = formatted.strftime("%B, %Y"), contributors = contributors, monthID = monthID)
 	else:
-		return render_template('loader.html', month = month, formatted = formatted.strftime("%B, %Y"))
+		return render_template('loader.html', monthID = monthID, formatted = formatted.strftime("%B, %Y"))
  
 
 @app.route('/contributor/<username>/<month>')
@@ -76,6 +76,16 @@ def getContributorStats(username, month=None):
 
 		return json.loads(jsonArray);
 
+@app.route('/refresh/<month>')
+@app.route('/refresh/')
+def refreshStatsByMonth(month=None):
+	""" Force a deep refresh """
+	if month == None:
+		month = getCurrentMonth() # make month format human-readable 
+	formatted = datetime.strptime(month, ("%Y-%m"))
+
+	# Let loader handle the refreshing process as this is its purpose 
+	return render_template('loader.html', monthID = month, formatted = formatted.strftime("%B, %Y"))
 
 def getCurrentMonth(format="%Y-%m"):
 	""" Get current month. """
@@ -119,7 +129,7 @@ def raw(month=None):
 
 	formatted = datetime.strptime(month, ("%Y-%m"))
 
-	return render_template('stats.html', stats = stats, 
+	return render_template('stats.html', stats = stats, monthID = month, 
 			month = formatted.strftime("%B, %Y"), contributors = contributors)
 
 

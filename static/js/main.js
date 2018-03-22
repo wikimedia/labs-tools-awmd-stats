@@ -11,12 +11,12 @@ jQuery(document).ready( function($){
 	}).on('changeDate', function(e) {
 		var y = e.date.getFullYear(),
 		_m = e.date.getMonth() + 1,
-		m = (_m > 9 ? _m : '0'+_m),
+		m = (_m > 9 ? _m : '0' + _m),
 		_d = e.date.getDate(),
-		d = (_d > 9 ? _d : '0'+_d),
+		d = (_d > 9 ? _d : '0' + _d),
 		month = y + '-' + m;
 
-		window.open(baseUrl + "month/"+month,"_self")
+		window.open(baseUrl + "month/" + month, "_self")
 	});
 
 	// progress bar while loading stats
@@ -28,9 +28,9 @@ jQuery(document).ready( function($){
 		}
 	});
 
-	/* Refresh page when refresh icon is clicked */
+	// Refresh page when refresh icon is clicked //
 	$('#refresh-btn').click(function() {
-		location.reload(true);
+		window.open( baseUrl + "refresh/" + $('input#month').val(), "_self" );
 	});
 });
 
