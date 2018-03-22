@@ -76,6 +76,9 @@ def getContributorStats(username, month=None):
 
 		return json.loads(jsonArray);
 
+@app.route('/refresh/<month>')
+def refreshStatsByMonth(month):
+	""" Force a deep refresh """
 
 def getCurrentMonth(format="%Y-%m"):
 	""" Get current month. """
