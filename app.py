@@ -182,7 +182,6 @@ def getContributors(patches):
 	contributors = list(contributors.values())
 
 	return contributors
- 
 
 def filterMonth(string, month):
 	""" Filter month. """
