@@ -16,6 +16,11 @@ Install application dependencies using the `install-deps.sh` script:
 ```
 The above script attempts to check system requirements and tell informs user on next steps.
 
+## Quickstart the app
+```bash
+export FLASK_APP=app.py
+flask run
+```
 
 # Track your contributions
 
