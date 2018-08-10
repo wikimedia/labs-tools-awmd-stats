@@ -137,7 +137,7 @@ def getStatsFromDb(month):
 	""" Get monthly statistics from DB. """
 	Patch = Query()
 	db = getDb()
-	stats = db.search(Patch.created.test(filterMonth, month))
+	stats = db.search(Patch.created.matches(month))
 
 	return stats
 
@@ -161,11 +161,16 @@ def getDb():
 
 def getContributors(patches):
 	""" Get the list of patch contributors. """
-	contributors = []
-	# grouping by, the pythonic way
-	for key, group in itertools.groupby(patches, key = lambda x: x['username']):
-		contributors.append(list(group))
-
+	contributors = {}
+	# grouping by username
+	for patch in patches:
+		
+		try: 
+			contributors[patch['username']].update(patch) 
+		except:
+			# create key if inexistent
+			contributors[patch['username']] = patch
+			
 	return contributors
 
 
