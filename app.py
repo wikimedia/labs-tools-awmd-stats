@@ -165,6 +165,7 @@ def getContributors(patches):
 	contributors = {}
 
 	# group contributions by username
+	# a probably faster alternative is : https://matthewmoisen.com/blog/itertools-groupby-example/
 	for patch in patches:
 		 
 		try:
@@ -176,7 +177,6 @@ def getContributors(patches):
 			user_patches = []
 			user_patches.append(patch)
 			contributors[patch['username']] = user_patches
-
  
 	# convert from dic to list
 	contributors = list(contributors.values())
