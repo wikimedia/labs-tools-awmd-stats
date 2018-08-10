@@ -6,7 +6,7 @@ import requests
 import json
 import time
 import itertools
-import pprint
+from  pprint import pprint
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from flask import Flask
@@ -137,7 +137,8 @@ def getStatsFromDb(month):
 	""" Get monthly statistics from DB. """
 	Patch = Query()
 	db = getDb()
-	stats = db.search(Patch.created.matches(month))
+	#stats = db.search(Patch.created == month)
+	stats = db.search(Patch.created.test(filterMonth, month))
 
 	return stats
 
@@ -162,17 +163,26 @@ def getDb():
 def getContributors(patches):
 	""" Get the list of patch contributors. """
 	contributors = {}
-	# grouping by username
+
+	# group contributions by username
 	for patch in patches:
-		
-		try: 
-			contributors[patch['username']].update(patch) 
+		 
+		try:
+			user_patches = []
+			user_patches.append(patch)
+			contributors[patch['username']] = contributors[patch['username']] + user_patches
 		except:
 			# create key if inexistent
-			contributors[patch['username']] = patch
-			
-	return contributors
+			user_patches = []
+			user_patches.append(patch)
+			contributors[patch['username']] = user_patches
 
+ 
+	# convert from dic to list
+	contributors = list(contributors.values())
+
+	return contributors
+ 
 
 def filterMonth(string, month):
 	""" Filter month. """
@@ -227,7 +237,7 @@ def sample_request():
 	pprint.pprint(getContributorStats('D3r1ck01', '2018-01'))
 
 	return ''
-
+ 
 
 def dbHasMonth(month):
 	""" Check whether month has entries in the DB. """
@@ -238,7 +248,7 @@ def dbHasMonth(month):
 	else:
 		return False
 
-
+ 
 # Execute the application
 if __name__ == '__main__':
 	app.run()
