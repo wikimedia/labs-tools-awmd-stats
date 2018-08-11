@@ -163,30 +163,11 @@ def getDb():
 
 def getContributors(patches):
 	""" Get the list of patch contributors. """
-	
-
-	# group contributions by username
-	'''  
-	# a probably faster algorithm is : https://matthewmoisen.com/blog/itertools-groupby-example/
-	for patch in patches:
-		 
-		try:
-			user_patches = []
-			user_patches.append(patch)
-			contributors[patch['username']] = contributors[patch['username']] + user_patches
-		except:
-			# create key if inexistent
-			user_patches = []
-			user_patches.append(patch)
-			contributors[patch['username']] = user_patches
- 
-	# convert from dic to list
-	contributors = list(contributors.values())
-
-	''' 
+		
 	data = []
 	contributors = []
 
+	# group contributions by username 
 	data = sorted(patches, key=itemgetter('username'))
 	
 	for k, g in itertools.groupby(data, key=lambda x:x['username']):
