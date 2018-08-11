@@ -6,6 +6,7 @@ import requests
 import json
 import time
 import itertools
+from operator import itemgetter
 from  pprint import pprint
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -162,10 +163,11 @@ def getDb():
 
 def getContributors(patches):
 	""" Get the list of patch contributors. """
-	contributors = {}
+	
 
 	# group contributions by username
-	# a probably faster alternative is : https://matthewmoisen.com/blog/itertools-groupby-example/
+	'''  
+	# a probably faster algorithm is : https://matthewmoisen.com/blog/itertools-groupby-example/
 	for patch in patches:
 		 
 		try:
@@ -180,6 +182,15 @@ def getContributors(patches):
  
 	# convert from dic to list
 	contributors = list(contributors.values())
+
+	''' 
+	data = []
+	contributors = []
+
+	data = sorted(patches, key=itemgetter('username'))
+	
+	for k, g in itertools.groupby(data, key=lambda x:x['username']):
+		contributors.append(list(g)) # Store group iterator as a list
 
 	return contributors
 
