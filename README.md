@@ -18,7 +18,7 @@ The above script attempts to check system requirements and tell informs user on 
 
 ## Quickstart the app
 ```bash
-export FLASK_APP=app.py
+export FLASK_APP=app.py # add --reload parameter to enable Flask auto-compilation feature
 flask run
 ```
 

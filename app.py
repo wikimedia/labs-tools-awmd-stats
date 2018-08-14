@@ -124,6 +124,10 @@ def raw(month=None):
 			if not patchExists(patch):
 				# persist patch to db
 				db.insert(patch)
+			# update patch status
+			else:
+				Patch = Query()
+				db.update({'status': patch['status']}, (Patch.username == patch['username']) & (Patch.created == patch['created'])) 
 
 	stats = getStatsFromDb(month)
 	contributors = getContributors(stats)
