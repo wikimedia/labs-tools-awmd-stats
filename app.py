@@ -129,8 +129,6 @@ def raw(month=None):
 				Patch = Query()
 	            db.update({'status': patch['status']}, (Patch.username == patch['username']) & (Patch.created == patch['created'])) 
 
-
-
 	stats = getStatsFromDb(month)
 	contributors = getContributors(stats)
 
