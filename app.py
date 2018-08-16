@@ -22,7 +22,7 @@ app = Flask(__name__)
 def index(month=None):
 	""" Default / Home page of the application / tool. """
 	if month == None:
-		month = getCurrentMonth() # make month format human-readable 
+		month = getCurrentMonth() # make month format human-readable
 	monthID = month
 	stats = getStatsFromDb(month)
 	contributors = getContributors(stats)
@@ -30,11 +30,11 @@ def index(month=None):
 	# check whether there are entries in db
 	formatted = datetime.strptime(month, ("%Y-%m"))
 	if dbHasMonth(month) == True:
-		return render_template('index.html', stats = stats, 
+		return render_template('index.html', stats = stats,
 			month = formatted.strftime("%B, %Y"), contributors = contributors, monthID = monthID)
 	else:
 		return render_template('loader.html', monthID = monthID, formatted = formatted.strftime("%B, %Y"))
- 
+
 
 @app.route('/contributor/<username>/<month>')
 def contributorPatchesByMonth(username, month):
@@ -63,7 +63,7 @@ def getContributorStats(username, month=None):
 	if month == None:
 		date = getCurrentMonth()
 	else:
-		date = month 
+		date = month
 	previous_month = decrementMonth(date)
 	next_month = incrementMonth(date)
 
@@ -82,17 +82,17 @@ def getContributorStats(username, month=None):
 def refreshStatsByMonth(month=None):
 	""" Force a deep refresh """
 	if month == None:
-		month = getCurrentMonth() # make month format human-readable 
+		month = getCurrentMonth() # make month format human-readable
 	formatted = datetime.strptime(month, ("%Y-%m"))
 
-	# Let loader handle the refreshing process as this is its purpose 
+	# Let loader handle the refreshing process as this is its purpose
 	return render_template('loader.html', monthID = month, formatted = formatted.strftime("%B, %Y"))
 
 def getCurrentMonth(format="%Y-%m"):
 	""" Get current month. """
 	currentMonth = time.strftime(format) # e.g. 2018-02
 
-	return currentMonth 
+	return currentMonth
 
 
 @app.route('/raw/')
@@ -127,14 +127,14 @@ def raw(month=None):
 			# update patch status
 			else:
 				Patch = Query()
-				db.update({'status': patch['status']}, (Patch.username == patch['username']) & (Patch.created == patch['created'])) 
+				db.update({'status': patch['status']}, (Patch.username == patch['username']) & (Patch.created == patch['created']))
 
 	stats = getStatsFromDb(month)
 	contributors = getContributors(stats)
 
 	formatted = datetime.strptime(month, ("%Y-%m"))
 
-	return render_template('stats.html', stats = stats, monthID = month, 
+	return render_template('stats.html', stats = stats, monthID = month,
 			month = formatted.strftime("%B, %Y"), contributors = contributors)
 
 
@@ -167,13 +167,13 @@ def getDb():
 
 def getContributors(patches):
 	""" Get the list of patch contributors. """
-		
+
 	data = []
 	contributors = []
 
-	# group contributions by username 
+	# group contributions by username
 	data = sorted(patches, key=itemgetter('username'))
-	
+
 	for k, g in itertools.groupby(data, key=lambda x:x['username']):
 		contributors.append(list(g)) # Store group iterator as a list
 
@@ -181,7 +181,7 @@ def getContributors(patches):
 
 def filterMonth(string, month):
 	""" Filter month. """
-	if month in string: 
+	if month in string:
 		return True
 	else:
 		return False
@@ -191,7 +191,7 @@ def patchExists(patch):
 	""" Check whether patch(es) exists in the DB. """
 	db = getDb()
 	Patch = Query()
-	rows = db.search((Patch.created == patch['created']) 
+	rows = db.search((Patch.created == patch['created'])
 		& (Patch.username == patch['username']))
 
 	# if the patch was previously saved
@@ -206,10 +206,10 @@ def monthToDate(month):
 	month = datetime.strptime(month, ("%Y-%m"))
 	date = month.strftime("%Y-%m-%d"); # eg 2018-02-01
 	date = datetime.strptime(date, ("%Y-%m-%d")) # return datetime object
-	
-	return date 
 
-	
+	return date
+
+
 def incrementMonth(month, n=1):
 	""" Increment date by 'n' months. """
 	date =  monthToDate(month)
@@ -232,7 +232,7 @@ def sample_request():
 	pprint.pprint(getContributorStats('D3r1ck01', '2018-01'))
 
 	return ''
- 
+
 
 def dbHasMonth(month):
 	""" Check whether month has entries in the DB. """
@@ -243,7 +243,7 @@ def dbHasMonth(month):
 	else:
 		return False
 
- 
+
 # Execute the application
 if __name__ == '__main__':
 	app.run()

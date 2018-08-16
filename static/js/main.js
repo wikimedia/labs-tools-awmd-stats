@@ -1,12 +1,12 @@
 jQuery(document).ready( function($){
-	
+
 	// base url
 	baseUrl = getBaseUrl();
 
 
 	$('#datepicker').datepicker({
 		format: "mm-yyyy",
-		startView: "months", 
+		startView: "months",
 		minViewMode: "months"
 	}).on('changeDate', function(e) {
 		var y = e.date.getFullYear(),
@@ -40,6 +40,6 @@ function getBaseUrl() {
 	var baseUrl = document.getElementById('baseurl').getAttribute('href').replace(/^https?:\/\//,'');
 
 	// add actual protocol to fix Flask bug with protocol inconsistency
-	baseUrl = location.protocol + "//" + baseUrl 
+	baseUrl = location.protocol + "//" + baseUrl
 	return baseUrl;
 }

@@ -11,7 +11,7 @@ Africa Wikimedia Developer (AWMD) Tool for gathering monthly statistics of Afric
 ## Installing dependencies
 
 Install application dependencies using the `install-deps.sh` script:
-```bash 
+```bash
 ./install-deps.sh
 ```
 The above script attempts to check system requirements and tell informs user on next steps.

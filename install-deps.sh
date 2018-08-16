@@ -12,7 +12,7 @@ if command -v python3 &>/dev/null; then
 		echo -e "\033[1;32m[OK] pip is installed, now installing dependencies...\n\033[0m"
 	else
 		echo -e "\033[1;32mpip (Python Dependency Manager) is not installed, aborting...\033[0m"
-		exit 1 
+		exit 1
 	fi
 else
 	echo -e "\033[1;32mPython 3 is not installed, aborting...\033[0m"
