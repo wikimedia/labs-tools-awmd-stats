@@ -16,12 +16,12 @@ class AppTestCase(unittest.TestCase):
 		self.app = app.test_client()
 
 	# Test the / (index) route response status_code
-	def test_index(self):
+	def test_index_route(self):
 		response = self.app.get('/')
 		self.assertEquals(response.status_code, 200)
 
 	# Test the /test route response status_code
-	def test_test(self):
+	def test_test_route(self):
 		response = self.app.get('/test')
 		self.assertEquals(response.status_code, 200)
 
@@ -36,13 +36,23 @@ class AppTestCase(unittest.TestCase):
 		self.assertEquals(response.status_code, 200)
 
 	# Test the /month/<month> route response status_code
-	def test_month_route(self):
+	def test_month_month_route(self):
 		response = self.app.get('/month/2018-01')
 		self.assertEquals(response.status_code, 200)
 
 	# Test the /contributor/<username>/<month>
 	def test_contributor_username_month_route(self):
-		response = self.app.get('/contributor/D3r1ck01/2018-02')
+		response = self.app.get('/contributor/D3r1ck01/2018-07')
+		self.assertEquals(response.status_code, 200)
+
+	# Test the /refresh/ route response status_code
+	def test_refresh_route(self):
+		response = self.app.get('/refresh/')
+		self.assertEquals(response.status_code, 200)
+
+	# Test the /refresh/<month> route response status_code
+	def test_refresh_month_route(self):
+		response = self.app.get('/refresh/2018-01')
 		self.assertEquals(response.status_code, 200)
 
 
@@ -55,7 +65,7 @@ class AppTestCase(unittest.TestCase):
 
 	# Test dbHasMonth() method
 	def testDbHasMonth_WithData(self):
-		status = dbHasMonth("2018-02") # search month with data
+		status = dbHasMonth("2018-07") # search month with data
 		self.assertEquals(status, True) # returns True for month with data
 
 	def testDbHasMonth_WithoutData(self):

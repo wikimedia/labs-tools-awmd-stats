@@ -7,7 +7,7 @@ import json
 import time
 import itertools
 from operator import itemgetter
-from  pprint import pprint
+from pprint import pprint
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from flask import Flask
@@ -229,7 +229,7 @@ def decrementMonth(month, n=1):
 @app.route('/test')
 def sample_request():
 	""" Test API endpoint with hardcoded data. """
-	pprint.pprint(getContributorStats('D3r1ck01', '2018-01'))
+	pprint(getContributorStats('D3r1ck01', '2018-07'))
 
 	return ''
 
