@@ -1,26 +1,34 @@
 # Author: Samuel Guebo, Derick Alangi
-# Description: Entry point of the application
+# Description: The main application layer
 # License: MIT
 
-import requests
-import json
-import time
 import itertools
+import json
+import requests
+import time
+
+from datetime import datetime
+from dateutil import relativedelta
+from flask import Flask
+from flask import render_template
+from flask import request
 from operator import itemgetter
 from pprint import pprint
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
-from flask import Flask
-from flask import render_template, request
-from tinydb import TinyDB, Query
+from tinydb import TinyDB
+from tinydb import Query
 
-# instantiate Flask
+# instantiate a Flask app
 app = Flask(__name__)
 
 @app.route('/month/<month>')
 @app.route('/')
 def index(month=None):
-	""" Default / Home page of the application / tool. """
+	"""
+	Default/Home page of the application/tool.
+
+	Keyword arguments:
+	month -- the default is the current month but can view previous months
+	"""
 	if month == None:
 		month = getCurrentMonth() # make month format human-readable
 	monthID = month
@@ -38,7 +46,13 @@ def index(month=None):
 
 @app.route('/contributor/<username>/<month>')
 def contributorPatchesByMonth(username, month):
-	""" REST endpoint for list of contributor's patche(s). """
+	"""
+	REST endpoint for list of contributor's patche(s).
+
+	Keyword arguments:
+	username -- the gerrit handle of the contributor
+	month -- the month to fetch corresponding contributions
+	"""
 	Submitter = Query()
 	db = getDb()
 	# filter by username
@@ -50,7 +64,7 @@ def contributorPatchesByMonth(username, month):
 
 
 def readContributorsFromFile():
-	""" Read through and get all contributors. """
+	"""Read through and get all contributors."""
 	file = open('contributors.json', "r")
 	jsonText =  file.read()
 	response = json.loads(jsonText)
@@ -59,7 +73,13 @@ def readContributorsFromFile():
 
 
 def getContributorStats(username, month=None):
-	""" Fetch Gerrit API for patch contributor data. """
+	"""
+	Fetch Gerrit API for patch contributor data.
+
+	Keyword arguments:
+	username -- the gerrit handle of the contributor
+	month -- the corresponding month to get contributor statistics
+	"""
 	if month == None:
 		date = getCurrentMonth()
 	else:
@@ -80,7 +100,12 @@ def getContributorStats(username, month=None):
 @app.route('/refresh/<month>')
 @app.route('/refresh/')
 def refreshStatsByMonth(month=None):
-	""" Force a deep refresh """
+	"""
+	Force a deep refresh.
+
+	Keyword arguments:
+	month -- the month to perform a hard refresh (regenerate the data)
+	"""
 	if month == None:
 		month = getCurrentMonth() # make month format human-readable
 	formatted = datetime.strptime(month, ("%Y-%m"))
@@ -89,7 +114,12 @@ def refreshStatsByMonth(month=None):
 	return render_template('loader.html', monthID = month, formatted = formatted.strftime("%B, %Y"))
 
 def getCurrentMonth(format="%Y-%m"):
-	""" Get current month. """
+	"""
+	Get current month.
+
+	Keyword arguments:
+	format -- the current month format to be used
+	"""
 	currentMonth = time.strftime(format) # e.g. 2018-02
 
 	return currentMonth
@@ -98,7 +128,12 @@ def getCurrentMonth(format="%Y-%m"):
 @app.route('/raw/')
 @app.route('/raw/<month>')
 def raw(month=None):
-	""" Display Raw HTML stats """
+	"""
+	Display Raw HTML stats.
+
+	Keyword arguments:
+	month -- the month to generate raw data, mainly JSON data
+	"""
 	if month == None:
 		month = getCurrentMonth()
 
@@ -127,11 +162,11 @@ def raw(month=None):
 			# update patch status
 			else:
 				Patch = Query()
-				db.update({'status': patch['status']}, (Patch.username == patch['username']) & (Patch.created == patch['created']))
+				db.update({'status': patch['status']}, (Patch.username == patch['username'])
+					& (Patch.created == patch['created']))
 
 	stats = getStatsFromDb(month)
 	contributors = getContributors(stats)
-
 	formatted = datetime.strptime(month, ("%Y-%m"))
 
 	return render_template('stats.html', stats = stats, monthID = month,
@@ -139,7 +174,12 @@ def raw(month=None):
 
 
 def getStatsFromDb(month):
-	""" Get monthly statistics from DB. """
+	"""
+	Get monthly statistics from DB.
+
+	Keyword arguments:
+	month -- the month to get monthly stats from db.json
+	"""
 	Patch = Query()
 	db = getDb()
 	#stats = db.search(Patch.created == month)
@@ -150,15 +190,21 @@ def getStatsFromDb(month):
 
 @app.template_filter()
 def datetimeformat(value, inFormat="%Y-%m-%d %H:%M:%S.000000000", outFormat = '%Y-%m-%d, %H:%M'):
-	""" Custom Flask filter for datetimeformating. """
+	"""
+	Custom Flask filter for datetimeformating.
+
+	Keyword arguments:
+	value -- the actual date value gotten from the data
+	inFormat -- input format of the value (date)
+	outFormat -- output format of the value (date)
+	"""
 	formattedString = datetime.strptime(value, inFormat)
 
 	return formattedString.strftime(outFormat) # simple formatting
 
 
 def getDb():
-	""" DB object to be used independently. """
-
+	"""DB object to be used independently."""
 	# setting the tinydb location
 	db = TinyDB('db/db.json')
 
@@ -166,8 +212,12 @@ def getDb():
 
 
 def getContributors(patches):
-	""" Get the list of patch contributors. """
+	"""
+	Get the list of patch contributors.
 
+	Keyword arguments:
+	patches -- patches of all patch contributors
+	"""
 	data = []
 	contributors = []
 
@@ -180,7 +230,13 @@ def getContributors(patches):
 	return contributors
 
 def filterMonth(string, month):
-	""" Filter month. """
+	"""
+	Filter month.
+
+	Keyword arguments:
+	string -- the string to perform the filtration on
+	month -- the month used as the filter
+	"""
 	if month in string:
 		return True
 	else:
@@ -188,7 +244,12 @@ def filterMonth(string, month):
 
 
 def patchExists(patch):
-	""" Check whether patch(es) exists in the DB. """
+	"""
+	Check whether patch(es) exists in the DB.
+
+	Keyword arguments:
+	patch -- the patch(es) to be checked if it exist in db.json
+	"""
 	db = getDb()
 	Patch = Query()
 	rows = db.search((Patch.created == patch['created'])
@@ -202,7 +263,12 @@ def patchExists(patch):
 
 
 def monthToDate(month):
-	""" Convert month to date format. """
+	"""
+	Convert month to date format.
+
+	Keyword arguments:
+	month -- the month to convert to date format
+	"""
 	month = datetime.strptime(month, ("%Y-%m"))
 	date = month.strftime("%Y-%m-%d"); # eg 2018-02-01
 	date = datetime.strptime(date, ("%Y-%m-%d")) # return datetime object
@@ -211,31 +277,48 @@ def monthToDate(month):
 
 
 def incrementMonth(month, n=1):
-	""" Increment date by 'n' months. """
+	"""
+	Increment date by 'n' months.
+
+	Keyword arguments:
+	month -- the current set month
+	n -- the number of months to increment (default is 1)
+	"""
 	date =  monthToDate(month)
-	next_month = date + relativedelta(months=n)
+	next_month = date + relativedelta.relativedelta(months=n)
 
 	return next_month.strftime("%Y-%m-%d")
 
 
 def decrementMonth(month, n=1):
-	""" Decrement date by 'n' months. """
+	"""
+	Decrement date by 'n' months.
+
+	Keyword arguments:
+	month -- the current set month
+	n -- the number of months to decrement (default is 1)
+	"""
 	date =  monthToDate(month)
-	previous_month = date - relativedelta(months=n)
+	previous_month = date - relativedelta.relativedelta(months=n)
 
 	return previous_month.strftime("%Y-%m-%d")
 
 
 @app.route('/test')
 def sample_request():
-	""" Test API endpoint with hardcoded data. """
+	"""Test API endpoint with hardcoded data."""
 	pprint(getContributorStats('D3r1ck01', '2018-07'))
 
 	return ''
 
 
 def dbHasMonth(month):
-	""" Check whether month has entries in the DB. """
+	"""
+	Check whether month has entries in the DB.
+
+	Keyword arguments:
+	month -- check if this month is in the db.json (DB)
+	"""
 	stats = getStatsFromDb(month)
 	# if there is at least one entry
 	if len(stats) > 0:
@@ -244,6 +327,6 @@ def dbHasMonth(month):
 		return False
 
 
-# Execute the application
+# Entry point of the application
 if __name__ == '__main__':
 	app.run()

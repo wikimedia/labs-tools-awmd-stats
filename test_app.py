@@ -5,8 +5,12 @@
 # Section 1: Test all routes
 # Section 2: Test all UD methods
 
+import time
 import unittest
-from app import *
+
+from app import app
+from app import getCurrentMonth
+from app import dbHasMonth
 
 class AppTestCase(unittest.TestCase):
 	""" Tests for the application. """
