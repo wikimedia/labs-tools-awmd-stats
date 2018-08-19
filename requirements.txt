@@ -2,3 +2,4 @@ Flask==0.12.2
 python-dateutil==2.6.1
 requests==2.18.4
 tinydb==3.7.0
+flask-script==2.0.6

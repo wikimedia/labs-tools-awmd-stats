@@ -16,11 +16,23 @@ Install application dependencies using the `install-deps.sh` script:
 ```
 The above script attempts to check system requirements and tell informs user on next steps.
 
-## Quickstart the app
+## Quickstart the tool
 ```bash
-export FLASK_APP=app.py # add --reload parameter to enable Flask auto-compilation feature
-flask run
+python manage.py runserver
 ```
+
+## Testing the tool
+```bash
+pip install pytest
+```
+
+Then run the command below (make sure you're in the project's root for example):
+```
+bash
+py.test -v tests/
+```
+
+`NOTE`: If you find any failing test, report on Phabricator here: https://phabricator.wikimedia.org/project/board/2858/.
 
 # Track your contributions
 
@@ -30,4 +42,4 @@ flask run
 # Contributors
 
 * [Samuel Guébo](https://github.com/samuelguebo) - Project Lead
-* [Derick Alangi](https://github.com/ch3nkula) - Supporter
+* [Derick Alangi](https://github.com/ch3nkula) - Contributor
