@@ -27,8 +27,7 @@ pip install pytest
 ```
 
 Then run the command below (make sure you're in the project's root for example):
-```
-bash
+```bash
 py.test -v tests/
 ```
 
