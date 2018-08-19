@@ -8,6 +8,7 @@ instance/
 .pytest_cache/
 .coverage
 htmlcov/
+.tox/
 
 dist/
 build/
