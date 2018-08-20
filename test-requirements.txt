@@ -1,0 +1,3 @@
+pytest==3.0.7
+py==1.4.29
+setuptools==36.0.1

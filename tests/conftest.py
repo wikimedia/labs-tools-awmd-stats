@@ -4,7 +4,8 @@
 
 import pytest
 
-from awmdstats import create_app
+from awmdstats.app import create_app
+
 
 @pytest.fixture()
 def testapp(request):

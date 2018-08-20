@@ -4,7 +4,7 @@
 
 import os
 
-from flask_script import Manager, Server
+from flask_script import Manager
 
 from awmdstats import create_app
 

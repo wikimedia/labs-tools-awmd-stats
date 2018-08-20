@@ -14,5 +14,4 @@ dist/
 build/
 *.egg-info/
 
-database
 .cache
