@@ -6,7 +6,7 @@ import os
 
 from flask_script import Manager
 
-from awmdstats import create_app
+from awmdstats.app import create_app
 
 # Run in particular environment
 env = os.environ.get('APPNAME_ENV', 'dev')

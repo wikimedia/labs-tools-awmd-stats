@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>app.py</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div class='section'>
+    <div class='docs'><h1>app.py</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span></span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      <p>Author: Samuel Guebo, Derick Alangi
+Description: The main application layer
+License: MIT</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">render_template</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="kn">from</span> <span class="nn">awmdstats</span> <span class="kn">import</span> <span class="n">utils</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
+      </div>
+      <p>An flask application factory, as explained here:
+http://flask.pocoo.org/docs/patterns/appfactories/</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">create_app</span><span class="p">(</span><span class="n">object_name</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-3'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-3'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-4'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-4'>#</a>
+      </div>
+      <p>Default/Home page of the application/tool.</p>
+<p>Keyword arguments:
+month &ndash; the default is the current month but can view previous months</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/month/&lt;month&gt;&#39;</span><span class="p">)</span>
+    <span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">month</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-5'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-5'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="k">if</span> <span class="n">month</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">month</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getCurrentMonth</span><span class="p">()</span>  <span class="c1"># make month format human-readable</span>
+        <span class="n">monthID</span> <span class="o">=</span> <span class="n">month</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getStatsFromDb</span><span class="p">(</span><span class="n">month</span><span class="p">)</span>
+        <span class="n">contributors</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getContributors</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-6'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-6'>#</a>
+      </div>
+      <p>check whether there are entries in db</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="n">formatted</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">month</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;%Y-%m&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">dbHasMonth</span><span class="p">(</span><span class="n">month</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span>
+                <span class="s1">&#39;index.html&#39;</span><span class="p">,</span> <span class="n">stats</span><span class="o">=</span><span class="n">stats</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="n">formatted</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%B, %Y&quot;</span><span class="p">),</span>
+                <span class="n">contributors</span><span class="o">=</span><span class="n">contributors</span><span class="p">,</span> <span class="n">monthID</span><span class="o">=</span><span class="n">monthID</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span>
+                <span class="s1">&#39;loader.html&#39;</span><span class="p">,</span> <span class="n">monthID</span><span class="o">=</span><span class="n">monthID</span><span class="p">,</span>
+                <span class="n">formatted</span><span class="o">=</span><span class="n">formatted</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%B, %Y&quot;</span><span class="p">)</span>
+            <span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-7'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-7'>#</a>
+      </div>
+      <p>REST endpoint for list of contributor&rsquo;s patche(s).</p>
+<p>Keyword arguments:
+username &ndash; the gerrit handle of the contributor
+month &ndash; the month to fetch corresponding contributions</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/contributor/&lt;username&gt;/&lt;month&gt;&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">contributorPatchesByMonth</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">month</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-8'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-8'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="n">Submitter</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">Query</span><span class="p">()</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getDb</span><span class="p">()</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-9'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-9'>#</a>
+      </div>
+      <p>filter by username</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="n">patches</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">Submitter</span><span class="o">.</span><span class="n">username</span> <span class="o">==</span> <span class="n">username</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-10'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-10'>#</a>
+      </div>
+      <p>grab previous url from flask.request.referrer</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="n">backUrl</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">referrer</span>
+
+        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span>
+            <span class="s1">&#39;contributor.html&#39;</span><span class="p">,</span> <span class="n">patches</span><span class="o">=</span><span class="n">patches</span><span class="p">,</span>
+            <span class="n">monthID</span><span class="o">=</span><span class="n">month</span><span class="p">,</span> <span class="n">backUrl</span><span class="o">=</span><span class="n">backUrl</span>
+        <span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-11'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-11'>#</a>
+      </div>
+      <p>Force a deep refresh.</p>
+<p>Keyword arguments:
+month &ndash; the month to perform a hard refresh (regenerate the data)</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/refresh/&lt;month&gt;&#39;</span><span class="p">)</span>
+    <span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/refresh/&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">refreshStatsByMonth</span><span class="p">(</span><span class="n">month</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-12'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-12'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="k">if</span> <span class="n">month</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">month</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getCurrentMonth</span><span class="p">()</span>  <span class="c1"># make month format human-readable</span>
+        <span class="n">formatted</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">month</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;%Y-%m&quot;</span><span class="p">))</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-13'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-13'>#</a>
+      </div>
+      <p>Let loader handle the refreshing process as this is its purpose</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span>
+            <span class="s1">&#39;loader.html&#39;</span><span class="p">,</span> <span class="n">monthID</span><span class="o">=</span><span class="n">month</span><span class="p">,</span>
+            <span class="n">formatted</span><span class="o">=</span><span class="n">formatted</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%B, %Y&quot;</span><span class="p">)</span>
+        <span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-14'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-14'>#</a>
+      </div>
+      <p>Display Raw HTML stats.</p>
+<p>Keyword arguments:
+month &ndash; the month to generate raw data, mainly JSON data</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/raw/&#39;</span><span class="p">)</span>
+    <span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/raw/&lt;month&gt;&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">raw</span><span class="p">(</span><span class="n">month</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-15'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-15'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="k">if</span> <span class="n">month</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">month</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getCurrentMonth</span><span class="p">()</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-16'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-16'>#</a>
+      </div>
+      <p>load and save contributors list</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="n">contributors</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">readContributorsFromFile</span><span class="p">()</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-17'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-17'>#</a>
+      </div>
+      <p>loop through contributors</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="k">for</span> <span class="n">contributor</span> <span class="ow">in</span> <span class="n">contributors</span><span class="p">:</span>
+
+            <span class="n">username</span> <span class="o">=</span> <span class="n">contributor</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
+            <span class="n">patches</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getContributorStats</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">month</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-18'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-18'>#</a>
+      </div>
+      <p>loop through contributor patches</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>            <span class="n">db</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getDb</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">patch</span> <span class="ow">in</span> <span class="n">patches</span><span class="p">:</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-19'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-19'>#</a>
+      </div>
+      <p>prepare patch dictionary</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>                <span class="n">patch</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">username</span>
+                <span class="n">patch</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">contributor</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                <span class="n">patch</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">contributor</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-20'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-20'>#</a>
+      </div>
+      <p>make sure patch wasn&rsquo;t previously saved</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>                <span class="k">if</span> <span class="ow">not</span> <span class="n">utils</span><span class="o">.</span><span class="n">patchExists</span><span class="p">(</span><span class="n">patch</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-21'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-21'>#</a>
+      </div>
+      <p>persist patch to db</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>                    <span class="n">db</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">patch</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-22'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-22'>#</a>
+      </div>
+      <p>update patch status</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">Patch</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">Query</span><span class="p">()</span>
+                    <span class="n">db</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                        <span class="p">{</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="n">patch</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]},</span>
+                        <span class="p">(</span><span class="n">Patch</span><span class="o">.</span><span class="n">username</span> <span class="o">==</span> <span class="n">patch</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">])</span> <span class="o">&amp;</span>
+                        <span class="p">(</span><span class="n">Patch</span><span class="o">.</span><span class="n">created</span> <span class="o">==</span> <span class="n">patch</span><span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">])</span>
+                    <span class="p">)</span>
+
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getStatsFromDb</span><span class="p">(</span><span class="n">month</span><span class="p">)</span>
+        <span class="n">contributors</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getContributors</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+        <span class="n">formatted</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">month</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;%Y-%m&quot;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span>
+            <span class="s1">&#39;stats.html&#39;</span><span class="p">,</span> <span class="n">stats</span><span class="o">=</span><span class="n">stats</span><span class="p">,</span> <span class="n">monthID</span><span class="o">=</span><span class="n">month</span><span class="p">,</span>
+            <span class="n">month</span><span class="o">=</span><span class="n">formatted</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%B, %Y&quot;</span><span class="p">),</span> <span class="n">contributors</span><span class="o">=</span><span class="n">contributors</span>
+        <span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-23'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-23'>#</a>
+      </div>
+      <p>Custom Flask filter for datetimeformating.</p>
+<p>Keyword arguments:
+value &ndash; the actual date value gotten from the data
+inFormat &ndash; input format of the value (date)
+outFormat &ndash; output format of the value (date)</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="nd">@app.template_filter</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">datetimeformat</span><span class="p">(</span>
+        <span class="n">value</span><span class="p">,</span>
+        <span class="n">inFormat</span><span class="o">=</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.000000000&quot;</span><span class="p">,</span>
+        <span class="n">outFormat</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">, %H:%M&#39;</span>
+    <span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-24'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-24'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="n">formattedString</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">inFormat</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">formattedString</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">outFormat</span><span class="p">)</span>  <span class="c1"># simple formatting</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-25'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-25'>#</a>
+      </div>
+      <p>Test API endpoint with hardcoded data.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/test&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">sample_request</span><span class="p">():</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-26'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-26'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="n">pprint</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">getContributorStats</span><span class="p">(</span><span class="s1">&#39;D3r1ck01&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-02&#39;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">return</span> <span class="n">app</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>
