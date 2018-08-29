@@ -11,9 +11,14 @@ import pytest
 class TestApp:
     """Test routes in the application."""
 
-    #  Test the / (index) route response status_code
+    #  Test the index( / ) route response status_code
     def test_index_route(self, testapp):
         response = testapp.get('/')
+        assert response.status_code == 200
+
+    #  Test the /docs/<doc> route response status_code
+    def test_docs_doc_route(self, testapp):
+        response = testapp.get('/docs/index')
         assert response.status_code == 200
 
     #  Test the /test route response status_code

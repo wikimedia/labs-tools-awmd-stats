@@ -21,6 +21,18 @@ The above script attempts to check system requirements and tell informs user on 
 python manage.py runserver
 ```
 
+## Read the code documentations
+To view documentation of the codes which makes use of the docstrings, use this endpoint
+#### On localhost
+```bash
+localhost:5000/docs/index
+```
+
+#### On toolforge server;
+```bash
+https://tools.wmflabs.org/awmd-stats/docs/index
+```
+
 ## Testing the tool
 ```bash
 pip install pytest

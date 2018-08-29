@@ -166,4 +166,26 @@ def create_app(object_name):
 
         return ''
 
+    @app.route('/docs/<doc>')
+    def show_doc(doc="index"):
+        """Show documentation for a particular module."""
+        doc_list = [
+            "__init__.html",
+            "app.html",
+            "conftest.html",
+            "index",
+            "manage.html",
+            "settings.html",
+            "test_app.html",
+            "test_utils.html",
+            "utils.html"
+        ]
+
+        if doc in doc_list:
+            if doc == "index":
+                return render_template("docs/" + doc + ".html")
+            return render_template("docs/" + doc)
+        else:
+            return "[404] Doc Not Found"
+
     return app
