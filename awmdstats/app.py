@@ -166,14 +166,19 @@ def create_app(object_name):
 
         return ''
 
+    @app.route('/docs/sitemap')
+    def show_doc_sitemap():
+        """Show documentation sitemap."""
+        return render_template("docs/index.html")
+
     @app.route('/docs/<doc>')
-    def show_doc(doc="index"):
+    def show_doc(doc="sitemap"):
         """Show documentation for a particular module."""
         doc_list = [
             "__init__.html",
             "app.html",
             "conftest.html",
-            "index",
+            "index.html",
             "manage.html",
             "settings.html",
             "test_app.html",
@@ -182,8 +187,8 @@ def create_app(object_name):
         ]
 
         if doc in doc_list:
-            if doc == "index":
-                return render_template("docs/" + doc + ".html")
+            if doc == "sitemap.html":
+                return render_template("docs/" + doc)
             return render_template("docs/" + doc)
         else:
             return "[404] Doc Not Found"
