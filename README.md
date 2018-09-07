@@ -8,11 +8,11 @@ Africa Wikimedia Developer (AWMD) Tool for gathering monthly statistics of Afric
 * [Python 3.x+](https://www.python.org/downloads/)
 * [PIP (Python Dependency Manager)](https://pip.pypa.io/en/stable/installing/)
 
-## Installing dependencies
+## Setup and documentation
 
-Install application dependencies using the `install-deps.sh` script:
+Install application dependencies and regenerate documentation using the `setup.sh` script:
 ```bash
-./install-deps.sh
+./setup.sh
 ```
 The above script attempts to check system requirements and tell informs user on next steps.
 
