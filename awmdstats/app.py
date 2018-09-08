@@ -91,6 +91,7 @@ def create_app(object_name):
 
     @app.route('/raw/')
     @app.route('/raw/<month>')
+    @app.before_first_request
     def raw(month=None):
         """
         Display Raw HTML stats.
