@@ -7,7 +7,7 @@
 import pytest
 
 
-@pytest.mark.usefixtures("testapp")
+@pytest.mark.usefixtures('testapp')
 class TestApp:
     """Test routes in the application."""
 
