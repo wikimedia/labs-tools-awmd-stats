@@ -37,16 +37,16 @@ def create_app(object_name):
         contributors = utils.getContributors(stats)
 
         # check whether there are entries in db
-        formatted = datetime.strptime(month, ("%Y-%m"))
+        formatted = datetime.strptime(month, ('%Y-%m'))
         if utils.dbHasMonth(month) is True:
             return render_template(
-                'index.html', stats=stats, month=formatted.strftime("%B, %Y"),
+                'index.html', stats=stats, month=formatted.strftime('%B, %Y'),
                 contributors=contributors, monthID=monthID
             )
         else:
             return render_template(
                 'loader.html', monthID=monthID,
-                formatted=formatted.strftime("%B, %Y")
+                formatted=formatted.strftime('%B, %Y')
             )
 
     @app.route('/contributor/<username>/<month>')
@@ -81,12 +81,12 @@ def create_app(object_name):
         """
         if month is None:
             month = utils.getCurrentMonth()  # make month format human-readable
-        formatted = datetime.strptime(month, ("%Y-%m"))
+        formatted = datetime.strptime(month, ('%Y-%m'))
 
         # Let loader handle the refreshing process as this is its purpose
         return render_template(
             'loader.html', monthID=month,
-            formatted=formatted.strftime("%B, %Y")
+            formatted=formatted.strftime('%B, %Y')
         )
 
     @app.route('/raw/')
@@ -135,17 +135,17 @@ def create_app(object_name):
 
         stats = utils.getStatsFromDb(month)
         contributors = utils.getContributors(stats)
-        formatted = datetime.strptime(month, ("%Y-%m"))
+        formatted = datetime.strptime(month, ('%Y-%m'))
 
         return render_template(
             'stats.html', stats=stats, monthID=month,
-            month=formatted.strftime("%B, %Y"), contributors=contributors
+            month=formatted.strftime('%B, %Y'), contributors=contributors
         )
 
     @app.template_filter()
     def datetimeformat(
         value,
-        inFormat="%Y-%m-%d %H:%M:%S.000000000",
+        inFormat='%Y-%m-%d %H:%M:%S.000000000',
         outFormat='%Y-%m-%d, %H:%M'
     ):
         """
@@ -176,22 +176,22 @@ def create_app(object_name):
     def show_doc(doc="sitemap"):
         """Show documentation for a particular module."""
         doc_list = [
-            "__init__.html",
-            "app.html",
-            "conftest.html",
-            "index.html",
-            "manage.html",
-            "settings.html",
-            "test_app.html",
-            "test_utils.html",
-            "utils.html"
+            '__init__.html',
+            'app.html',
+            'conftest.html',
+            'index.html',
+            'manage.html',
+            'settings.html',
+            'test_app.html',
+            'test_utils.html',
+            'utils.html'
         ]
 
         if doc in doc_list:
-            if doc == "sitemap.html":
-                return render_template("docs/" + doc)
-            return render_template("docs/" + doc)
+            if doc == 'sitemap.html':
+                return render_template('docs/' + doc)
+            return render_template('docs/' + doc)
         else:
-            return "[404] Doc Not Found"
+            return '[404] Doc Not Found'
 
     return app

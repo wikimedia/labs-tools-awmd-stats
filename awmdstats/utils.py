@@ -23,7 +23,7 @@ def readContributorsFromFile():
 
     """Read through and get all contributors."""
 
-    file = open('contributors.json', "r")
+    file = open('contributors.json', 'r')
     jsonText = file.read()
     response = json.loads(jsonText)
 
@@ -47,20 +47,20 @@ def getContributorStats(username, month=None):
     previous_month = decrementMonth(date)
     next_month = incrementMonth(date)
 
-    if username != "":
-        link = "https://gerrit.wikimedia.org/r/changes/?q=owner:"
+    if username != '':
+        link = 'https://gerrit.wikimedia.org/r/changes/?q=owner:'
         # build the API requst url
-        url = link + username + "+after:" + \
+        url = link + username + '+after:' + \
             previous_month + "+before:" + next_month
         r = requests.get(url)
         jsonArray = r.text
         # Fix this error in headers of json tree
-        jsonArray = jsonArray.replace(")]}'", "", 1)
+        jsonArray = jsonArray.replace(")]}'", '', 1)
 
         return json.loads(jsonArray)
 
 
-def getCurrentMonth(format="%Y-%m"):
+def getCurrentMonth(format='%Y-%m'):
 
     """
     Get current month for a particular year.
@@ -170,9 +170,9 @@ def monthToDate(month):
     month -- the month to convert to date format
     """
 
-    month = datetime.strptime(month, ("%Y-%m"))
-    date = month.strftime("%Y-%m-%d")  # eg 2018-02-01
-    date = datetime.strptime(date, ("%Y-%m-%d"))  # return datetime object
+    month = datetime.strptime(month, ('%Y-%m'))
+    date = month.strftime('%Y-%m-%d')  # eg 2018-02-01
+    date = datetime.strptime(date, ('%Y-%m-%d'))  # return datetime object
 
     return date
 
@@ -190,7 +190,7 @@ def incrementMonth(month, n=1):
     date = monthToDate(month)
     next_month = date + relativedelta.relativedelta(months=n)
 
-    return next_month.strftime("%Y-%m-%d")
+    return next_month.strftime('%Y-%m-%d')
 
 
 def decrementMonth(month, n=1):
@@ -206,7 +206,7 @@ def decrementMonth(month, n=1):
     date = monthToDate(month)
     previous_month = date - relativedelta.relativedelta(months=n)
 
-    return previous_month.strftime("%Y-%m-%d")
+    return previous_month.strftime('%Y-%m-%d')
 
 
 def dbHasMonth(month):

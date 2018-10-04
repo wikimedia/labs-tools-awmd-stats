@@ -14,5 +14,5 @@ app = create_app('awmdstats.settings.%sConfig' % env.capitalize())
 
 manager = Manager(app)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     manager.run()
