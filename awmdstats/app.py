@@ -36,17 +36,32 @@ def create_app(object_name):
         stats = utils.getStatsFromDb(month)
         contributors = utils.getContributors(stats)
 
+        ChartData = []
+        patchTotal = 0
+        if month in request.path:
+            month_refresh = request.path.split('/')[-1]
+        else:
+            month_refresh = ''
+
+        for contributor in contributors:
+            patchTotal += len(contributor)
+            entry = {"name": contributor[0]['username'],
+                     "patches": str(len(contributor))}
+            ChartData.append(entry)
+
         # check whether there are entries in db
         formatted = datetime.strptime(month, ('%Y-%m'))
         if utils.dbHasMonth(month) is True:
             return render_template(
                 'index.html', stats=stats, month=formatted.strftime('%B, %Y'),
-                contributors=contributors, monthID=monthID
+                contributors=contributors, monthID=monthID, data=ChartData,
+                patchsum=patchTotal, refresh_month=month_refresh
             )
         else:
             return render_template(
-                'loader.html', monthID=monthID,
-                formatted=formatted.strftime('%B, %Y')
+                'no-contributions.html', monthID=monthID,
+                formatted=formatted.strftime('%B, %Y'),
+                refresh_month=month_refresh
             )
 
     @app.route('/contributor/<username>/<month>')
@@ -68,25 +83,6 @@ def create_app(object_name):
         return render_template(
             'contributor.html', patches=patches,
             monthID=month, backUrl=backUrl
-        )
-
-    @app.route('/refresh/<month>')
-    @app.route('/refresh/')
-    def refreshStatsByMonth(month=None):
-        """
-        Force a deep refresh.
-
-        Keyword arguments:
-        month -- the month to perform a hard refresh (regenerate the data)
-        """
-        if month is None:
-            month = utils.getCurrentMonth()  # make month format human-readable
-        formatted = datetime.strptime(month, ('%Y-%m'))
-
-        # Let loader handle the refreshing process as this is its purpose
-        return render_template(
-            'loader.html', monthID=month,
-            formatted=formatted.strftime('%B, %Y')
         )
 
     @app.route('/raw/')
@@ -137,9 +133,19 @@ def create_app(object_name):
         contributors = utils.getContributors(stats)
         formatted = datetime.strptime(month, ('%Y-%m'))
 
+        ChartData = []
+        patchTotal = 0
+
+        for contributor in contributors:
+            patchTotal += len(contributor)
+            entry = {"name": contributor[0]['username'],
+                     "patches": str(len(contributor))}
+            ChartData.append(entry)
+
         return render_template(
-            'stats.html', stats=stats, monthID=month,
-            month=formatted.strftime('%B, %Y'), contributors=contributors
+            'index.html', stats=stats, monthID=month,
+            month=formatted.strftime('%B, %Y'), contributors=contributors,
+            data=ChartData, patchsum=patchTotal
         )
 
     @app.template_filter()

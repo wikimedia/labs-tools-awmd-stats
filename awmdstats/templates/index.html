@@ -1,8 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-	<h2>Stats for {{month}}</h2>
+	<h2>Statistics for {{month}}</h2>
 	<p>{{stats|length}} patches by {{contributors|length}} contributors</p>
+	<div class="row">
+		<div class="col-sm-5">
+			<div id="chartContainer" style="height: 250px; width: 100%;"></div>
+		</div>
+		<div class="col-sm-7">
+			<div id="chartContainer1" style="height: 250px; width: 100%;"></div>
+		</div>
+	</div>
+	<br/>
+	<hr>
 	<div class="row">
 		{% for contributor in contributors %}
 		<div class="col-sm-4">

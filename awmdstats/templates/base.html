@@ -12,6 +12,15 @@
 	<script src="//tools-static.wmflabs.org/cdnjs/ajax/libs/jquery/3.3.1/jquery.js"></script>
 	<script src="//tools-static.wmflabs.org/cdnjs/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="//tools-static.wmflabs.org/cdnjs/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+
+	<script type="text/javascript">
+		{% if data is defined %}
+            var data = {{ data|tojson }}
+			var patchsum = {{ patchsum|tojson }}
+		{% else %}
+
+		{% endif %}
+	</script>
 </head>
 <body>
 	<nav class="navbar navbar-dark bg-primary navbar-expand-lg">
@@ -33,11 +42,9 @@
 					</li>
 				</ul>
 				<form class="navbar-form navbar-left" action="#">
-
 					<button type="button" class="btn btn-dark" id="datepicker"><i class="fa fa-calendar"></i> Previous months</button>
-					<button type="button" class="btn btn-success" id="refresh-btn"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+					<a href="{{url_for('raw', month=refresh_month)}}" class="btn btn-success"><i class="fa fa-refresh" id="refresh-btn" aria-hidden="true"></i></a>
 				</form>
-
 			</div>
 		</div>
 		<!-- Month identifier -->
@@ -47,6 +54,9 @@
 	<br>
 	<div class="container-fluid">
 		<div class="row content">
+			<div class="refresh-container">
+				<i class="refresh-spinner fa fa-spinner fa-spin fa-3x"></i>
+			</div>
 			{% block content %}{% endblock %}
 		</div>
 		<br>
@@ -59,7 +69,9 @@
 			<br>
 			<p>License: MIT, © 2018 - <a href="//gerrit.wikimedia.org/g/labs/tools/awmd-stats">Source code on Gitiles (Gerrit)</a></p>
 		</div>
+		<script src="//tools-static.wmflabs.org/cdnjs/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
 		<script src="{{url_for('static', filename='js/main.js')}}"></script>
+		<script src="{{url_for('static', filename='js/piechart.js')}}"></script>
 	</footer>
 </body>
 </html>
