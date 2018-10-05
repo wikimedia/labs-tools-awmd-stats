@@ -45,6 +45,13 @@ py.test -v tests/
 
 `NOTE`: If you find any failing test, report on Phabricator here: https://phabricator.wikimedia.org/project/board/2858/.
 
+## Coding conventions
+The contributors to this tool are strongly encouraged to use the following coding guidelines:
+
+* [Mediawiki's coding conventions for JavaScript](https://www.mediawiki.org/wiki/Manual:Coding_conventions/JavaScript)
+* [Mediawiki's manual for Pywikibot/Gerrit developers](https://www.mediawiki.org/wiki/Manual:Pywikibot/Development/Guidelines#Making_a_patch)
+
+
 # Track your contributions
 
 * You want your contributions to be tracked by this tool? Nicely add your information in the `contributors.json` in the `JSON` format and the tool will automatically run a cron to fetch your contributions.
