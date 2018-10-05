@@ -48,8 +48,8 @@ py.test -v tests/
 ## Coding conventions
 The contributors to this tool are strongly encouraged to use the following coding guidelines:
 
-* [Mediawiki's coding conventions for JavaScript](https://www.mediawiki.org/wiki/Manual:Coding_conventions/JavaScript)
-* [Mediawiki's manual for Pywikibot/Gerrit developers](https://www.mediawiki.org/wiki/Manual:Pywikibot/Development/Guidelines#Making_a_patch)
+* [MediaWiki's coding conventions for JavaScript](https://www.mediawiki.org/wiki/Manual:Coding_conventions/JavaScript)
+* [MediaWiki's manual for Pywikibot/Gerrit developers](https://www.mediawiki.org/wiki/Manual:Pywikibot/Development/Guidelines#Making_a_patch)
 
 
 # Track your contributions
