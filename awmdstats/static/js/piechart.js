@@ -5,6 +5,12 @@ window.onload = function() {
     var i, pie_dp = [], bar_dp = [];
     data_points = return_data();
     ps = return_patch_sum();
+    CanvasJS.addColorSet("warmColors",
+      ["#F24900","#FFBC20","#007bff","#55BA30","#FFA75B",
+       "#BC2FA0","#EE7600","#EE4000","#4EABFC","#DCC7AA",
+       "#E91E63","#F44336","#f18973","#2196F3","#3F51B5",
+       "#4CAF50","#FF9800","#FFC107","#9C27B0","#F44336"]
+    );
 
     for(i = 0; i < data_points.length; i++){
         // populate the pie chart data with it's values
@@ -25,6 +31,7 @@ window.onload = function() {
         title: {
             text: ""
         },
+        colorSet: "warmColors",
         data: [{
             type: "pie",
             startAngle: 240,
