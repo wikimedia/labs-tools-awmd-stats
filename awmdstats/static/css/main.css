@@ -52,6 +52,12 @@ a.button {
     opacity: 0.8;
 }
 
+hr.style-go {
+	height: 5px;
+	border: 0;
+	box-shadow: 0 5px 5px -5px #8c8b8b inset;
+}
+
 @media (min-width: 992px) {
     .navbar-expand-lg .navbar-nav .nav-link {
         margin-right: 1.5rem;

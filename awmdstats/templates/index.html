@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-	<h2>Statistics for {{month}}</h2>
-	<p>{{stats|length}} patches by {{contributors|length}} contributors</p>
+	<h4>Statistics for {{month}} > <i>{{stats|length}} patches by {{contributors|length}} contributors</i></h4>
+	<br/>
 	<div class="row">
 		<div class="col-sm-5">
 			<div id="chartContainer" style="height: 250px; width: 100%;"></div>
@@ -11,8 +11,7 @@
 			<div id="chartContainer1" style="height: 250px; width: 100%;"></div>
 		</div>
 	</div>
-	<br/>
-	<hr>
+	<hr class="style-go">
 	<div class="row">
 		{% for contributor in contributors %}
 		<div class="col-sm-4">
@@ -20,7 +19,7 @@
 				<div class="card-body">
 					<h4 class="card-title">{{contributor[0]['name']}}</h4>
 					<p class="card-text">
-						{{contributor[0]['username']}} / submitted {{contributor|length}} patches
+						{{contributor[0]['username']}} - submitted {{contributor|length}} patches
 						<br>
 					</p>
 					<p class="card-text"><small class="text-muted">{{contributor[0]['country']}}</small></p>
