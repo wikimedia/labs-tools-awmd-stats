@@ -135,6 +135,10 @@ def create_app(object_name):
 
         ChartData = []
         patchTotal = 0
+        if month in request.path:
+            month_refresh = request.path.split('/')[-1]
+        else:
+            month_refresh = ''
 
         for contributor in contributors:
             patchTotal += len(contributor)
@@ -142,11 +146,18 @@ def create_app(object_name):
                      "patches": str(len(contributor))}
             ChartData.append(entry)
 
-        return render_template(
-            'index.html', stats=stats, monthID=month,
-            month=formatted.strftime('%B, %Y'), contributors=contributors,
-            data=ChartData, patchsum=patchTotal
-        )
+        if utils.dbHasMonth(month) is True:
+            return render_template(
+                'index.html', stats=stats, month=formatted.strftime('%B, %Y'),
+                contributors=contributors, monthID=month, data=ChartData,
+                patchsum=patchTotal, refresh_month=month_refresh
+            )
+        else:
+            return render_template(
+                'no-contributions.html', monthID=month,
+                formatted=formatted.strftime('%B, %Y'),
+                refresh_month=month_refresh
+            )
 
     @app.template_filter()
     def datetimeformat(

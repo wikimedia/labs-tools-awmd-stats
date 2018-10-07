@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # Author: Derick N. Alangi
+# Work in Progress
 
 
 class Config(object):

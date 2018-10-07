@@ -32,18 +32,28 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item">
-						<a class="nav-link" href="{{url_for('index', _external=True)}}" id="baseurl"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
+						<a class="nav-link" href="{{url_for('index', _external=True)}}" id="baseurl">
+							<i class="fa fa-home"></i> Home <span class="sr-only">(current)</span>
+						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{url_for('show_doc_sitemap')}}"><i class="fa fa-book"></i> Docs</a>
+						<a class="nav-link" href="{{url_for('show_doc_sitemap')}}">
+							<i class="fa fa-book"></i> Docs
+						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="https://www.mediawiki.org/wiki/Africa_Wikimedia_Developers_Project" target="_blank"><i class="fa fa-users"></i> About AWMD</a>
+						<a class="nav-link" href="https://www.mediawiki.org/wiki/Africa_Wikimedia_Developers_Project" target="_blank">
+							<i class="fa fa-users"></i> About AWMD
+						</a>
 					</li>
 				</ul>
 				<form class="navbar-form navbar-left" action="#">
-					<button type="button" class="btn btn-dark" id="datepicker"><i class="fa fa-calendar"></i> Previous months</button>
-					<a href="{{url_for('raw', month=refresh_month)}}" class="btn btn-success"><i class="fa fa-refresh" id="refresh-btn" aria-hidden="true"></i></a>
+					<button type="button" class="btn btn-dark" id="datepicker">
+						<i class="fa fa-calendar"></i> Previous months
+					</button>
+					<a href="{{url_for('raw', month=refresh_month)}}" class="btn btn-success">
+						<i class="fa fa-refresh" id="refresh-btn" aria-hidden="true"></i>
+					</a>
 				</form>
 			</div>
 		</div>

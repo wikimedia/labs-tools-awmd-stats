@@ -58,6 +58,14 @@ hr.style-go {
 	box-shadow: 0 5px 5px -5px #8c8b8b inset;
 }
 
+.vertical-center {
+  min-height: 60%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 60vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
 @media (min-width: 992px) {
     .navbar-expand-lg .navbar-nav .nav-link {
         margin-right: 1.5rem;
