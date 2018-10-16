@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Authors:  Derick N. Alangi,
 #           Samuel Guebo

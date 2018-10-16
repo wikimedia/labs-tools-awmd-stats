@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Author: Samuel Guebo, Derick Alangi
 # Description: The main application layer

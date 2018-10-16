@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Author: Derick N. Alangi
 # Unit tests for utility functions in the application
