@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Author: Derick Alangi, Samuel Guebo
 # Description: Check system, install deps, (re)generate documentation
