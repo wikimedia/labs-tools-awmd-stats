@@ -1,6 +1,10 @@
+coverage==4.5.1
 Flask==0.12.2
+Flask-Script==2.0.6
+Jinja2==2.10
+pytest-cov==2.6.0
 python-dateutil==2.6.1
 requests==2.18.4
 tinydb==3.7.0
-flask-script==2.0.6
-pycco==0.5.1
+urllib3==1.22
+Werkzeug==0.14.1
