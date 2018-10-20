@@ -21,7 +21,7 @@ def debug_mode():
     Enable running the app in debug mode.
 
     This allows the app context to be reloaded upon changes and save at
-    run time. Use "python manage.py debug_mode" for this feature.
+    run time.
     """
     app.run(debug=True)
 
