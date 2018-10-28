@@ -149,10 +149,8 @@ def patchExists(patch):
 
     db = getDb()
     Patch = Query()
-    rows = db.search(
-        (Patch.created == patch['created']) &
-        (Patch.username == patch['username'])
-    )
+    rows = db.search((Patch.created == patch['created']) & (
+        Patch.username == patch['username']))
 
     # if the patch was previously saved
     if len(rows) > 0:

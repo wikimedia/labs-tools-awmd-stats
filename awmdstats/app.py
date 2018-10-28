@@ -49,19 +49,23 @@ def create_app(object_name):
                      "patches": str(len(contributor))}
             ChartData.append(entry)
 
+        # URL scheme that the home button should use
+        prot_scheme = "https" if not app.debug else "http"
+
         # check whether there are entries in db
         formatted = datetime.strptime(month, ('%Y-%m'))
         if utils.dbHasMonth(month) is True:
             return render_template(
                 'index.html', stats=stats, month=formatted.strftime('%B, %Y'),
                 contributors=contributors, monthID=monthID, data=ChartData,
-                patchsum=patchTotal, refresh_month=month_refresh
+                patchsum=patchTotal, refresh_month=month_refresh,
+                scheme=prot_scheme
             )
         else:
             return render_template(
                 'no-contributions.html', monthID=monthID,
                 formatted=formatted.strftime('%B, %Y'),
-                refresh_month=month_refresh
+                refresh_month=month_refresh, scheme=prot_scheme
             )
 
     @app.route('/contributor/<username>/<month>')
@@ -123,11 +127,9 @@ def create_app(object_name):
                 # update patch status
                 else:
                     Patch = utils.Query()
-                    db.update(
-                        {'status': patch['status']},
-                        (Patch.username == patch['username']) &
-                        (Patch.created == patch['created'])
-                    )
+                    db.update({'status': patch['status']},
+                              (Patch.username == patch['username']) & (
+                        Patch.created == patch['created']))
 
         stats = utils.getStatsFromDb(month)
         contributors = utils.getContributors(stats)
