@@ -7,8 +7,10 @@
 import pytest
 import time
 
+from datetime import datetime
+
 from awmdstats.utils import dbHasMonth
-from awmdstats.utils import filterMonth
+from awmdstats.utils import filterMonth, incrementMonth, monthToDate
 from awmdstats.utils import getContributorStats
 from awmdstats.utils import getCurrentMonth
 from awmdstats.utils import readContributorsFromFile
@@ -55,3 +57,11 @@ class TestUtils:
         status = filterMonth('2018-07-14', '2018-07')
         # returns True if month is found if full date time
         assert bool(status) is True
+
+    # Test incrementMonth() method
+    def testIncrementMonth(self):
+        assert incrementMonth('2018-08', 2) == '2018-10-01'
+
+    # Test monthToDate() method
+    def testMonthToDate(self):
+        assert monthToDate('2018-08') == datetime(2018, 8, 1)
