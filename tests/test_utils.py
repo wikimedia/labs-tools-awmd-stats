@@ -6,13 +6,15 @@
 
 import pytest
 import time
+import tinydb
 
 from datetime import datetime
 
 from awmdstats.utils import dbHasMonth
-from awmdstats.utils import filterMonth, incrementMonth, monthToDate
+from awmdstats.utils import decrementMonth, filterMonth, incrementMonth, monthToDate
 from awmdstats.utils import getContributorStats
 from awmdstats.utils import getCurrentMonth
+from awmdstats.utils import getDb
 from awmdstats.utils import readContributorsFromFile
 
 
@@ -35,6 +37,10 @@ class TestUtils:
         status = dbHasMonth('2017-11')  # search month without data
         assert bool(status) is False  # returns False for month without data
 
+    # Test decrementMonth() method
+    def testDecrementMonth(self):
+        assert decrementMonth('2018-08', 2) == '2018-06-01'
+
     # Test readContributorsFromFile() method
     def testReadContributorsFromFile(self):
         contributors = readContributorsFromFile()
@@ -51,6 +57,11 @@ class TestUtils:
         #  https://tools.wmflabs.org/awmd-stats/contributor/Rosalieper/2018-04.
         stats = getContributorStats('BamLifa', '2018-04')
         assert len(stats) < 1 and isinstance(stats, list)
+
+    # Test getDb() method
+    def testGetDb(self):
+        db = getDb()
+        assert isinstance(db, tinydb.database.TinyDB)
 
     # Test filterMonth() method
     def testFilterMonth(self):
