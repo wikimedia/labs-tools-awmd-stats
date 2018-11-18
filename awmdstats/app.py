@@ -32,9 +32,9 @@ def create_app(object_name):
         """
         if month is None:
             month = utils.getCurrentMonth()  # make month format human-readable
-        monthID = month
+
         stats = utils.getStatsFromDb(month)
-        contributors = utils.getContributors(stats)
+        contributors = utils.getContributors(stats, month)
 
         ChartData = []
         patchTotal = 0
@@ -57,13 +57,13 @@ def create_app(object_name):
         if utils.dbHasMonth(month) is True:
             return render_template(
                 'index.html', stats=stats, month=formatted.strftime('%B, %Y'),
-                contributors=contributors, monthID=monthID, data=ChartData,
+                contributors=contributors, monthID=month, data=ChartData,
                 patchsum=patchTotal, refresh_month=month_refresh,
                 scheme=prot_scheme
             )
         else:
             return render_template(
-                'no-contributions.html', monthID=monthID,
+                'no-contributions.html', monthID=month,
                 formatted=formatted.strftime('%B, %Y'),
                 refresh_month=month_refresh, scheme=prot_scheme
             )
@@ -88,6 +88,94 @@ def create_app(object_name):
             'contributor.html', patches=patches,
             monthID=month, backUrl=backUrl
         )
+
+    @app.template_filter()
+    def datetimeformat(
+        value,
+        inFormat='%Y-%m-%d %H:%M:%S.000000000',
+        outFormat='%Y-%m-%d, %H:%M'
+    ):
+        """
+        Custom Flask filter for datetimeformating.
+
+        Keyword arguments:
+        value -- the actual date value gotten from the data
+        inFormat -- input format of the value (date)
+        outFormat -- output format of the value (date)
+        """
+        formattedString = datetime.strptime(value, inFormat)
+
+        return formattedString.strftime(outFormat)  # simple formatting
+
+    @app.route('/docs/sitemap')
+    def show_doc_sitemap():
+        """Show documentation sitemap."""
+        return render_template("docs/index.html")
+
+    @app.route('/docs/<doc>')
+    def show_doc(doc="sitemap"):
+        """Show documentation for a particular module."""
+        doc_list = [
+            '__init__.html',
+            'app.html',
+            'conftest.html',
+            'index.html',
+            'manage.html',
+            'settings.html',
+            'test_app.html',
+            'test_utils.html',
+            'utils.html'
+        ]
+
+        if doc in doc_list:
+            if doc == 'sitemap.html':
+                return render_template('docs/' + doc)
+            return render_template('docs/' + doc)
+        else:
+            return '[404] Doc Not Found'
+
+    @app.route('/month-rank/<month>')
+    def rank_by_month(month=None):
+        """
+        REST endpoint for a list of contributors sorted by patche(s).
+
+        Keyword arguments:
+        month -- the month to fetch corresponding contributors to be sorted
+        """
+        if month is None:
+            # get current month in format human-readable
+            month = utils.getCurrentMonth()
+
+        stats = utils.getStatsFromDb(month)
+        contributors = utils.getContributors(stats, month)
+
+        # sort contributors by patch count, in descending order
+        contributors = sorted(contributors, key=lambda x: x[0]['patch_total'],
+                              reverse=True)
+
+        if month in request.path:
+            month_refresh = request.path.split('/')[-1]
+        else:
+            month_refresh = ''
+
+        # check whether there are entries in db
+        formatted = datetime.strptime(month, ('%Y-%m'))
+
+        # grab previous url from flask.request.referrer
+        backUrl = request.referrer
+
+        if utils.dbHasMonth(month) is True:
+            return render_template(
+                'month.html', stats=stats, month=formatted.strftime('%B, %Y'),
+                contributors=contributors, monthID=month, backUrl=backUrl,
+                refresh_month=month_refresh
+            )
+        else:
+            return render_template(
+                'no-contributions.html', monthID=month,
+                formatted=formatted.strftime('%B, %Y'),
+                refresh_month=month_refresh
+            )
 
     @app.route('/raw/')
     @app.route('/raw/<month>')
@@ -132,7 +220,7 @@ def create_app(object_name):
                         Patch.created == patch['created']))
 
         stats = utils.getStatsFromDb(month)
-        contributors = utils.getContributors(stats)
+        contributors = utils.getContributors(stats, month)
         formatted = datetime.strptime(month, ('%Y-%m'))
 
         ChartData = []
@@ -161,56 +249,11 @@ def create_app(object_name):
                 refresh_month=month_refresh
             )
 
-    @app.template_filter()
-    def datetimeformat(
-        value,
-        inFormat='%Y-%m-%d %H:%M:%S.000000000',
-        outFormat='%Y-%m-%d, %H:%M'
-    ):
-        """
-        Custom Flask filter for datetimeformating.
-
-        Keyword arguments:
-        value -- the actual date value gotten from the data
-        inFormat -- input format of the value (date)
-        outFormat -- output format of the value (date)
-        """
-        formattedString = datetime.strptime(value, inFormat)
-
-        return formattedString.strftime(outFormat)  # simple formatting
-
     @app.route('/test')
     def sample_request():
         """Test API endpoint with hardcoded data."""
         pprint(utils.getContributorStats('D3r1ck01', '2018-02'))
 
         return ''
-
-    @app.route('/docs/sitemap')
-    def show_doc_sitemap():
-        """Show documentation sitemap."""
-        return render_template("docs/index.html")
-
-    @app.route('/docs/<doc>')
-    def show_doc(doc="sitemap"):
-        """Show documentation for a particular module."""
-        doc_list = [
-            '__init__.html',
-            'app.html',
-            'conftest.html',
-            'index.html',
-            'manage.html',
-            'settings.html',
-            'test_app.html',
-            'test_utils.html',
-            'utils.html'
-        ]
-
-        if doc in doc_list:
-            if doc == 'sitemap.html':
-                return render_template('docs/' + doc)
-            return render_template('docs/' + doc)
-        else:
-            return '[404] Doc Not Found'
 
     return app

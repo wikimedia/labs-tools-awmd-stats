@@ -10,7 +10,6 @@ import time
 
 from dateutil import relativedelta
 from datetime import datetime
-from operator import itemgetter
 from tinydb import TinyDB
 from tinydb import Query
 
@@ -101,23 +100,49 @@ def getDb():
     return db
 
 
-def getContributors(patches):
+def getContributors(patches, month):
 
     """
     Get the list of patch contributors.
 
     Keyword arguments:
     patches -- patches of all patch contributors
+    month -- the month used as the filter
     """
-
     data = []
     contributors = []
+    data = sorted(patches, key=lambda x: x['username'])
 
-    # group contributions by username
-    data = sorted(patches, key=itemgetter('username'))
-
+    # group contributions by username, works better with a pre-sorted list
     for k, g in itertools.groupby(data, key=lambda x: x['username']):
-        contributors.append(list(g))  # Store group iterator as a list
+
+        contributor_patches = list(g)
+
+        # prepare metrics
+        merged_count = abandoned_count = pending_count = 0
+
+        Patch = Query()
+        db = getDb()
+
+        # count status of patches
+        merged_count = len(db.search((Patch.status == 'MERGED') & (
+            Patch.username == k) & (Patch.created.test(filterMonth, month))))
+        abandoned_count = len(db.search((Patch.status == 'ABANDONED') & (
+            Patch.username == k) & (Patch.created.test(filterMonth, month))))
+        pending_count = len(db.search((Patch.status == 'NEW') & (
+            Patch.username == k) & (Patch.created.test(filterMonth, month))))
+
+        metrics = {
+            "merged_count": merged_count,
+            "abandoned_count": abandoned_count,
+            "pending_count": pending_count,
+            "patch_total": merged_count + abandoned_count + pending_count
+        }
+
+        # add metrics to the first child
+        contributor_patches[0] = dict(list(metrics.items()) + list(
+            contributor_patches[0].items()))
+        contributors.append(contributor_patches)  # Store group iterator as a list
 
     return contributors
 

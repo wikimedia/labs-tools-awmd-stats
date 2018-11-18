@@ -66,6 +66,26 @@ hr.style-go {
   align-items: center;
 }
 
+.stats-link .title{
+  text-transform: uppercase;
+  font-weight: 200;
+}
+.stats-link .link{
+  float: right;
+  margin-top: -8px;
+}
+
+.contributors-list{
+  margin: 20px 0px;
+}
+.contributors-list .contributor{
+  margin-bottom: 5px;
+  padding: 5px 10px;
+}
+.contributors-list .contributor:nth-child(odd){
+  background: #f9f4f4;
+  margin-bottom: 5px;
+}
 @media (min-width: 992px) {
     .navbar-expand-lg .navbar-nav .nav-link {
         margin-right: 1.5rem;

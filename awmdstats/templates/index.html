@@ -1,7 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-	<h4>Statistics for {{month}} > <i>{{stats|length}} patches by {{contributors|length}} contributors</i></h4>
+	<div class="stats-link">
+		<h4 class="title">Statistics for {{month}}
+			<a href="{{url_for('rank_by_month', month=monthID)}}" class="link">
+				<button class="btn btn-success btn-sm">
+				<i class="fa fa-bar-chart"></i> View the {{stats|length}} patches submitted by {{contributors|length}} contributors
+				</button>
+			</a>
+		</h4>
+	</div>
 	<br/>
 	<div class="row">
 		<div class="col-sm-5">
