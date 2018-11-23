@@ -8,6 +8,11 @@ Africa Wikimedia Developer (AWMD) Tool for gathering monthly statistics of Afric
 * [Python 3.x+](https://www.python.org/downloads/)
 * [PIP (Python Dependency Manager)](https://pip.pypa.io/en/stable/installing/)
 
+## Clone project
+```bash
+git clone ssh://<USERNAME>@gerrit.wikimedia.org:29418/labs/tools/awmd-stats
+```
+
 ## Setup and documentation
 
 Install application dependencies and regenerate documentation using the `setup.sh` script:
