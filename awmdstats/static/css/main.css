@@ -91,3 +91,34 @@ hr.style-go {
         margin-right: 1.5rem;
     }
 }
+.sitemap {
+    padding: 0px 50px;
+    margin-bottom: 30px;
+}
+
+.sitemap .label a{
+  text-decoration: none;
+	display: inline-block;
+	background: #353a3f;
+	color: #FFF;
+	font-size: 13px;
+
+	border: 1px solid transparent;
+    padding: .1rem .5rem;
+    font-size: .85rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+}
+.sitemap .label a:hover{
+  background: #28a745;
+}
+.sitemap .active.label a{
+	display: inline-block;
+	background: #28a745;
+}
+.navbar-nav a:visited {
+  color: #FFF !important;
+}
+a.btn.btn-success:visited {
+    color: #FFF;
+}

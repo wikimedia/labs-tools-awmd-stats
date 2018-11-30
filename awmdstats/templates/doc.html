@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container">
+    <div class="sitemap">
+      {% if doc_list %}
+        {% for doc in doc_list %}
+        <span class="label{% if 'docs/'+doc|string() == template|string() %} active{% endif %}"><a href="{{url_for('show_doc', doc=doc)}}">{{doc}}</a></span>
+        {% endfor %}
+      {% endif %}
+    </div>
+    {% if template %}
+      {% include template %}
+    {% endif %}
+  </div>
+{% endblock %}

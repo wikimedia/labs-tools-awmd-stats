@@ -15,6 +15,7 @@ from awmdstats.utils import decrementMonth, filterMonth, incrementMonth, monthTo
 from awmdstats.utils import getContributorStats
 from awmdstats.utils import getCurrentMonth
 from awmdstats.utils import getDb
+from awmdstats.utils import getDocList
 from awmdstats.utils import getStatsFromDb
 from awmdstats.utils import readContributorsFromFile
 
@@ -69,6 +70,11 @@ class TestUtils:
     def testGetDb(self):
         db = getDb()
         assert isinstance(db, tinydb.database.TinyDB)
+
+    # Test getDocList() method
+    def testGetDocList(self):
+        doc_list = getDocList('awmdstats/templates/docs')
+        assert len(doc_list) > 0 and isinstance(doc_list, list)
 
     # Test filterMonth() method
     def testFilterMonth(self):

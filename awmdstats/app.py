@@ -107,32 +107,26 @@ def create_app(object_name):
 
         return formattedString.strftime(outFormat)  # simple formatting
 
-    @app.route('/docs/sitemap')
-    def show_doc_sitemap():
-        """Show documentation sitemap."""
-        return render_template("docs/index.html")
-
     @app.route('/docs/<doc>')
-    def show_doc(doc="sitemap"):
+    def show_doc(doc="index.html"):
         """Show documentation for a particular module."""
-        doc_list = [
-            '__init__.html',
-            'app.html',
-            'conftest.html',
-            'index.html',
-            'manage.html',
-            'settings.html',
-            'test_app.html',
-            'test_utils.html',
-            'utils.html'
-        ]
+
+        # grab all generated from directory
+        doc_dir_path = "awmdstats/templates/docs"
+        doc_list = utils.getDocList(doc_dir_path)
+
+        doc_list = sorted(doc_list)  # sort alphabetically for sitemap output
 
         if doc in doc_list:
-            if doc == 'sitemap.html':
-                return render_template('docs/' + doc)
-            return render_template('docs/' + doc)
+            return render_template('doc.html', template='docs/' + doc,
+                                   doc_list=doc_list)
         else:
-            return '[404] Doc Not Found'
+            notice_title = "No documentation"
+            notice_desc = "Oops! no file " + doc + " found."
+
+            return render_template('doc.html', template='404.html',
+                                   notice_title=notice_title,
+                                   notice_desc=notice_desc)
 
     @app.route('/month-rank/<month>')
     def rank_by_month(month=None):

@@ -5,6 +5,7 @@
 
 import itertools
 import json
+import os
 import requests
 import time
 
@@ -71,6 +72,24 @@ def getCurrentMonth(format='%Y-%m'):
     currentMonth = time.strftime(format)  # e.g. 2018-02
 
     return currentMonth
+
+
+def getDocList(path):
+
+    """
+    Get the generated documentation files as a list
+
+    Keyword arguments:
+    directory -- the path to the directory containing generated doc files
+    """
+
+    doc_list = []
+
+    # get all HTML files
+    for doc in os.listdir(path):
+        doc_list.append(doc)
+
+    return doc_list
 
 
 def getStatsFromDb(month):
