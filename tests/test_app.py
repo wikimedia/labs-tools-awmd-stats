@@ -41,6 +41,11 @@ class TestApp:
         response = testapp.get('/month/2018-01')
         assert response.status_code == 200
 
+    #  Test the /month-rank/<month> route response status_code
+    def test_rank_by_month_route(self, testapp):
+        response = testapp.get('/month-rank/2018-01')
+        assert response.status_code == 200
+
     #  Test the /contributor/<username>/<month>
     def test_contributor_username_month_route(self, testapp):
         response = testapp.get('/contributor/D3r1ck01/2018-07')

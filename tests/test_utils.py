@@ -15,6 +15,7 @@ from awmdstats.utils import decrementMonth, filterMonth, incrementMonth, monthTo
 from awmdstats.utils import getContributorStats
 from awmdstats.utils import getCurrentMonth
 from awmdstats.utils import getDb
+from awmdstats.utils import getStatsFromDb
 from awmdstats.utils import readContributorsFromFile
 
 
@@ -46,6 +47,12 @@ class TestUtils:
         contributors = readContributorsFromFile()
         # returns False if isn't a list or is empty
         assert len(contributors) > 0 and isinstance(contributors, list)
+
+    # Test getContributors() method
+    def testGetContributors(self):
+        month = '2018-07'
+        stats = getStatsFromDb(month)
+        assert len(stats) > 0 and isinstance(stats, list)
 
     # Test getContributorStats() method
     def testGetContributorStats_WithData(self):

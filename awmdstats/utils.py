@@ -100,20 +100,20 @@ def getDb():
     return db
 
 
-def getContributors(patches, month):
+def getContributors(stats, month):
 
     """
     Get the list of patch contributors.
 
     Keyword arguments:
-    patches -- patches of all patch contributors
+    stats -- nested list of all patch contributors
     month -- the month used as the filter
     """
     data = []
     contributors = []
-    data = sorted(patches, key=lambda x: x['username'])
+    data = sorted(stats, key=lambda x: x['username'])
 
-    # group contributions by username, works better with a pre-sorted list
+    # group contributions, list should be pre-sorted using same key
     for k, g in itertools.groupby(data, key=lambda x: x['username']):
 
         contributor_patches = list(g)
