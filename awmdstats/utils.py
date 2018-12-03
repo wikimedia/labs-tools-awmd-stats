@@ -161,7 +161,11 @@ def getContributors(stats, month):
         # add metrics to the first child
         contributor_patches[0] = dict(list(metrics.items()) + list(
             contributor_patches[0].items()))
-        contributors.append(contributor_patches)  # Store group iterator as a list
+        contributors.append(contributor_patches)  # build list
+
+    # by default sort contributors by patch count, in descending order
+    contributors = sorted(contributors, key=lambda x: x[0]['patch_total'],
+                          reverse=True)
 
     return contributors
 

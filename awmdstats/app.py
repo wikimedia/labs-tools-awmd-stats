@@ -143,10 +143,6 @@ def create_app(object_name):
         stats = utils.getStatsFromDb(month)
         contributors = utils.getContributors(stats, month)
 
-        # sort contributors by patch count, in descending order
-        contributors = sorted(contributors, key=lambda x: x[0]['patch_total'],
-                              reverse=True)
-
         if month in request.path:
             month_refresh = request.path.split('/')[-1]
         else:
