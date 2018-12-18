@@ -11,8 +11,9 @@ import tinydb
 from datetime import datetime
 
 from awmdstats.utils import dbHasMonth
-from awmdstats.utils import decrementMonth, filterMonth, incrementMonth, monthToDate
-from awmdstats.utils import getContributorStats
+from awmdstats.utils import decrementMonth, filterMonth
+from awmdstats.utils import incrementMonth, monthToDate
+from awmdstats.utils import getContributorStats, getContributors
 from awmdstats.utils import getCurrentMonth
 from awmdstats.utils import getDb
 from awmdstats.utils import getDocList
@@ -35,7 +36,8 @@ class TestUtils:
         assert bool(status) is True  # returns True for month with data
 
     def testDbHasMonth_WithoutData(self):
-        #  Past month with no data: https://tools.wmflabs.org/awmd-stats/month/2017-11.
+        #  Past month with no data
+        #  https://tools.wmflabs.org/awmd-stats/month/2017-11.
         status = dbHasMonth('2017-11')  # search month without data
         assert bool(status) is False  # returns False for month without data
 
@@ -53,7 +55,8 @@ class TestUtils:
     def testGetContributors(self):
         month = '2018-07'
         stats = getStatsFromDb(month)
-        assert len(stats) > 0 and isinstance(stats, list)
+        contributors = getContributors(stats, month)
+        assert len(contributors) > 0 and isinstance(contributors, list)
 
     # Test getContributorStats() method
     def testGetContributorStats_WithData(self):
