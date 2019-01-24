@@ -246,4 +246,8 @@ def create_app(object_name):
 
         return ''
 
+    @app.context_processor
+    def inject_current_year():
+        return {'cYear': datetime.utcnow()}
+
     return app
