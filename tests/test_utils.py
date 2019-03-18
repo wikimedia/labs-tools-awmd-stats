@@ -92,3 +92,14 @@ class TestUtils:
     # Test month_to_date() method
     def test_month_to_date(self):
         assert month_to_date('2018-08') == datetime(2018, 8, 1)
+
+    # Test get_stats_from_db() method
+    def test_get_stats_from_db_with_data(self):
+        # Test for existing stats
+        stats = get_stats_from_db('2019-03')
+        assert len(stats) > 0
+
+    def test_get_stats_from_db_without_data(self):
+        # Test for non-existent stats
+        stats = get_stats_from_db('2017-03')
+        assert len(stats) < 1
