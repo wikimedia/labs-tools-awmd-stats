@@ -14,7 +14,7 @@
 		</thead>
 		<tbody>
 			{% for patch in patches %}
-				{% if monthID in patch.created %}
+				{% if month_id in patch.created %}
 					<tr>
 						<td>{{loop.index}}</td>
 						<td><a href="//gerrit.wikimedia.org/r/#/c/{{patch._number}}/">{{patch.project}}</a></td>
@@ -26,6 +26,6 @@
 			{% endfor %}
 		</tbody>
 	</table>
-	<a href="{{backUrl}}" class="btn btn-primary float-left" title="Back to homepage">&laquo; Back</a>
+	<a href="{{back_url}}" class="btn btn-primary float-left" title="Back to homepage">&laquo; Back</a>
 </div>
 {% endblock %}

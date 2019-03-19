@@ -94,10 +94,10 @@ month &ndash; the default is the current month but can view previous months</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>        <span class="k">if</span> <span class="n">month</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">month</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getCurrentMonth</span><span class="p">()</span>  <span class="c1"># make month format human-readable</span>
+            <span class="n">month</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_current_month</span><span class="p">()</span>  <span class="c1"># make month format human-readable</span>
         <span class="n">monthID</span> <span class="o">=</span> <span class="n">month</span>
-        <span class="n">stats</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getStatsFromDb</span><span class="p">(</span><span class="n">month</span><span class="p">)</span>
-        <span class="n">contributors</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getContributors</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span></pre></div>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_stats_from_db</span><span class="p">(</span><span class="n">month</span><span class="p">)</span>
+        <span class="n">contributors</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_contributors</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -110,7 +110,7 @@ month &ndash; the default is the current month but can view previous months</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>        <span class="n">formatted</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">month</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;%Y-%m&quot;</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">dbHasMonth</span><span class="p">(</span><span class="n">month</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">db_has_month</span><span class="p">(</span><span class="n">month</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span>
                 <span class="s1">&#39;index.html&#39;</span><span class="p">,</span> <span class="n">stats</span><span class="o">=</span><span class="n">stats</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="n">formatted</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%B, %Y&quot;</span><span class="p">),</span>
                 <span class="n">contributors</span><span class="o">=</span><span class="n">contributors</span><span class="p">,</span> <span class="n">monthID</span><span class="o">=</span><span class="n">monthID</span>
@@ -148,7 +148,7 @@ month &ndash; the month to fetch corresponding contributions</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>        <span class="n">Submitter</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">Query</span><span class="p">()</span>
-        <span class="n">db</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getDb</span><span class="p">()</span></pre></div>
+        <span class="n">db</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_db</span><span class="p">()</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -206,7 +206,7 @@ month &ndash; the month to perform a hard refresh (regenerate the data)</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>        <span class="k">if</span> <span class="n">month</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">month</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getCurrentMonth</span><span class="p">()</span>  <span class="c1"># make month format human-readable</span>
+            <span class="n">month</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_current_month</span><span class="p">()</span>  <span class="c1"># make month format human-readable</span>
         <span class="n">formatted</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">month</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;%Y-%m&quot;</span><span class="p">))</span></pre></div>
     </div>
   </div>
@@ -251,7 +251,7 @@ month &ndash; the month to generate raw data, mainly JSON data</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>        <span class="k">if</span> <span class="n">month</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">month</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getCurrentMonth</span><span class="p">()</span></pre></div>
+            <span class="n">month</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_current_month</span><span class="p">()</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -263,7 +263,7 @@ month &ndash; the month to generate raw data, mainly JSON data</p>
       <p>load and save contributors list</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre>        <span class="n">contributors</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">readContributorsFromFile</span><span class="p">()</span></pre></div>
+      <div class="highlight"><pre>        <span class="n">contributors</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">read_contributors_from_file</span><span class="p">()</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -278,7 +278,7 @@ month &ndash; the month to generate raw data, mainly JSON data</p>
       <div class="highlight"><pre>        <span class="k">for</span> <span class="n">contributor</span> <span class="ow">in</span> <span class="n">contributors</span><span class="p">:</span>
 
             <span class="n">username</span> <span class="o">=</span> <span class="n">contributor</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
-            <span class="n">patches</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getContributorStats</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">month</span><span class="p">)</span></pre></div>
+            <span class="n">patches</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_contributor_stats</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">month</span><span class="p">)</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -290,7 +290,7 @@ month &ndash; the month to generate raw data, mainly JSON data</p>
       <p>loop through contributor patches</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre>            <span class="n">db</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getDb</span><span class="p">()</span>
+      <div class="highlight"><pre>            <span class="n">db</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_db</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">patch</span> <span class="ow">in</span> <span class="n">patches</span><span class="p">:</span></pre></div>
     </div>
   </div>
@@ -317,7 +317,7 @@ month &ndash; the month to generate raw data, mainly JSON data</p>
       <p>make sure patch wasn&rsquo;t previously saved</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre>                <span class="k">if</span> <span class="ow">not</span> <span class="n">utils</span><span class="o">.</span><span class="n">patchExists</span><span class="p">(</span><span class="n">patch</span><span class="p">):</span></pre></div>
+      <div class="highlight"><pre>                <span class="k">if</span> <span class="ow">not</span> <span class="n">utils</span><span class="o">.</span><span class="n">patch_exists</span><span class="p">(</span><span class="n">patch</span><span class="p">):</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -349,8 +349,8 @@ month &ndash; the month to generate raw data, mainly JSON data</p>
                         <span class="p">(</span><span class="n">Patch</span><span class="o">.</span><span class="n">created</span> <span class="o">==</span> <span class="n">patch</span><span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">])</span>
                     <span class="p">)</span>
 
-        <span class="n">stats</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getStatsFromDb</span><span class="p">(</span><span class="n">month</span><span class="p">)</span>
-        <span class="n">contributors</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getContributors</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_stats_from_db</span><span class="p">(</span><span class="n">month</span><span class="p">)</span>
+        <span class="n">contributors</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_contributors</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
         <span class="n">formatted</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">month</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;%Y-%m&quot;</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span>
@@ -416,7 +416,7 @@ outFormat &ndash; output format of the value (date)</p>
 
     </div>
     <div class='code'>
-      <div class="highlight"><pre>        <span class="n">pprint</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">getContributorStats</span><span class="p">(</span><span class="s1">&#39;D3r1ck01&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-02&#39;</span><span class="p">))</span>
+      <div class="highlight"><pre>        <span class="n">pprint</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">get_contributor_stats</span><span class="p">(</span><span class="s1">&#39;D3r1ck01&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-02&#39;</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="s1">&#39;&#39;</span></pre></div>
     </div>

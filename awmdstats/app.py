@@ -13,7 +13,7 @@ from pprint import pprint
 from awmdstats import utils
 
 
-def create_app(object_name):
+def create_app():
     """
     An flask application factory, as explained here:
     http://flask.pocoo.org/docs/patterns/appfactories/
@@ -31,81 +31,81 @@ def create_app(object_name):
         month -- the default is the current month but can view previous months
         """
         if month is None:
-            month = utils.getCurrentMonth()  # make month format human-readable
+            month = utils.get_current_month()  # make month format human-readable
 
-        stats = utils.getStatsFromDb(month)
-        contributors = utils.getContributors(stats, month)
+        stats = utils.get_stats_from_db(month)
+        contributors = utils.get_contributors(stats, month)
 
-        ChartData = []
-        patchTotal = 0
+        chart_data = []
+        patch_total = 0
         if month in request.path:
             month_refresh = request.path.split('/')[-1]
         else:
             month_refresh = ''
 
         for contributor in contributors:
-            patchTotal += len(contributor)
+            patch_total += len(contributor)
             entry = {"name": contributor[0]['username'],
                      "patches": str(len(contributor))}
-            ChartData.append(entry)
+            chart_data.append(entry)
 
         # URL scheme that the home button should use
         prot_scheme = "https" if not app.debug else "http"
 
         # check whether there are entries in db
-        formatted = datetime.strptime(month, ('%Y-%m'))
-        if utils.dbHasMonth(month) is True:
+        formatted = datetime.strptime(month, '%Y-%m')
+        if utils.db_has_month(month) is True:
             return render_template(
                 'index.html', stats=stats, month=formatted.strftime('%B, %Y'),
-                contributors=contributors, monthID=month, data=ChartData,
-                patchsum=patchTotal, refresh_month=month_refresh,
+                contributors=contributors, month_id=month, data=chart_data,
+                patchsum=patch_total, refresh_month=month_refresh,
                 scheme=prot_scheme
             )
         else:
             return render_template(
-                'no-contributions.html', monthID=month,
+                'no-contributions.html', month_id=month,
                 formatted=formatted.strftime('%B, %Y'),
                 refresh_month=month_refresh, scheme=prot_scheme
             )
 
     @app.route('/contributor/<username>/<month>')
-    def contributorPatchesByMonth(username, month):
+    def contributor_patches_by_month(username, month):
         """
-        REST endpoint for list of contributor's patche(s).
+        REST endpoint for list of contributor's patch(es).
 
         Keyword arguments:
-        username -- the gerrit handle of the contributor
+        username -- the Gerrit handle of the contributor
         month -- the month to fetch corresponding contributions
         """
-        Submitter = utils.Query()
-        db = utils.getDb()
+        submitter = utils.Query()
+        db = utils.get_db()
         # filter by username
-        patches = db.search(Submitter.username == username)
+        patches = db.search(submitter.username == username)
         # grab previous url from flask.request.referrer
-        backUrl = request.referrer
+        back_url = request.referrer
 
         return render_template(
             'contributor.html', patches=patches,
-            monthID=month, backUrl=backUrl
+            month_id=month, back_url=back_url
         )
 
     @app.template_filter()
     def datetimeformat(
         value,
-        inFormat='%Y-%m-%d %H:%M:%S.000000000',
-        outFormat='%Y-%m-%d, %H:%M'
+        in_format='%Y-%m-%d %H:%M:%S.000000000',
+        out_format='%Y-%m-%d, %H:%M'
     ):
         """
-        Custom Flask filter for datetimeformating.
+        Custom Flask filter for date-time formatting.
 
         Keyword arguments:
         value -- the actual date value gotten from the data
         inFormat -- input format of the value (date)
         outFormat -- output format of the value (date)
         """
-        formattedString = datetime.strptime(value, inFormat)
+        formatted_string = datetime.strptime(value, in_format)
 
-        return formattedString.strftime(outFormat)  # simple formatting
+        return formatted_string.strftime(out_format)  # simple formatting
 
     @app.route('/docs/<doc>')
     def show_doc(doc="index.html"):
@@ -113,7 +113,7 @@ def create_app(object_name):
 
         # grab all generated from directory
         doc_dir_path = "awmdstats/templates/docs"
-        doc_list = utils.getDocList(doc_dir_path)
+        doc_list = utils.get_doc_list(doc_dir_path)
 
         doc_list = sorted(doc_list)  # sort alphabetically for sitemap output
 
@@ -138,10 +138,10 @@ def create_app(object_name):
         """
         if month is None:
             # get current month in format human-readable
-            month = utils.getCurrentMonth()
+            month = utils.get_current_month()
 
-        stats = utils.getStatsFromDb(month)
-        contributors = utils.getContributors(stats, month)
+        stats = utils.get_stats_from_db(month)
+        contributors = utils.get_contributors(stats, month)
 
         if month in request.path:
             month_refresh = request.path.split('/')[-1]
@@ -149,15 +149,15 @@ def create_app(object_name):
             month_refresh = ''
 
         # check whether there are entries in db
-        formatted = datetime.strptime(month, ('%Y-%m'))
+        formatted = datetime.strptime(month, '%Y-%m')
 
         # grab previous url from flask.request.referrer
-        backUrl = request.referrer
+        back_url = request.referrer
 
-        if utils.dbHasMonth(month) is True:
+        if utils.db_has_month(month) is True:
             return render_template(
                 'month.html', stats=stats, month=formatted.strftime('%B, %Y'),
-                contributors=contributors, monthID=month, backUrl=backUrl,
+                contributors=contributors, month_id=month, back_url=back_url,
                 refresh_month=month_refresh
             )
         else:
@@ -178,19 +178,19 @@ def create_app(object_name):
         month -- the month to generate raw data, mainly JSON data
         """
         if month is None:
-            month = utils.getCurrentMonth()
+            month = utils.get_current_month()
 
         # load and save contributors list
-        contributors = utils.readContributorsFromFile()
+        contributors = utils.read_contributors_from_file()
 
         # loop through contributors
         for contributor in contributors:
 
             username = contributor['username']
-            patches = utils.getContributorStats(username, month)
+            patches = utils.get_contributor_stats(username, month)
 
             # loop through contributor patches
-            db = utils.getDb()
+            db = utils.get_db()
             for patch in patches:
 
                 # prepare patch dictionary
@@ -199,42 +199,42 @@ def create_app(object_name):
                 patch['country'] = contributor['country']
 
                 # make sure patch wasn't previously saved
-                if not utils.patchExists(patch):
+                if not utils.patch_exists(patch):
                     # persist patch to db
                     db.insert(patch)
                 # update patch status
                 else:
-                    Patch = utils.Query()
+                    query = utils.Query()
                     db.update({'status': patch['status']},
-                              (Patch.username == patch['username']) & (
-                        Patch.created == patch['created']))
+                              (query.username == patch['username']) & (
+                        query.created == patch['created']))
 
-        stats = utils.getStatsFromDb(month)
-        contributors = utils.getContributors(stats, month)
-        formatted = datetime.strptime(month, ('%Y-%m'))
+        stats = utils.get_stats_from_db(month)
+        contributors = utils.get_contributors(stats, month)
+        formatted = datetime.strptime(month, '%Y-%m')
 
-        ChartData = []
-        patchTotal = 0
+        chart_data = []
+        patch_total = 0
         if month in request.path:
             month_refresh = request.path.split('/')[-1]
         else:
             month_refresh = ''
 
         for contributor in contributors:
-            patchTotal += len(contributor)
+            patch_total += len(contributor)
             entry = {"name": contributor[0]['username'],
                      "patches": str(len(contributor))}
-            ChartData.append(entry)
+            chart_data.append(entry)
 
-        if utils.dbHasMonth(month) is True:
+        if utils.db_has_month(month) is True:
             return render_template(
                 'index.html', stats=stats, month=formatted.strftime('%B, %Y'),
-                contributors=contributors, monthID=month, data=ChartData,
-                patchsum=patchTotal, refresh_month=month_refresh
+                contributors=contributors, month_id=month, data=chart_data,
+                patchsum=patch_total, refresh_month=month_refresh
             )
         else:
             return render_template(
-                'no-contributions.html', monthID=month,
+                'no-contributions.html', month_id=month,
                 formatted=formatted.strftime('%B, %Y'),
                 refresh_month=month_refresh
             )
@@ -242,7 +242,7 @@ def create_app(object_name):
     @app.route('/test')
     def sample_request():
         """Test API endpoint with hardcoded data."""
-        pprint(utils.getContributorStats('D3r1ck01', '2018-02'))
+        pprint(utils.get_contributor_stats('D3r1ck01', '2018-02'))
 
         return ''
 

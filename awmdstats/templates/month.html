@@ -7,12 +7,12 @@
 	<div class="contributors-list">
 		{% for contributor in contributors %}
 		<p class="contributor">
-			{{loop.index}}. <a href="{{url_for('contributorPatchesByMonth', username=contributor[0]['username'], month=monthID)}}" title="Full details for {{contributor[0]['name']}}">
+			{{loop.index}}. <a href="{{url_for('contributor_patches_by_month', username=contributor[0]['username'], month=month_id)}}" title="Full details for {{contributor[0]['name']}}">
 				@{{contributor[0]['username']}} - ({{contributor[0]['patch_total']}} patches submitted - {{contributor[0]['merged_count']}} merged, {{contributor[0]['pending_count']}} under review and {{contributor[0]['abandoned_count']}} abandoned)
 			</a>
 		</p>
 		{% endfor %}
 	</div>
-	<a href="{{backUrl}}" class="btn btn-primary float-left" title="Back to homepage">&laquo; Back</a>
+	<a href="{{back_url}}" class="btn btn-primary float-left" title="Back to homepage">&laquo; Back</a>
 </div>
 {% endblock %}

@@ -2,15 +2,11 @@
 
 # Author: Derick N. Alangi
 
-import os
-
 from flask_script import Manager
 
 from awmdstats.app import create_app
 
-# Run in particular environment
-env = os.environ.get('APPNAME_ENV', 'dev')  # WIP
-app = create_app('awmdstats.settings.%sConfig' % env.capitalize())
+app = create_app()
 
 manager = Manager(app)
 

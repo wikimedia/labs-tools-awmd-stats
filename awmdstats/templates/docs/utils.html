@@ -66,7 +66,7 @@
       <p>Read through and get all contributors.</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre><span class="k">def</span> <span class="nf">readContributorsFromFile</span><span class="p">():</span></pre></div>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">read_contributors_from_file</span><span class="p">():</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -97,7 +97,7 @@ username &ndash; the gerrit handle of the contributor
 month &ndash; the corresponding month to get contributor statistics</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre><span class="k">def</span> <span class="nf">getContributorStats</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></pre></div>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">get_contributor_stats</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -110,11 +110,11 @@ month &ndash; the corresponding month to get contributor statistics</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="k">if</span> <span class="n">month</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">date</span> <span class="o">=</span> <span class="n">getCurrentMonth</span><span class="p">()</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">get_current_month</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">date</span> <span class="o">=</span> <span class="n">month</span>
-    <span class="n">previous_month</span> <span class="o">=</span> <span class="n">decrementMonth</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
-    <span class="n">next_month</span> <span class="o">=</span> <span class="n">incrementMonth</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
+    <span class="n">previous_month</span> <span class="o">=</span> <span class="n">decrement_month</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
+    <span class="n">next_month</span> <span class="o">=</span> <span class="n">increment_month</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">username</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
         <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;https://gerrit.wikimedia.org/r/changes/?q=owner:&quot;</span></pre></div>
@@ -160,7 +160,7 @@ month &ndash; the corresponding month to get contributor statistics</p>
 format &ndash; the current month format to be used</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre><span class="k">def</span> <span class="nf">getCurrentMonth</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s2">&quot;%Y-%m&quot;</span><span class="p">):</span></pre></div>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">get_current_month</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s2">&quot;%Y-%m&quot;</span><span class="p">):</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -188,7 +188,7 @@ format &ndash; the current month format to be used</p>
 month &ndash; the month to get monthly stats from db.json</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre><span class="k">def</span> <span class="nf">getStatsFromDb</span><span class="p">(</span><span class="n">month</span><span class="p">):</span></pre></div>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">get_stats_from_db</span><span class="p">(</span><span class="n">month</span><span class="p">):</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -201,7 +201,7 @@ month &ndash; the month to get monthly stats from db.json</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="n">Patch</span> <span class="o">=</span> <span class="n">Query</span><span class="p">()</span>
-    <span class="n">db</span> <span class="o">=</span> <span class="n">getDb</span><span class="p">()</span></pre></div>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">get_db</span><span class="p">()</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -213,7 +213,7 @@ month &ndash; the month to get monthly stats from db.json</p>
       <p>stats = db.search(Patch.created == month)</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre>    <span class="n">stats</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">Patch</span><span class="o">.</span><span class="n">created</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">filterMonth</span><span class="p">,</span> <span class="n">month</span><span class="p">))</span>
+      <div class="highlight"><pre>    <span class="n">stats</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">Patch</span><span class="o">.</span><span class="n">created</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">filter_month</span><span class="p">,</span> <span class="n">month</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">stats</span></pre></div>
     </div>
@@ -227,7 +227,7 @@ month &ndash; the month to get monthly stats from db.json</p>
       <p>DB object to be used independently.</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre><span class="k">def</span> <span class="nf">getDb</span><span class="p">():</span></pre></div>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">get_db</span><span class="p">():</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -267,7 +267,7 @@ month &ndash; the month to get monthly stats from db.json</p>
 patches &ndash; patches of all patch contributors</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre><span class="k">def</span> <span class="nf">getContributors</span><span class="p">(</span><span class="n">patches</span><span class="p">):</span></pre></div>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">get_contributors</span><span class="p">(</span><span class="n">patches</span><span class="p">):</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -312,7 +312,7 @@ string &ndash; the string to perform the filtration on
 month &ndash; the month used as the filter</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre><span class="k">def</span> <span class="nf">filterMonth</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">month</span><span class="p">):</span></pre></div>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">filter_month</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">month</span><span class="p">):</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -341,7 +341,7 @@ month &ndash; the month used as the filter</p>
 patch &ndash; the patch(es) to be checked if it exist in db.json</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre><span class="k">def</span> <span class="nf">patchExists</span><span class="p">(</span><span class="n">patch</span><span class="p">):</span></pre></div>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">patch_exists</span><span class="p">(</span><span class="n">patch</span><span class="p">):</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -353,7 +353,7 @@ patch &ndash; the patch(es) to be checked if it exist in db.json</p>
 
     </div>
     <div class='code'>
-      <div class="highlight"><pre>    <span class="n">db</span> <span class="o">=</span> <span class="n">getDb</span><span class="p">()</span>
+      <div class="highlight"><pre>    <span class="n">db</span> <span class="o">=</span> <span class="n">get_db</span><span class="p">()</span>
     <span class="n">Patch</span> <span class="o">=</span> <span class="n">Query</span><span class="p">()</span>
     <span class="n">rows</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
         <span class="p">(</span><span class="n">Patch</span><span class="o">.</span><span class="n">created</span> <span class="o">==</span> <span class="n">patch</span><span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">])</span> <span class="o">&amp;</span>
@@ -387,7 +387,7 @@ patch &ndash; the patch(es) to be checked if it exist in db.json</p>
 month &ndash; the month to convert to date format</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre><span class="k">def</span> <span class="nf">monthToDate</span><span class="p">(</span><span class="n">month</span><span class="p">):</span></pre></div>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">month_to_date</span><span class="p">(</span><span class="n">month</span><span class="p">):</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -418,7 +418,7 @@ month &ndash; the current set month
 n &ndash; the number of months to increment (default is 1)</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre><span class="k">def</span> <span class="nf">incrementMonth</span><span class="p">(</span><span class="n">month</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span></pre></div>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">increment_month</span><span class="p">(</span><span class="n">month</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -430,7 +430,7 @@ n &ndash; the number of months to increment (default is 1)</p>
 
     </div>
     <div class='code'>
-      <div class="highlight"><pre>    <span class="n">date</span> <span class="o">=</span> <span class="n">monthToDate</span><span class="p">(</span><span class="n">month</span><span class="p">)</span>
+      <div class="highlight"><pre>    <span class="n">date</span> <span class="o">=</span> <span class="n">month_to_date</span><span class="p">(</span><span class="n">month</span><span class="p">)</span>
     <span class="n">next_month</span> <span class="o">=</span> <span class="n">date</span> <span class="o">+</span> <span class="n">relativedelta</span><span class="o">.</span><span class="n">relativedelta</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">next_month</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span></pre></div>
@@ -448,7 +448,7 @@ month &ndash; the current set month
 n &ndash; the number of months to decrement (default is 1)</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre><span class="k">def</span> <span class="nf">decrementMonth</span><span class="p">(</span><span class="n">month</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span></pre></div>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">decrement_month</span><span class="p">(</span><span class="n">month</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -460,7 +460,7 @@ n &ndash; the number of months to decrement (default is 1)</p>
 
     </div>
     <div class='code'>
-      <div class="highlight"><pre>    <span class="n">date</span> <span class="o">=</span> <span class="n">monthToDate</span><span class="p">(</span><span class="n">month</span><span class="p">)</span>
+      <div class="highlight"><pre>    <span class="n">date</span> <span class="o">=</span> <span class="n">month_to_date</span><span class="p">(</span><span class="n">month</span><span class="p">)</span>
     <span class="n">previous_month</span> <span class="o">=</span> <span class="n">date</span> <span class="o">-</span> <span class="n">relativedelta</span><span class="o">.</span><span class="n">relativedelta</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">previous_month</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span></pre></div>
@@ -477,7 +477,7 @@ n &ndash; the number of months to decrement (default is 1)</p>
 month &ndash; check if this month is in the db.json (DB)</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre><span class="k">def</span> <span class="nf">dbHasMonth</span><span class="p">(</span><span class="n">month</span><span class="p">):</span></pre></div>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">db_has_month</span><span class="p">(</span><span class="n">month</span><span class="p">):</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -489,7 +489,7 @@ month &ndash; check if this month is in the db.json (DB)</p>
 
     </div>
     <div class='code'>
-      <div class="highlight"><pre>    <span class="n">stats</span> <span class="o">=</span> <span class="n">getStatsFromDb</span><span class="p">(</span><span class="n">month</span><span class="p">)</span></pre></div>
+      <div class="highlight"><pre>    <span class="n">stats</span> <span class="o">=</span> <span class="n">get_stats_from_db</span><span class="p">(</span><span class="n">month</span><span class="p">)</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>

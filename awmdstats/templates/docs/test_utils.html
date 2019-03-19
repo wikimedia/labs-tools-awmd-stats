@@ -37,11 +37,11 @@ TODO: We intend to have 100% test coverage</p>
       <div class="highlight"><pre><span class="kn">import</span> <span class="nn">pytest</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="kn">from</span> <span class="nn">awmdstats.utils</span> <span class="kn">import</span> <span class="n">dbHasMonth</span>
-<span class="kn">from</span> <span class="nn">awmdstats.utils</span> <span class="kn">import</span> <span class="n">filterMonth</span>
-<span class="kn">from</span> <span class="nn">awmdstats.utils</span> <span class="kn">import</span> <span class="n">getContributorStats</span>
-<span class="kn">from</span> <span class="nn">awmdstats.utils</span> <span class="kn">import</span> <span class="n">getCurrentMonth</span>
-<span class="kn">from</span> <span class="nn">awmdstats.utils</span> <span class="kn">import</span> <span class="n">readContributorsFromFile</span></pre></div>
+<span class="kn">from</span> <span class="nn">awmdstats.utils</span> <span class="kn">import</span> <span class="n">db_has_month</span>
+<span class="kn">from</span> <span class="nn">awmdstats.utils</span> <span class="kn">import</span> <span class="n">filter_month</span>
+<span class="kn">from</span> <span class="nn">awmdstats.utils</span> <span class="kn">import</span> <span class="n">get_contributor_stats</span>
+<span class="kn">from</span> <span class="nn">awmdstats.utils</span> <span class="kn">import</span> <span class="n">get_current_month</span>
+<span class="kn">from</span> <span class="nn">awmdstats.utils</span> <span class="kn">import</span> <span class="n">read_contributors_from_file</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -75,12 +75,12 @@ TODO: We intend to have 100% test coverage</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-4'>#</a>
       </div>
-      <p>Test getCurrentMonth() method</p>
+      <p>Test get_current_month() method</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">testGetCurrentMonth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">formatted</span><span class="o">=</span><span class="s2">&quot;%Y-%m&quot;</span><span class="p">):</span>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">test_get_current_month</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">formatted</span><span class="o">=</span><span class="s2">&quot;%Y-%m&quot;</span><span class="p">):</span>
         <span class="n">Y_M_format</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">formatted</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">getCurrentMonth</span><span class="p">(</span><span class="n">formatted</span><span class="p">)</span> <span class="o">==</span> <span class="n">Y_M_format</span></pre></div>
+        <span class="k">assert</span> <span class="n">get_current_month</span><span class="p">(</span><span class="n">formatted</span><span class="p">)</span> <span class="o">==</span> <span class="n">Y_M_format</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -89,11 +89,11 @@ TODO: We intend to have 100% test coverage</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-5'>#</a>
       </div>
-      <p>Test dbHasMonth() method</p>
+      <p>Test db_has_month() method</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">testDbHasMonth_WithData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">status</span> <span class="o">=</span> <span class="n">dbHasMonth</span><span class="p">(</span><span class="s2">&quot;2018-07&quot;</span><span class="p">)</span>  <span class="c1"># search month with data</span>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">test_db_has_month_with_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">db_has_month</span><span class="p">(</span><span class="s2">&quot;2018-07&quot;</span><span class="p">)</span>  <span class="c1"># search month with data</span>
         <span class="k">assert</span> <span class="nb">bool</span><span class="p">(</span><span class="n">status</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">True</span>  <span class="c1"># returns True for month with data</span></pre></div>
     </div>
   </div>
@@ -106,7 +106,7 @@ TODO: We intend to have 100% test coverage</p>
 
     </div>
     <div class='code'>
-      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">testDbHasMonth_WithoutData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></pre></div>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">test_db_has_month_without_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -118,7 +118,7 @@ TODO: We intend to have 100% test coverage</p>
       <p>Past month with no data: https://tools.wmflabs.org/awmd-stats/month/2017-11.</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre>        <span class="n">status</span> <span class="o">=</span> <span class="n">dbHasMonth</span><span class="p">(</span><span class="s2">&quot;2017-11&quot;</span><span class="p">)</span>  <span class="c1"># search month without data</span>
+      <div class="highlight"><pre>        <span class="n">status</span> <span class="o">=</span> <span class="n">db_has_month</span><span class="p">(</span><span class="s2">&quot;2017-11&quot;</span><span class="p">)</span>  <span class="c1"># search month without data</span>
         <span class="k">assert</span> <span class="nb">bool</span><span class="p">(</span><span class="n">status</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">False</span>  <span class="c1"># returns False for month without data</span></pre></div>
     </div>
   </div>
@@ -128,11 +128,11 @@ TODO: We intend to have 100% test coverage</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-8'>#</a>
       </div>
-      <p>Test readContributorsFromFile() method</p>
+      <p>Test read_contributors_from_file() method</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">testReadContributorsFromFile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">contributors</span> <span class="o">=</span> <span class="n">readContributorsFromFile</span><span class="p">()</span></pre></div>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">test_read_contributors_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">contributors</span> <span class="o">=</span> <span class="n">read_contributors_from_file</span><span class="p">()</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -153,11 +153,11 @@ TODO: We intend to have 100% test coverage</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-10'>#</a>
       </div>
-      <p>Test getContributorStats() method</p>
+      <p>Test get_contributor_stats() method</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">testGetContributorStats_WithData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">stats</span> <span class="o">=</span> <span class="n">getContributorStats</span><span class="p">(</span><span class="s2">&quot;Rosalieper&quot;</span><span class="p">,</span> <span class="s2">&quot;2018-07&quot;</span><span class="p">)</span>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">test_get_contributor_stats_with_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">get_contributor_stats</span><span class="p">(</span><span class="s2">&quot;Rosalieper&quot;</span><span class="p">,</span> <span class="s2">&quot;2018-07&quot;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stats</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span></pre></div>
     </div>
   </div>
@@ -170,7 +170,7 @@ TODO: We intend to have 100% test coverage</p>
 
     </div>
     <div class='code'>
-      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">testGetContributorStats_WithoutData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></pre></div>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">test_get_contributor_stats_without_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -183,7 +183,7 @@ TODO: We intend to have 100% test coverage</p>
  https://tools.wmflabs.org/awmd-stats/contributor/Rosalieper/2018-04.</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre>        <span class="n">stats</span> <span class="o">=</span> <span class="n">getContributorStats</span><span class="p">(</span><span class="s2">&quot;BamLifa&quot;</span><span class="p">,</span> <span class="s2">&quot;2018-04&quot;</span><span class="p">)</span>
+      <div class="highlight"><pre>        <span class="n">stats</span> <span class="o">=</span> <span class="n">get_contributor_stats</span><span class="p">(</span><span class="s2">&quot;BamLifa&quot;</span><span class="p">,</span> <span class="s2">&quot;2018-04&quot;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stats</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span></pre></div>
     </div>
   </div>
@@ -193,11 +193,11 @@ TODO: We intend to have 100% test coverage</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-13'>#</a>
       </div>
-      <p>Test filterMonth() method</p>
+      <p>Test filter_month() method</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">testFilterMonth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">status</span> <span class="o">=</span> <span class="n">filterMonth</span><span class="p">(</span><span class="s2">&quot;2018-07-14&quot;</span><span class="p">,</span> <span class="s2">&quot;2018-07&quot;</span><span class="p">)</span>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">test_filter_month</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">filter_month</span><span class="p">(</span><span class="s2">&quot;2018-07-14&quot;</span><span class="p">,</span> <span class="s2">&quot;2018-07&quot;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">bool</span><span class="p">(</span><span class="n">status</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">True</span>  <span class="c1"># returns True if month is found if full date time</span>
 
 </pre></div>

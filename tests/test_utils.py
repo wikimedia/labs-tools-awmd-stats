@@ -10,85 +10,85 @@ import tinydb
 
 from datetime import datetime
 
-from awmdstats.utils import dbHasMonth
-from awmdstats.utils import decrementMonth, filterMonth
-from awmdstats.utils import incrementMonth, monthToDate
-from awmdstats.utils import getContributorStats, getContributors
-from awmdstats.utils import getCurrentMonth
-from awmdstats.utils import getDb
-from awmdstats.utils import getDocList
-from awmdstats.utils import getStatsFromDb
-from awmdstats.utils import readContributorsFromFile
+from awmdstats.utils import db_has_month
+from awmdstats.utils import decrement_month, filter_month
+from awmdstats.utils import increment_month, month_to_date
+from awmdstats.utils import get_contributor_stats, get_contributors
+from awmdstats.utils import get_current_month
+from awmdstats.utils import get_db
+from awmdstats.utils import get_doc_list
+from awmdstats.utils import get_stats_from_db
+from awmdstats.utils import read_contributors_from_file
 
 
 @pytest.mark.usefixtures('testapp')
 class TestUtils:
     """Test utility functions in the application."""
 
-    #  Test getCurrentMonth() method
-    def testGetCurrentMonth(self, formatted='%Y-%m'):
-        Y_M_format = time.strftime(formatted)
-        assert getCurrentMonth(formatted) == Y_M_format
+    #  Test get_current_month() method
+    def test_get_current_month(self, formatted='%Y-%m'):
+        y_m_format = time.strftime(formatted)
+        assert get_current_month(formatted) == y_m_format
 
-    #  Test dbHasMonth() method
-    def testDbHasMonth_WithData(self):
-        status = dbHasMonth('2018-07')  # search month with data
+    #  Test db_has_month() method
+    def test_db_has_month_with_data(self):
+        status = db_has_month('2018-07')  # search month with data
         assert bool(status) is True  # returns True for month with data
 
-    def testDbHasMonth_WithoutData(self):
+    def test_db_has_month_without_data(self):
         #  Past month with no data
         #  https://tools.wmflabs.org/awmd-stats/month/2017-11.
-        status = dbHasMonth('2017-11')  # search month without data
+        status = db_has_month('2017-11')  # search month without data
         assert bool(status) is False  # returns False for month without data
 
-    # Test decrementMonth() method
-    def testDecrementMonth(self):
-        assert decrementMonth('2018-08', 2) == '2018-06-01'
+    # Test decrement_month() method
+    def test_decrement_month(self):
+        assert decrement_month('2018-08', 2) == '2018-06-01'
 
-    # Test readContributorsFromFile() method
-    def testReadContributorsFromFile(self):
-        contributors = readContributorsFromFile()
+    # Test read_contributors_from_file() method
+    def test_read_contributors_from_file(self):
+        contributors = read_contributors_from_file()
         # returns False if isn't a list or is empty
         assert len(contributors) > 0 and isinstance(contributors, list)
 
-    # Test getContributors() method
-    def testGetContributors(self):
+    # Test get_contributors() method
+    def test_get_contributors(self):
         month = '2018-07'
-        stats = getStatsFromDb(month)
-        contributors = getContributors(stats, month)
+        stats = get_stats_from_db(month)
+        contributors = get_contributors(stats, month)
         assert len(contributors) > 0 and isinstance(contributors, list)
 
-    # Test getContributorStats() method
-    def testGetContributorStats_WithData(self):
-        stats = getContributorStats('Rosalieper', '2018-07')
+    # Test get_contributor_stats() method
+    def test_get_contributor_stats_with_data(self):
+        stats = get_contributor_stats('Rosalieper', '2018-07')
         assert len(stats) > 0 and isinstance(stats, list)
 
-    def testGetContributorStats_WithoutData(self):
+    def test_get_contributor_stats_without_data(self):
         #  Past month with no data:
         #  https://tools.wmflabs.org/awmd-stats/contributor/Rosalieper/2018-04.
-        stats = getContributorStats('BamLifa', '2018-04')
+        stats = get_contributor_stats('BamLifa', '2018-04')
         assert len(stats) < 1 and isinstance(stats, list)
 
-    # Test getDb() method
-    def testGetDb(self):
-        db = getDb()
+    # Test get_db() method
+    def test_get_db(self):
+        db = get_db()
         assert isinstance(db, tinydb.database.TinyDB)
 
-    # Test getDocList() method
-    def testGetDocList(self):
-        doc_list = getDocList('awmdstats/templates/docs')
+    # Test get_doc_list() method
+    def test_get_doc_list(self):
+        doc_list = get_doc_list('awmdstats/templates/docs')
         assert len(doc_list) > 0 and isinstance(doc_list, list)
 
-    # Test filterMonth() method
-    def testFilterMonth(self):
-        status = filterMonth('2018-07-14', '2018-07')
+    # Test filter_month() method
+    def test_filter_month(self):
+        status = filter_month('2018-07-14', '2018-07')
         # returns True if month is found if full date time
         assert bool(status) is True
 
-    # Test incrementMonth() method
-    def testIncrementMonth(self):
-        assert incrementMonth('2018-08', 2) == '2018-10-01'
+    # Test increment_month() method
+    def test_increment_month(self):
+        assert increment_month('2018-08', 2) == '2018-10-01'
 
-    # Test monthToDate() method
-    def testMonthToDate(self):
-        assert monthToDate('2018-08') == datetime(2018, 8, 1)
+    # Test month_to_date() method
+    def test_month_to_date(self):
+        assert month_to_date('2018-08') == datetime(2018, 8, 1)

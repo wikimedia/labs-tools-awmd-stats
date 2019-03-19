@@ -19,18 +19,18 @@ Utility functions to perform specific tasks for the app.
 """
 
 
-def readContributorsFromFile():
+def read_contributors_from_file():
 
     """Read through and get all contributors."""
 
     file = open('contributors.json', 'r')
-    jsonText = file.read()
-    response = json.loads(jsonText)
+    json_text = file.read()
+    response = json.loads(json_text)
 
     return response
 
 
-def getContributorStats(username, month=None):
+def get_contributor_stats(username, month=None):
 
     """
     Fetch Gerrit API for patch contributor data.
@@ -41,26 +41,26 @@ def getContributorStats(username, month=None):
     """
 
     if month is None:
-        date = getCurrentMonth()
+        date = get_current_month()
     else:
         date = month
-    previous_month = decrementMonth(date)
-    next_month = incrementMonth(date)
+    previous_month = decrement_month(date)
+    next_month = increment_month(date)
 
     if username != '':
         link = 'https://gerrit.wikimedia.org/r/changes/?q=owner:'
-        # build the API requst url
+        # build the API request url
         url = link + username + '+after:' + \
             previous_month + "+before:" + next_month
         r = requests.get(url)
-        jsonArray = r.text
+        json_array = r.text
         # Fix this error in headers of json tree
-        jsonArray = jsonArray.replace(")]}'", '', 1)
+        json_array = json_array.replace(")]}'", '', 1)
 
-        return json.loads(jsonArray)
+        return json.loads(json_array)
 
 
-def getCurrentMonth(format='%Y-%m'):
+def get_current_month(formatted='%Y-%m'):
 
     """
     Get current month for a particular year.
@@ -69,12 +69,12 @@ def getCurrentMonth(format='%Y-%m'):
     format -- the current month format to be used
     """
 
-    currentMonth = time.strftime(format)  # e.g. 2018-02
+    current_month = time.strftime(formatted)  # e.g. 2018-02
 
-    return currentMonth
+    return current_month
 
 
-def getDocList(path):
+def get_doc_list(path):
 
     """
     Get the generated documentation files as a list
@@ -92,7 +92,7 @@ def getDocList(path):
     return doc_list
 
 
-def getStatsFromDb(month):
+def get_stats_from_db(month):
 
     """
     Get monthly statistics from DB.
@@ -101,15 +101,15 @@ def getStatsFromDb(month):
     month -- the month to get monthly stats from db.json
     """
 
-    Patch = Query()
-    db = getDb()
-    # stats = db.search(Patch.created == month)
-    stats = db.search(Patch.created.test(filterMonth, month))
+    patch = Query()
+    db = get_db()
+    # stats = db.search(patch.created == month)
+    stats = db.search(patch.created.test(filter_month, month))
 
     return stats
 
 
-def getDb():
+def get_db():
 
     """DB object to be used independently."""
 
@@ -119,7 +119,7 @@ def getDb():
     return db
 
 
-def getContributors(stats, month):
+def get_contributors(stats, month):
 
     """
     Get the list of patch contributors.
@@ -128,7 +128,6 @@ def getContributors(stats, month):
     stats -- nested list of all patch contributors
     month -- the month used as the filter
     """
-    data = []
     contributors = []
     data = sorted(stats, key=lambda x: x['username'])
 
@@ -137,19 +136,16 @@ def getContributors(stats, month):
 
         contributor_patches = list(g)
 
-        # prepare metrics
-        merged_count = abandoned_count = pending_count = 0
-
-        Patch = Query()
-        db = getDb()
+        patch = Query()
+        db = get_db()
 
         # count status of patches
-        merged_count = len(db.search((Patch.status == 'MERGED') & (
-            Patch.username == k) & (Patch.created.test(filterMonth, month))))
-        abandoned_count = len(db.search((Patch.status == 'ABANDONED') & (
-            Patch.username == k) & (Patch.created.test(filterMonth, month))))
-        pending_count = len(db.search((Patch.status == 'NEW') & (
-            Patch.username == k) & (Patch.created.test(filterMonth, month))))
+        merged_count = len(db.search((patch.status == 'MERGED') & (
+            patch.username == k) & (patch.created.test(filter_month, month))))
+        abandoned_count = len(db.search((patch.status == 'ABANDONED') & (
+            patch.username == k) & (patch.created.test(filter_month, month))))
+        pending_count = len(db.search((patch.status == 'NEW') & (
+            patch.username == k) & (patch.created.test(filter_month, month))))
 
         metrics = {
             "merged_count": merged_count,
@@ -170,7 +166,7 @@ def getContributors(stats, month):
     return contributors
 
 
-def filterMonth(string, month):
+def filter_month(string, month):
 
     """
     Filter month.
@@ -186,7 +182,7 @@ def filterMonth(string, month):
         return False
 
 
-def patchExists(patch):
+def patch_exists(patch):
 
     """
     Check whether patch(es) exists in the DB.
@@ -195,10 +191,10 @@ def patchExists(patch):
     patch -- the patch(es) to be checked if it exist in db.json
     """
 
-    db = getDb()
-    Patch = Query()
-    rows = db.search((Patch.created == patch['created']) & (
-        Patch.username == patch['username']))
+    db = get_db()
+    query = Query()
+    rows = db.search((query.created == patch['created']) & (
+        query.username == patch['username']))
 
     # if the patch was previously saved
     if len(rows) > 0:
@@ -207,7 +203,7 @@ def patchExists(patch):
         return False
 
 
-def monthToDate(month):
+def month_to_date(month):
 
     """
     Convert month to date format.
@@ -216,14 +212,14 @@ def monthToDate(month):
     month -- the month to convert to date format
     """
 
-    month = datetime.strptime(month, ('%Y-%m'))
+    month = datetime.strptime(month, '%Y-%m')
     date = month.strftime('%Y-%m-%d')  # eg 2018-02-01
-    date = datetime.strptime(date, ('%Y-%m-%d'))  # return datetime object
+    date = datetime.strptime(date, '%Y-%m-%d')  # return datetime object
 
     return date
 
 
-def incrementMonth(month, n=1):
+def increment_month(month, n=1):
 
     """
     Increment date by 'n' months.
@@ -233,13 +229,13 @@ def incrementMonth(month, n=1):
     n -- the number of months to increment (default is 1)
     """
 
-    date = monthToDate(month)
+    date = month_to_date(month)
     next_month = date + relativedelta.relativedelta(months=n)
 
     return next_month.strftime('%Y-%m-%d')
 
 
-def decrementMonth(month, n=1):
+def decrement_month(month, n=1):
 
     """
     Decrement date by 'n' months.
@@ -249,13 +245,13 @@ def decrementMonth(month, n=1):
     n -- the number of months to decrement (default is 1)
     """
 
-    date = monthToDate(month)
+    date = month_to_date(month)
     previous_month = date - relativedelta.relativedelta(months=n)
 
     return previous_month.strftime('%Y-%m-%d')
 
 
-def dbHasMonth(month):
+def db_has_month(month):
 
     """
     Check whether month has entries in the DB.
@@ -264,7 +260,7 @@ def dbHasMonth(month):
     month -- check if this month is in the db.json (DB)
     """
 
-    stats = getStatsFromDb(month)
+    stats = get_stats_from_db(month)
     # if there is at least one entry
     if len(stats) > 0:
         return True
