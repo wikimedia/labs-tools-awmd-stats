@@ -99,6 +99,7 @@ class TestUtils:
         stats = get_stats_from_db('2019-03')
         assert len(stats) > 0
 
+    # Test get_stats_from_db_without_data() method
     def test_get_stats_from_db_without_data(self):
         # Test for non-existent stats
         stats = get_stats_from_db('2017-03')
