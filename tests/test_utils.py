@@ -25,19 +25,20 @@ from awmdstats.utils import read_contributors_from_file
 class TestUtils:
     """Test utility functions in the application."""
 
-    #  Test get_current_month() method
+    # Test get_current_month() method
     def test_get_current_month(self, formatted='%Y-%m'):
         y_m_format = time.strftime(formatted)
         assert get_current_month(formatted) == y_m_format
 
-    #  Test db_has_month() method
+    # Test db_has_month() method
     def test_db_has_month_with_data(self):
         status = db_has_month('2018-07')  # search month with data
         assert bool(status) is True  # returns True for month with data
 
+    # Test db_has_month_without_data() method
     def test_db_has_month_without_data(self):
-        #  Past month with no data
-        #  https://tools.wmflabs.org/awmd-stats/month/2017-11.
+        # Past month with no data
+        # https://tools.wmflabs.org/awmd-stats/month/2017-11.
         status = db_has_month('2017-11')  # search month without data
         assert bool(status) is False  # returns False for month without data
 
