@@ -35,11 +35,12 @@ class TestUtils:
         status = db_has_month('2018-07')  # search month with data
         assert bool(status) is True  # returns True for month with data
 
-    # Test db_has_month_without_data() method
+    # Test db_has_month() method (with no data)
+    # T219098: Use a far behind date as fix
     def test_db_has_month_without_data(self):
-        # Past month with no data
-        # https://tools.wmflabs.org/awmd-stats/month/2017-11.
-        status = db_has_month('2017-11')  # search month without data
+        #  Past month with no data
+        #  https://tools.wmflabs.org/awmd-stats/month/1900-12.
+        status = db_has_month('1900-12')  # search month without data
         assert bool(status) is False  # returns False for month without data
 
     # Test decrement_month() method
