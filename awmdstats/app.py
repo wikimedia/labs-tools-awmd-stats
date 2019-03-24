@@ -162,7 +162,7 @@ def create_app():
             )
         else:
             return render_template(
-                'no-contributions.html', monthID=month,
+                'no-contributions.html', month_id=month,
                 formatted=formatted.strftime('%B, %Y'),
                 refresh_month=month_refresh
             )
