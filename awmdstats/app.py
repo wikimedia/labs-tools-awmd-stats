@@ -68,6 +68,20 @@ def create_app():
                 refresh_month=month_refresh, scheme=prot_scheme
             )
 
+    @app.context_processor
+    def utility_processor():
+        def attach_badge(patch_count):
+            if patch_count >= 100:
+                badge = '🥇'
+            elif patch_count >= 50:
+                badge = '🥈'
+            elif patch_count >= 10:
+                badge = '🥉'
+            else:
+                badge = ''
+            return badge
+        return dict(attach_badge=attach_badge)
+
     @app.route('/contributor/<username>/<month>')
     def contributor_patches_by_month(username, month):
         """
