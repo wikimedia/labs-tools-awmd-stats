@@ -13,6 +13,9 @@
 		</p>
 		{% endfor %}
 	</div>
-	<a href="{{back_url}}" class="btn btn-primary float-left" title="Back to homepage">&laquo; Back</a>
+	<div class="btn-group">
+		<a href="{{back_url}}" class="btn btn-primary float-left" title="Back to homepage">&laquo; Back</a>
+		<a class="btn btn-success float-left" href="{{url_for('rank_by_month', month=month_id)}}/wiki">Wikicode</a>
+	</div>
 </div>
 {% endblock %}

@@ -8,6 +8,7 @@ from datetime import datetime
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask import url_for
 from pprint import pprint
 
 from awmdstats import utils
@@ -31,7 +32,7 @@ def create_app():
         month -- the default is the current month but can view previous months
         """
         if month is None:
-            month = utils.get_current_month()  # make month format human-readable
+            month = utils.get_current_month()  # month format human-readable
 
         stats = utils.get_stats_from_db(month)
         contributors = utils.get_contributors(stats, month)
@@ -142,13 +143,15 @@ def create_app():
                                    notice_title=notice_title,
                                    notice_desc=notice_desc)
 
+    @app.route('/month-rank/<month>/<format>')
     @app.route('/month-rank/<month>')
-    def rank_by_month(month=None):
+    def rank_by_month(month=None, format=None):
         """
         REST endpoint for a list of contributors sorted by patche(s).
 
         Keyword arguments:
         month -- the month to fetch corresponding contributors to be sorted
+        format -- the formats that the sorted data can be displayed in
         """
         if month is None:
             # get current month in format human-readable
@@ -167,6 +170,36 @@ def create_app():
 
         # grab previous url from flask.request.referrer
         back_url = request.referrer
+
+        formats = ['wiki']
+        if format is not None and format in formats:
+
+            # build formatted list
+            wikicode = ""
+            for contributor in contributors:
+                data = contributor[0]
+                url_parts = request.url_root.split("/")
+                base_url = "/".join(url_parts[0:len(url_parts) - 1])
+                line = (['# @', data['username'], ' - [[',
+                        base_url,
+                        url_for('contributor_patches_by_month',
+                                username=data['username'],
+                                month=month),
+                         '|(' + str(data['patch_total']),
+                         ' patches submitted - ',
+                         str(data['merged_count']),
+                         ' merged, ' + str(data['pending_count']),
+                         ' under review and ',
+                         str(data['abandoned_count']),
+                         ' abandoned)]]'
+                         ]
+                        )
+
+                if format == 'wiki':
+                    wikicode += "".join(line) + '\n'
+
+            #  render raw text
+            return wikicode, 200, {'Content-Type': 'text/css;'}
 
         if utils.db_has_month(month) is True:
             return render_template(

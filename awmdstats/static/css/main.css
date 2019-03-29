@@ -122,3 +122,6 @@ hr.style-go {
 a.btn.btn-success:visited {
     color: #FFF;
 }
+.btn-group .btn{
+  margin-right: 5px;
+}
