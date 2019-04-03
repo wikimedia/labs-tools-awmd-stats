@@ -19,6 +19,7 @@ from awmdstats.utils import get_db
 from awmdstats.utils import get_doc_list
 from awmdstats.utils import get_stats_from_db
 from awmdstats.utils import read_contributors_from_file
+from awmdstats.utils import patch_exists
 
 
 @pytest.mark.usefixtures('testapp')
@@ -106,3 +107,19 @@ class TestUtils:
         # Test for non-existent stats
         stats = get_stats_from_db('2017-03')
         assert len(stats) < 1
+
+    # Test patch_exists() method
+    def test_patch_exists_with_data(self):
+        # Test for existing patch
+        patch = {'created': '2019-03-13 08:14:04.000000000',
+                 'username': 'jeropbrenda'}
+        status = patch_exists(patch)
+        assert bool(status) is True
+
+    # Test patch_exists() method (with no data)
+    def test_patch_exists_without_data(self):
+        # Test for non-existent patch
+        patch = {'created': '2017-03-13 08:14:04.000000000',
+                 'username': 'jeropbrenda'}
+        status = patch_exists(patch)
+        assert bool(status) is False
