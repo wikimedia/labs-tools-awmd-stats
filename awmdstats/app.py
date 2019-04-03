@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 # Author: Samuel Guebo, Derick Alangi
 # Description: The main application layer
 # License: MIT
+
+import emoji
 
 from datetime import datetime
 from flask import Flask
@@ -73,11 +76,11 @@ def create_app():
     def utility_processor():
         def attach_badge(patch_count):
             if patch_count >= 100:
-                badge = '🥇'
+                badge = emoji.emojize('🥇')
             elif patch_count >= 50:
-                badge = '🥈'
+                badge = emoji.emojize('🥈')
             elif patch_count >= 10:
-                badge = '🥉'
+                badge = emoji.emojize('🥉')
             else:
                 badge = ''
             return badge
