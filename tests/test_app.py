@@ -18,7 +18,13 @@ class TestApp:
 
     #  Test the /docs/<doc> route response status_code
     def test_docs_doc_route(self, testapp):
-        response = testapp.get('/docs/index')
+        response = testapp.get('/docs/index.html')
+        assert response.status_code == 200
+
+    #  Test the /docs/<doc> route response status_code if doc does not exist in docs list
+    def test_docs_doc_route_without_doc(self, testapp):
+        response = testapp.get('/docs/missingdoc.html')
+        # Returns a 200 because template 404.html gets rendered
         assert response.status_code == 200
 
     #  Test the /test route response status_code
@@ -36,12 +42,22 @@ class TestApp:
         response = testapp.get('/raw/2018-01')
         assert response.status_code == 200
 
+    #  Test the /raw/<month> route response status_code if month has no data
+    def test_raw_month_route_without_data(self, testapp):
+        response = testapp.get('/raw/1900-01')
+        assert response.status_code == 200
+
     #  Test the /month/<month> route response status_code
     def test_month_month_route(self, testapp):
         response = testapp.get('/month/2018-01')
         assert response.status_code == 200
 
-    #  Test the /month-rank/<month>/wiki route response status_code
+    #  Test the /month/<month> route response status_code if month has no data
+    def test_month_month_route_without_data(self, testapp):
+        response = testapp.get('/month/1900-01')
+        assert response.status_code == 200
+
+    #  #  Test the /month-rank/<month>/wiki route response status_code
     def test_rank_by_month_route_with_wiki_format(self, testapp):
         response = testapp.get('/month-rank/2018-01/wiki')
         assert response.status_code == 200
@@ -54,6 +70,11 @@ class TestApp:
     #  Test the /month-rank/<month> route response status_code
     def test_rank_by_month_route(self, testapp):
         response = testapp.get('/month-rank/2018-01')
+        assert response.status_code == 200
+
+    #  Test the /month-rank/<month> route response status_code if month has no data
+    def test_rank_by_month_route_without_data(self, testapp):
+        response = testapp.get('/month-rank/1900-01')
         assert response.status_code == 200
 
     #  Test the /contributor/<username>/<month>

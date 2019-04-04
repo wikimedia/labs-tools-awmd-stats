@@ -72,6 +72,11 @@ class TestUtils:
         stats = get_contributor_stats('BamLifa', '2018-04')
         assert len(stats) < 1 and isinstance(stats, list)
 
+    # Test get_contributor_stats() method if no month is specified
+    def test_get_contributor_stats_without_month(self):
+        stats = get_contributor_stats('D3r1ck01')
+        assert len(stats) > 0 and isinstance(stats, list)
+
     # Test get_db() method
     def test_get_db(self):
         db = get_db()
