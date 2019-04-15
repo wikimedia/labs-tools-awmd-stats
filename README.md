@@ -23,7 +23,8 @@ The above script attempts to check system requirements and tell informs user on 
 
 ## Quickstart the tool
 ```bash
-python manage.py runserver
+export FLASK_APP=flasky.py
+flask run
 ```
 
 ## Read the code documentations
@@ -33,7 +34,7 @@ To view documentation of the codes which makes use of the docstrings, use this e
 localhost:5000/docs/index
 ```
 
-#### On toolforge server;
+#### On Toolforge server;
 ```bash
 https://tools.wmflabs.org/awmd-stats/docs/index
 ```
