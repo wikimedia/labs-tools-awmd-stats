@@ -34,7 +34,7 @@ To view documentation of the codes which makes use of the docstrings, use this e
 localhost:5000/docs/index
 ```
 
-#### On Toolforge server;
+#### On Toolforge server
 ```bash
 https://tools.wmflabs.org/awmd-stats/docs/index
 ```
@@ -66,4 +66,4 @@ The contributors to this tool are strongly encouraged to use the following codin
 # Contributors
 
 * [Samuel Guébo](https://github.com/samuelguebo) - Project Lead
-* [Derick Alangi](https://github.com/ch3nkula) - Contributor
+* [Derick Alangi](https://github.com/xSavitar) - Contributor
