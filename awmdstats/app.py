@@ -12,6 +12,7 @@ from datetime import datetime
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask import Response
 from flask import url_for
 from pprint import pprint
 
@@ -181,34 +182,39 @@ def create_app():
             # build formatted list
             wikicode = ""
             jsoncode = ""
-            for contributor in contributors:
-                data = contributor[0]
-                url_parts = request.url_root.split("/")
-                base_url = "/".join(url_parts[0:len(url_parts) - 1])
-                line = (['# @', data['username'], ' - [[',
-                        base_url,
-                        url_for('contributor_patches_by_month',
-                                username=data['username'],
-                                month=month),
-                         '|(' + str(data['patch_total']),
-                         ' patches submitted - ',
-                         str(data['merged_count']),
-                         ' merged, ' + str(data['pending_count']),
-                         ' under review and ',
-                         str(data['abandoned_count']),
-                         ' abandoned)]]'
-                         ]
-                        )
+            if format == 'wiki':
+                for contributor in contributors:
+                    data = contributor[0]
 
-                if format == 'wiki':
+                    url_parts = request.url_root.split("/")
+                    base_url = "/".join(url_parts[0:len(url_parts) - 1])
+                    line = (['# @', data['username'], ' - [[',
+                            base_url,
+                            url_for('contributor_patches_by_month',
+                                    username=data['username'],
+                                    month=month),
+                             '|(' + str(data['patch_total']),
+                             ' patches submitted - ',
+                             str(data['merged_count']),
+                             ' merged, ' + str(data['pending_count']),
+                             ' under review and ',
+                             str(data['abandoned_count']),
+                             ' abandoned)]]'
+                             ]
+                            )
                     wikicode += "".join(line) + '\n'
-                    #  render raw text
-                    return wikicode, 200, {'Content-Type': 'text/css;'}
 
+                #  render wikicode
+                resp = Response(wikicode, status=200,
+                                mimetype='text/plain')
+                return resp
+
+            #  render json text, if requested
             if format == 'json':
                 jsoncode += json.dumps(contributors)
-                #  render json text
-                return jsoncode, 200, {'Content-Type': 'text/css;'}
+                resp = Response(jsoncode, status=200,
+                                mimetype='application/json')
+                return resp
 
         if utils.db_has_month(month) is True:
             return render_template(
