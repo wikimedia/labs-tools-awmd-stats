@@ -6,6 +6,7 @@
 # License: MIT
 
 import emoji
+import json
 
 from datetime import datetime
 from flask import Flask
@@ -174,11 +175,12 @@ def create_app():
         # grab previous url from flask.request.referrer
         back_url = request.referrer
 
-        formats = ['wiki']
+        formats = ['wiki', 'json']
         if format is not None and format in formats:
 
             # build formatted list
             wikicode = ""
+            jsoncode = ""
             for contributor in contributors:
                 data = contributor[0]
                 url_parts = request.url_root.split("/")
@@ -200,9 +202,13 @@ def create_app():
 
                 if format == 'wiki':
                     wikicode += "".join(line) + '\n'
+                    #  render raw text
+                    return wikicode, 200, {'Content-Type': 'text/css;'}
 
-            #  render raw text
-            return wikicode, 200, {'Content-Type': 'text/css;'}
+            if format == 'json':
+                jsoncode += json.dumps(contributors)
+                #  render json text
+                return jsoncode, 200, {'Content-Type': 'text/css;'}
 
         if utils.db_has_month(month) is True:
             return render_template(
