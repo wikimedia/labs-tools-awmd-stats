@@ -22,14 +22,19 @@
 	<hr class="style-go">
 	<div class="row">
 		{% for contributor in contributors %}
+		{% set patch_count = contributor|length %}
 		<div class="col-sm-4">
 			<div class="card">
 				<div class="card-body">
 					<h4 class="card-title">
-						{{contributor[0]['name']}} {{attach_badge(contributor|length)}}
+						{{contributor[0]['name']}} {{attach_badge(patch_count)}}
 					</h4>
 					<p class="card-text">
-						{{contributor[0]['username']}} - submitted {{contributor|length}} patches
+						{% if patch_count > 1 %}
+							{{contributor[0]['username']}} - submitted {{patch_count - contributor[0]['abandoned_count']}} patches
+						{% else %}
+							{{contributor[0]['username']}} - submitted {{patch_count - contributor[0]['abandoned_count']}} patch
+						{% endif %}
 						<br>
 					</p>
 					<p class="card-text">
