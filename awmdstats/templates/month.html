@@ -8,7 +8,7 @@
 		{% for contributor in contributors %}
 		<p class="contributor">
 			{{loop.index}}. <a href="{{url_for('contributor_patches_by_month', username=contributor[0]['username'], month=month_id)}}" title="Full details for {{contributor[0]['name']}}">
-				@{{contributor[0]['username']}} - ({{contributor[0]['patch_total']}} patches submitted - {{contributor[0]['merged_count']}} merged, {{contributor[0]['pending_count']}} under review and {{contributor[0]['abandoned_count']}} abandoned)
+				@{{contributor[0]['username']}} - ({{(contributor[0]['patch_total'] - contributor[0]['abandoned_count'])}} patches submitted - {{contributor[0]['merged_count']}} merged and {{contributor[0]['pending_count']}} under review)
 			</a>
 		</p>
 		{% endfor %}
