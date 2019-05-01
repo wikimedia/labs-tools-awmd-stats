@@ -14,6 +14,12 @@ window.onload = function() {
 
     for(i = 0; i < data_points.length; i++){
         // populate the pie chart data with it's values
+        if(data_points[i].patches < 1){
+            // Hide contributors with 0 contribs per abandon policy:
+            // If N patches have been submitted and N abandoned, hide
+            // the user everywhere possible.
+            continue;
+        }
         pie_dp.push({
             y: (parseInt(data_points[i]['patches'])/ps)*100,
             label: data_points[i]['name']

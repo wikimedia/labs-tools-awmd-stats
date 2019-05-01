@@ -50,9 +50,10 @@ def create_app():
             month_refresh = ''
 
         for contributor in contributors:
-            patch_total += len(contributor)
+            patch_count = len(contributor) - contributor[0]['abandoned_count']
+            patch_total += patch_count
             entry = {"name": contributor[0]['username'],
-                     "patches": str(len(contributor))}
+                     "patches": str(patch_count)}
             chart_data.append(entry)
 
         # URL scheme that the home button should use

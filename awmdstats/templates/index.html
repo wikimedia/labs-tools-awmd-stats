@@ -5,7 +5,7 @@
 		<h4 class="title">Statistics for {{month}}
 			<a href="{{url_for('rank_by_month', month=month_id)}}" class="link">
 				<button class="btn btn-success btn-sm">
-				<i class="fa fa-bar-chart"></i> View {{stats|length}} patches in total by {{contributors|length}} contributors
+				<i class="fa fa-bar-chart"></i> View all {{stats|length}} patches and its contributors
 				</button>
 			</a>
 		</h4>
@@ -22,35 +22,58 @@
 	<hr class="style-go">
 	<div class="row">
 		{% for contributor in contributors %}
-		{% set patch_count = contributor|length %}
-		<div class="col-sm-4">
-			<div class="card">
-				<div class="card-body">
-					<h4 class="card-title">
-						{{contributor[0]['name']}} {{attach_badge(patch_count)}}
-					</h4>
-					<p class="card-text">
-						{% if patch_count > 1 %}
-							{{contributor[0]['username']}} - submitted {{patch_count - contributor[0]['abandoned_count']}} patches
-						{% else %}
-							{{contributor[0]['username']}} - submitted {{patch_count - contributor[0]['abandoned_count']}} patch
-						{% endif %}
-						<br>
-					</p>
-					<p class="card-text">
-						<small class="text-muted">{{contributor[0]['country']}}</small>
-					</p>
+		{% set patch_count = contributor|length - contributor[0]['abandoned_count'] %}
+			{% if patch_count > 1 %}
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">
+							{{contributor[0]['name']}} {{attach_badge(patch_count)}}
+						</h4>
+						<p class="card-text">
+							{{contributor[0]['username']}} - submitted {{patch_count}} patches
+							<br>
+						</p>
+						<p class="card-text">
+							<small class="text-muted">{{contributor[0]['country']}}</small>
+						</p>
 
-					<a href="{{url_for('contributor_patches_by_month', username=contributor[0]['username'], month=month_id)}}" class="btn btn-primary float-left" title="Full details for {{contributor[0]['name']}}">
-					View patches</a>
-					<small class="text-muted" style="float: right;"><br/>
-						<b>{{(contributor[0]['merged_count'] * 2) + contributor[0]['pending_count']}} points</b>
-					</small>
+						<a href="{{url_for('contributor_patches_by_month', username=contributor[0]['username'], month=month_id)}}" class="btn btn-primary float-left" title="Full details for {{contributor[0]['name']}}">
+						View patches</a>
+						<small class="text-muted" style="float: right;"><br/>
+							<b>{{(contributor[0]['merged_count'] * 2) + contributor[0]['pending_count']}} points</b>
+						</small>
+					</div>
 				</div>
+				<br>
 			</div>
-			<br>
-		</div>
+			{% elif patch_count == 0 %}
 
+			{% else %}
+				<div class="col-sm-4">
+					<div class="card">
+						<div class="card-body">
+							<h4 class="card-title">
+								{{contributor[0]['name']}} {{attach_badge(patch_count)}}
+							</h4>
+							<p class="card-text">
+								{{contributor[0]['username']}} - submitted {{patch_count}} patch
+								<br>
+							</p>
+							<p class="card-text">
+								<small class="text-muted">{{contributor[0]['country']}}</small>
+							</p>
+
+							<a href="{{url_for('contributor_patches_by_month', username=contributor[0]['username'], month=month_id)}}" class="btn btn-primary float-left" title="Full details for {{contributor[0]['name']}}">
+							View patches</a>
+							<small class="text-muted" style="float: right;"><br/>
+								<b>{{(contributor[0]['merged_count'] * 2) + contributor[0]['pending_count']}} points</b>
+							</small>
+						</div>
+					</div>
+					<br>
+				</div>
+			{% endif %}
 		{% endfor %}
 	</div>
 </div>
