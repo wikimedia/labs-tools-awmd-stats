@@ -19,15 +19,53 @@ Utility functions to perform specific tasks for the app.
 """
 
 
-def read_contributors_from_file():
+def db_has_month(month):
 
-    """Read through and get all contributors."""
+    """
+    Check whether month has entries in the DB.
 
-    file = open('contributors.json', 'r')
-    json_text = file.read()
-    response = json.loads(json_text)
+    Keyword arguments:
+    month -- check if this month is in the db.json (DB)
+    """
 
-    return response
+    stats = get_stats_from_db(month)
+    # if there is at least one entry
+    if len(stats) > 0:
+        return True
+    else:
+        return False
+
+
+def decrement_month(month, n=1):
+
+    """
+    Decrement date by 'n' months.
+
+    Keyword arguments:
+    month -- the current set month
+    n -- the number of months to decrement (default is 1)
+    """
+
+    date = month_to_date(month)
+    previous_month = date - relativedelta.relativedelta(months=n)
+
+    return previous_month.strftime('%Y-%m-%d')
+
+
+def filter_month(string, month):
+
+    """
+    Filter month.
+
+    Keyword arguments:
+    string -- the string to perform the filtration on
+    month -- the month used as the filter
+    """
+
+    if month in string:
+        return True
+    else:
+        return False
 
 
 def get_contributor_stats(username, month=None):
@@ -74,6 +112,16 @@ def get_current_month(formatted='%Y-%m'):
     return current_month
 
 
+def get_db():
+
+    """DB object to be used independently."""
+
+    # setting the tinydb location
+    db = TinyDB('database/db.json')
+
+    return db
+
+
 def get_doc_list(path):
 
     """
@@ -107,16 +155,6 @@ def get_stats_from_db(month):
     stats = db.search(patch.created.test(filter_month, month))
 
     return stats
-
-
-def get_db():
-
-    """DB object to be used independently."""
-
-    # setting the tinydb location
-    db = TinyDB('database/db.json')
-
-    return db
 
 
 def get_contributors(stats, month):
@@ -166,41 +204,20 @@ def get_contributors(stats, month):
     return contributors
 
 
-def filter_month(string, month):
+def increment_month(month, n=1):
 
     """
-    Filter month.
+    Increment date by 'n' months.
 
     Keyword arguments:
-    string -- the string to perform the filtration on
-    month -- the month used as the filter
+    month -- the current set month
+    n -- the number of months to increment (default is 1)
     """
 
-    if month in string:
-        return True
-    else:
-        return False
+    date = month_to_date(month)
+    next_month = date + relativedelta.relativedelta(months=n)
 
-
-def patch_exists(patch):
-
-    """
-    Check whether patch(es) exists in the DB.
-
-    Keyword arguments:
-    patch -- the patch(es) to be checked if it exist in db.json
-    """
-
-    db = get_db()
-    query = Query()
-    rows = db.search((query.created == patch['created']) & (
-        query.username == patch['username']))
-
-    # if the patch was previously saved
-    if len(rows) > 0:
-        return True
-    else:
-        return False
+    return next_month.strftime('%Y-%m-%d')
 
 
 def month_to_date(month):
@@ -219,50 +236,22 @@ def month_to_date(month):
     return date
 
 
-def increment_month(month, n=1):
+def patch_exists(patch):
 
     """
-    Increment date by 'n' months.
+    Check whether patch(es) exists in the DB.
 
     Keyword arguments:
-    month -- the current set month
-    n -- the number of months to increment (default is 1)
+    patch -- the patch(es) to be checked if it exist in db.json
     """
 
-    date = month_to_date(month)
-    next_month = date + relativedelta.relativedelta(months=n)
+    db = get_db()
+    query = Query()
+    rows = db.search((query.created == patch['created']) & (
+        query.username == patch['username']))
 
-    return next_month.strftime('%Y-%m-%d')
-
-
-def decrement_month(month, n=1):
-
-    """
-    Decrement date by 'n' months.
-
-    Keyword arguments:
-    month -- the current set month
-    n -- the number of months to decrement (default is 1)
-    """
-
-    date = month_to_date(month)
-    previous_month = date - relativedelta.relativedelta(months=n)
-
-    return previous_month.strftime('%Y-%m-%d')
-
-
-def db_has_month(month):
-
-    """
-    Check whether month has entries in the DB.
-
-    Keyword arguments:
-    month -- check if this month is in the db.json (DB)
-    """
-
-    stats = get_stats_from_db(month)
-    # if there is at least one entry
-    if len(stats) > 0:
+    # if the patch was previously saved
+    if len(rows) > 0:
         return True
     else:
         return False
@@ -294,3 +283,14 @@ def prepare_chart_data(contributors, month, request):
         chart_data.append(entry)
 
     return [patch_total, chart_data, month_refresh]
+
+
+def read_contributors_from_file():
+
+    """Read through and get all contributors."""
+
+    file = open('contributors.json', 'r')
+    json_text = file.read()
+    response = json.loads(json_text)
+
+    return response
