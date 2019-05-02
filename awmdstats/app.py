@@ -42,19 +42,9 @@ def create_app():
         stats = utils.get_stats_from_db(month)
         contributors = utils.get_contributors(stats, month)
 
-        chart_data = []
-        patch_total = 0
-        if month in request.path:
-            month_refresh = request.path.split('/')[-1]
-        else:
-            month_refresh = ''
-
-        for contributor in contributors:
-            patch_count = len(contributor) - contributor[0]['abandoned_count']
-            patch_total += patch_count
-            entry = {"name": contributor[0]['username'],
-                     "patches": str(patch_count)}
-            chart_data.append(entry)
+        patch_total, chart_data, month_refresh = utils.prepare_chart_data(
+            contributors, month, request
+        )
 
         # URL scheme that the home button should use
         prot_scheme = "https" if not app.debug else "http"
@@ -275,18 +265,9 @@ def create_app():
         contributors = utils.get_contributors(stats, month)
         formatted = datetime.strptime(month, '%Y-%m')
 
-        chart_data = []
-        patch_total = 0
-        if month in request.path:
-            month_refresh = request.path.split('/')[-1]
-        else:
-            month_refresh = ''
-
-        for contributor in contributors:
-            patch_total += len(contributor)
-            entry = {"name": contributor[0]['username'],
-                     "patches": str(len(contributor))}
-            chart_data.append(entry)
+        patch_total, chart_data, month_refresh = utils.prepare_chart_data(
+            contributors, month, request
+        )
 
         if utils.db_has_month(month) is True:
             return render_template(

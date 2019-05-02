@@ -266,3 +266,31 @@ def db_has_month(month):
         return True
     else:
         return False
+
+
+def prepare_chart_data(contributors, month, request):
+
+    """
+    Prepare charts data for index page and /raw/ page.
+
+    Keyword arguments:
+    contributors -- the contributors for the month
+    month -- the current month we want to process
+    request -- current client request
+    """
+
+    chart_data = []
+    patch_total = 0
+    if month in request.path:
+        month_refresh = request.path.split('/')[-1]
+    else:
+        month_refresh = ''
+
+    for contributor in contributors:
+        patch_count = len(contributor) - contributor[0]['abandoned_count']
+        patch_total += patch_count
+        entry = {"name": contributor[0]['username'],
+                 "patches": str(patch_count)}
+        chart_data.append(entry)
+
+    return [patch_total, chart_data, month_refresh]
