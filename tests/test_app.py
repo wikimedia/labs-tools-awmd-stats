@@ -58,5 +58,5 @@ class TestApp:
 
     #  Test the /contributor/<username>/<month>
     def test_contributor_username_month_route(self, testapp):
-        response = testapp.get('/contributor/D3r1ck01/2018-07')
+        response = testapp.get('/contributions/D3r1ck01/2018-07')
         assert response.status_code == 200

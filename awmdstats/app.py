@@ -79,7 +79,7 @@ def create_app():
             return badge
         return dict(attach_badge=attach_badge)
 
-    @app.route('/contributor/<username>/<month>')
+    @app.route('/contributions/<username>/<month>')
     def contributor_patches_by_month(username, month):
         """
         REST endpoint for list of contributor's patch(es).
@@ -96,7 +96,7 @@ def create_app():
         back_url = request.referrer
 
         return render_template(
-            'contributor.html', patches=patches,
+            'contributions.html', patches=patches,
             month_id=month, back_url=back_url
         )
 
