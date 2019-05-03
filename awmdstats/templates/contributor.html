@@ -14,7 +14,7 @@
 		</thead>
 		<tbody>
 			{% for patch in patches %}
-				{% if month_id in patch.created %}
+				{% if month_id in patch.created and patch.status != 'ABANDONED' %}
 					<tr>
 						<td>{{loop.index}}</td>
 						<td><a href="//gerrit.wikimedia.org/r/#/c/{{patch._number}}/">{{patch.project}}</a></td>
