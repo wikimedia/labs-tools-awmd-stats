@@ -1,7 +1,13 @@
 # awmd-stats
 
-Africa Wikimedia Developer (AWMD) Tool for gathering monthly statistics of African technical contributors into Wikimedia projects e.g. MediaWiki, MediaWiki extensions, etc.
+Africa Wikimedia Developer (AWMD) statisitics tool is meant for gathering monthly statistics of African technical contributors into Wikimedia projects such as; MediaWiki, MediaWiki extensions, etc. For more information see: https://www.mediawiki.org/wiki/Awmd-stats
 
+## Ranking method
+The tool uses a method to rank different contributors based on their patches and the state of the patch.
+Assume "m" is the number of patches merged and "n" is the number of patches under review, the formula is:
+```
+points = (2 x m) + n
+```
 
 # Requirements
 
