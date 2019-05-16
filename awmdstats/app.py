@@ -21,7 +21,7 @@ from awmdstats import utils
 
 def create_app():
     """
-    An flask application factory, as explained here:
+    A flask application factory, as explained here:
     http://flask.pocoo.org/docs/patterns/appfactories/
     """
 
