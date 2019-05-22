@@ -1,4 +1,4 @@
-# awmd-stats
+# awmd-stats [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 Africa Wikimedia Developer (AWMD) statisitics tool is meant for gathering monthly statistics of African technical contributors into Wikimedia projects such as; MediaWiki, MediaWiki extensions, etc. For more information see: https://www.mediawiki.org/wiki/Awmd-stats
 
@@ -73,3 +73,7 @@ The contributors to this tool are strongly encouraged to use the following codin
 
 * [Samuel Guébo](https://github.com/samuelguebo) - Project Lead
 * [Derick Alangi](https://github.com/xSavitar) - Contributor
+
+
+## License
+This project is open source and available under the [MIT License](LICENSE).
